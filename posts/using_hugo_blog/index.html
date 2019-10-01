@@ -127,10 +127,9 @@
 
 <ul>
 <li>到项目的根目录下, 即MyBlog文件夹下</li>
-<li><code>git clone https://github.com/imzeuk/hugo-theme-zozo themes/zozo</code></li>
+<li><code>git clone https://github.com/imzeuk/hugo-theme-zozo themes/zozo</code><br>
+一般主题下面都有一个 <em>exampleSite/config.toml</em> 文件是这个主题的默认配置可以copy到该项目的根目录, 然后在修改一下.</li>
 </ul>
-
-<p>一般主题下面都有一个 <em>exampleSite/config.toml</em> 文件是这个主题的默认配置可以copy到该项目的根目录, 然后在修改一下.</p>
 
 <h2 id="4-生成第一个blog文件">4. 生成第一个Blog文件</h2>
 
@@ -186,7 +185,19 @@
 
 <h2 id="8-将网站部署到github上">8. 将网站部署到github上</h2>
 
-<p>&lt;++&gt;</p>
+<ol>
+<li>首先, 创建一个github仓库, 并命名为<code>username.github.io</code>
+
+<ul>
+<li>有时, 创建的仓库<font color=blue>无法访问</font>, 可以尝试将<code>.io</code>改为<code>.com</code>试以下</li>
+</ul></li>
+<li>将运行<code>hugo</code>命令生成的默认为<code>public</code>的文件夹初始化为git仓库, 然后添加上传
+
+<ul>
+<li><code>git init</code> <code>git add .</code> <code>git commit -m &quot;MyBlog&quot;</code> <code>git remote add origin githuv_link</code> <code>git push -u origin master</code></li>
+</ul></li>
+<li>在浏览器中输入<code>username.github.io</code></li>
+</ol>
 </div>
         <div class="post_footer">
           
