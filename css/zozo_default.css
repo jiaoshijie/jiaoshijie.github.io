@@ -8,7 +8,7 @@ html {
 body {
   color: #333333;
   font-family: 'source-han-sans-simplified-c', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   width: 100%;
   background-color: #f7f7f7;
   margin: 0;
@@ -456,9 +456,9 @@ hr {
 
 .markdown pre,
 .markdown code {
-  font-family: 'Source Code Pro', 'Roboto Mono', Menlo, Monaco, courier, monospace;
-  font-size: 1.0em;
-  background: #f5f5f5 !important;
+  font-family: 'Roboto Mono', Menlo, Monaco, courier, monospace;
+  font-size: 0.9em;
+  background: #f8f8f8 !important;
   border: none;
 }
 
@@ -473,7 +473,7 @@ hr {
 }
 
 .markdown code {
-  color: #4D4B4B;
+  color: #666666;
   padding: 4px 5px;
   border-radius: 2px;
   white-space: nowrap;
@@ -683,32 +683,6 @@ a.back_to_top:hover span {
             transform: translateY(0);
   }
 }
-
-.markdown table {
-  margin-top: 0;
-  margin-bottom: 16px;
-  display: block;
-  width: 100%;
-  overflow: auto;
-  word-break: normal;
-  word-break: keep-all;
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-.markdown table tr {
-  background-color: #fff;
-  border-top: 1px solid #ccc;
-}
-.markdown table tr:nth-child(2n) {
-  background-color: #f8f8f8;
-}
-.markdown table th,
-.markdown table td {
-  padding: 6px 13px;
-  border: 1px solid #ddd;
-}
-
 
 /*animation ends*/
 /*# sourceMappingURL=zozo.css.map */
