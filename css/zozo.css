@@ -479,8 +479,13 @@ hr {
   color: #4D4B4B;
   padding: 4px 5px;
   border-radius: 2px;
-  white-space: nowrap;
+  /* white-space: nowrap; */
+  white-space: pre;
 }
+
+/* .markdown code.language-elisp { */
+/*     white-space: pre; */
+/*   } */
 
 .markdown pre code {
   padding: 0;
