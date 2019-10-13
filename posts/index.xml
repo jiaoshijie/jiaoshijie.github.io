@@ -6,7 +6,7 @@
     <description>Recent content in Posts on 名字夸张的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 11 Oct 2019 22:46:48 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 13 Oct 2019 22:46:48 +0800</lastBuildDate>
     
 	<atom:link href="https://jiaoshijie.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,10 @@
     <item>
       <title>Tinyhttpd学习</title>
       <link>https://jiaoshijie.github.io/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Fri, 11 Oct 2019 22:46:48 +0800</pubDate>
+      <pubDate>Sun, 13 Oct 2019 22:46:48 +0800</pubDate>
       
       <guid>https://jiaoshijie.github.io/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/</guid>
-      <description>TODO Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由per</description>
+      <description>Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由perl</description>
     </item>
     
     <item>
@@ -36,15 +36,6 @@
       
       <guid>https://jiaoshijie.github.io/posts/using_hugo_blog/</guid>
       <description>1. 安装hugo 对于Arch系Linux系统使用 sudo pacman -S hugo 其他安装方式去官网查看 2. 使用hugo创建Blog hugo new site MyBlog MyBlog为自己想创建的文件夹名称 3. 下载hugo主题 到项目的根目录下, 即MyBlog文件</description>
-    </item>
-    
-    <item>
-      <title>Linux下的一些配置文件说明</title>
-      <link>https://jiaoshijie.github.io/posts/linux_configure_file_insight/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://jiaoshijie.github.io/posts/linux_configure_file_insight/</guid>
-      <description>Linux下的一些配置文件说明 以下为在CentOS8上的配置， 有些也在Arch上做了测试 /etc/profile 启动login-bash时会读取的配置文件, 并且只有login-bash才会读取。 /etc/bashrc 两种登入方式都会读取的配置</description>
     </item>
     
   </channel>

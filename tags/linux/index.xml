@@ -6,7 +6,7 @@
     <description>Recent content in Linux on 名字夸张的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 11 Oct 2019 22:46:48 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 13 Oct 2019 22:46:48 +0800</lastBuildDate>
     
 	<atom:link href="https://jiaoshijie.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,10 @@
     <item>
       <title>Tinyhttpd学习</title>
       <link>https://jiaoshijie.github.io/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Fri, 11 Oct 2019 22:46:48 +0800</pubDate>
+      <pubDate>Sun, 13 Oct 2019 22:46:48 +0800</pubDate>
       
       <guid>https://jiaoshijie.github.io/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/</guid>
-      <description>TODO Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由per</description>
+      <description>Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由perl</description>
     </item>
     
   </channel>
