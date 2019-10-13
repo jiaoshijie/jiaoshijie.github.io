@@ -10,7 +10,7 @@
         content="jiaoshijie"/>
 
   
-  <meta name="description" content="learn record"/>
+  <meta name="description" content="Linux下的一些配置文件说明 以下为在CentOS8上的配置， 有些也在Arch上做了测试 /etc/profile 启动login-bash时会读取的配置文件, 并且只有login-bash才会读取。 /etc/bashrc 两种登入方式都会读取的配置"/>
   
 
   
@@ -19,13 +19,11 @@
   
 
   
-  <link rel="canonical" href="https://jiaoshijie.github.io/tags/"/>
+  <link rel="canonical" href="https://jiaoshijie.github.io/posts/linux_configure_file_insight/"/>
 
   
-  <link rel="alternate" type="application/rss&#43;xml" href="https://jiaoshijie.github.io/tags/index.xml">
-  
 
-  <title>Tags &middot; 名字夸张的Blog</title>
+  <title>Linux下的一些配置文件说明 &middot; 名字夸张的Blog</title>
 
   <link rel="shortcut icon" href="https://jiaoshijie.github.io/images/favicon.ico"/>
   <link rel="stylesheet" href="https://jiaoshijie.github.io/css/animate.min.css"/>
@@ -91,61 +89,138 @@
 </div>
 
   <div class="content">
-    <div class="page_tags">
-      <ul>
-        
-        
-        
-        <li>
-          <a href="https://jiaoshijie.github.io/tags/c">
-            c <span class="terms_count">1</span>
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a href="https://jiaoshijie.github.io/tags/coding">
-            coding <span class="terms_count">1</span>
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a href="https://jiaoshijie.github.io/tags/eamcs">
-            eamcs <span class="terms_count">1</span>
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a href="https://jiaoshijie.github.io/tags/hugo">
-            hugo <span class="terms_count">1</span>
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a href="https://jiaoshijie.github.io/tags/linux">
-            linux <span class="terms_count">1</span>
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a href="https://jiaoshijie.github.io/tags/org">
-            org <span class="terms_count">1</span>
-          </a>
-        </li>
-        
-        
-      </ul>
+    <div class="post_page">
+      <div class="post animated fadeInDown">
+        <div class="post_title post_detail_title">
+          <h2><a href='/posts/linux_configure_file_insight/'>Linux下的一些配置文件说明</a></h2>
+          <span class="date">0001.01.01</span>
+        </div>
+        <div class="post_content markdown">
+<h1 id="headline-1">
+Linux下的一些配置文件说明
+</h1>
+<p>
+以下为在CentOS8上的配置， 有些也在Arch上做了测试
+</p>
+<h2 id="headline-2">
+/etc/profile
+</h2>
+<p>
+启动login-bash时会读取的配置文件, 并且只有login-bash才会读取。
+</p>
+<h2 id="headline-3">
+/etc/bashrc
+</h2>
+<p>
+两种登入方式都会读取的配置，所有用户都会读取的bash配置
+并且 <code>/etc/profile</code> 会调用这个文件
+所以默认情况下这个文件会被读取两次
+但是Arch发行版默认没有 <code>/etc/bashrc</code>
+取代的是 <code>/etc/bash.bashrc</code> 文件并且由 <code>/etc/profile</code> 来调用， 而且不会自己调用
+</p>
+<h2 id="headline-4">
+用户的bash配置文件
+</h2>
+<h3 id="headline-5">
+.bash_profile
+</h3>
+<p>
+启动login-bash时会读取的配置文件，并且只有login-bash才会读取。
+是用户级别的配置文件. 
+</p>
+<h3 id="headline-6">
+.bash_login
+</h3>
+<p>
+很少会用到, 只有不存在 <code>~/.bash_profile</code> 文件时才会使用该文件
+</p>
+<h3 id="headline-7">
+.profile
+</h3>
+<p>
+很少会用到, 只有不存在 <code>~/.bash_profile</code> <code>~/.bash_login</code> 文件时才会使用该文件
+</p>
+<h3 id="headline-8">
+.bashrc
+</h3>
+<p>
+login-bash和non-login-bash都会读取的bash配置
+login-bash是通过 <code>.bash_profile</code> 来调用的
+non-login-bash默认自己会读取 <code>.bash</code> 文件
+</p>
+<h2 id="headline-9">
+xserverrc
+</h2>
+<p>
+X Server启动加载的配置文件
+优先级: <code>.xserverrc</code> <code>/etc/X11/xinit/xserverrc</code> <code>单纯的运行/usr/bin/X</code>
+</p>
+<h2 id="headline-10">
+xinitrc
+</h2>
+<p>
+X Client启动加载的配置文件
+优先级: <code>.xinitrc</code> <code>/etc/X11/xinit/xinitrc</code> <code>单纯的运行xterm</code>
+由xinit程序执行
+</p>
+<h2 id="headline-11">
+Xauthority
+</h2>
+<p>
+用于X使用的认证
+</p>
+<h2 id="headline-12">
+Xmodmap
+</h2>
+<p>
+xmodmap 的键位配置文件
+</p>
+<h2 id="headline-13">
+xprofile
+</h2>
+<p>
+用于随会话自动运行程序，或从显示管理器启动,尤其是那个会话没有自带自动启动程序功能时 - 比如一个独立的窗口管理器。 
+使用gdm等图形登录时读取并运用里面的设置
+</p>
+<h2 id="headline-14">
+Xsession
+</h2>
+<p>
+登录管理器会使用.Xsession来初始化登录
+</p>
+<h2 id="headline-15">
+Xsessionrc
+</h2>
+<p>
+debian系的一个特性，不是debian的系同没有它。
+</p>
+<h2 id="headline-16">
+Xresource
+</h2>
+<p>
+一些X软件的设置, 显示设置
+如 xterm xurvt rofi
+</p>
+<h2 id="headline-17">
+Xdefaults
+</h2>
+<p>
+和 <code>Xresource</code> 一样但现在很少使用了
+</p>
+<h2 id="headline-18">
+xdg目录
+</h2>
+<p>
+一些X上的软件全局配置放到这个目录
+</p>
+</div>
+        <div class="post_footer">
+          
+        </div>
+      </div>
+      
+      
     </div>
-    <div class="pagination"></div>
   </div>
   <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
 </div>

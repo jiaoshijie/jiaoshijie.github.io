@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn" >
 <head>
-	<meta name="generator" content="Hugo 0.58.3" />
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -11,7 +10,7 @@
         content="jiaoshijie"/>
 
   
-  <meta name="description" content="learn record"/>
+  <meta name="description" content="TODO Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由per"/>
   
 
   
@@ -20,13 +19,11 @@
   
 
   
-  <link rel="canonical" href="https://jiaoshijie.github.io/"/>
+  <link rel="canonical" href="https://jiaoshijie.github.io/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/"/>
 
   
-  <link rel="alternate" type="application/rss&#43;xml" href="https://jiaoshijie.github.io/index.xml">
-  
 
-  <title>名字夸张的Blog</title>
+  <title>Tinyhttpd学习 &middot; 名字夸张的Blog</title>
 
   <link rel="shortcut icon" href="https://jiaoshijie.github.io/images/favicon.ico"/>
   <link rel="stylesheet" href="https://jiaoshijie.github.io/css/animate.min.css"/>
@@ -92,115 +89,144 @@
 </div>
 
   <div class="content">
-    
-
-
-
-<div class="post animated fadeInDown">
-  <div class="post_title">
-    <h2><a href='/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/'>Tinyhttpd学习</a></h2>
-  </div>
-  
-  <div class="list">
-    <div class="post_content markdown">
-      <p>TODO Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由per......</p>
-    </div>
-  </div>
-  
-  <div class="post_footer">
-    <div class="meta">
-      <div class="info">
-        <span class="field">
-          <i class="remixicon-map-pin-time-line"></i>
+    <div class="post_page">
+      <div class="post animated fadeInDown">
+        <div class="post_title post_detail_title">
+          <h2><a href='/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/'>Tinyhttpd学习</a></h2>
           <span class="date">2019.10.11</span>
-        </span>
-        
-        <span class="field tags">
-          <i class="remixicon-stack-line"></i>
+        </div>
+        <div class="post_content markdown">
+<h2 id="headline-1">
+<span class="todo">TODO</span>
+Introduction
+</h2>
+<p>
+第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。
+</p>
+<p>
+<a href="https://sourceforge.net/projects/tiny-httpd/">tinyhttpd官方源码在这里下载</a>
+</p>
+<p>
+<a href="">我的代码在这里</a>
+</p>
+<p>
+一些改动:
+</p>
+<ul>
+<li>
+<p>
+将cgi程序由perl语言改为python3
+</p>
+</li>
+</ul>
+<h2 id="headline-2">
+函数说明
+</h2>
+<ol>
+<li>
+<p>
+startup() 初始化服务端套接字, 如果端口号没有指定，则使用随机的端口号
+</p>
+</li>
+<li>
+<p>
+error_die() 打印服务端启动过程中的错误信息, 并退出程序
+</p>
+</li>
+<li>
+<p>
+accept_request() 处理客户端请求
+</p>
+<ul>
+<li>
+<p>
+获取请求类型(<code class="verbatim">GET</code> or <code class="verbatim">POST</code>)
+</p>
+</li>
+<li>
+<p>
+获取客户端要的网页文件的路径
+</p>
+</li>
+<li>
+<p>
+使用stat()函数获取文件属性，判断是执行cgi还是发送普通网页
+</p>
+</li>
+</ul>
+</li>
+<li>
+<p>
+get_line() 获取网络字符串的一行(换行符为: <code class="verbatim">\r\n</code> )
+</p>
+</li>
+<li>
+<p>
+unimplemented() 客户端请求不正确时(服务器不支持的请求)，发送给客户端<a href="https://man.ilovefishc.com/pageHTML5/HTTP.html">501</a>错误
+</p>
+</li>
+<li>
+<p>
+not_found_file() 客户端请求网页内容不存在返回该函数404
+</p>
+</li>
+<li>
+<p>
+cannot_execute() 不能执行cgi文件
+</p>
+</li>
+<li>
+<p>
+bad_request() 客户端请求错误
+</p>
+</li>
+<li>
+<p>
+serve_file() 发送网页文件
+</p>
+</li>
+<li>
+<p>
+execute_cgi() 执行cgi文件并将结果发送到客户端
+</p>
+</li>
+</ol>
+<p>
+<img src="../../static/images/tinyhttpd_01.png" alt="../../static/images/tinyhttpd_01.png" title="../../static/images/tinyhttpd_01.png" />
+</p>
+<h2 id="headline-3">
+<span class="todo">TODO</span>
+cgi介绍
+</h2>
+<h2 id="headline-4">
+<span class="todo">TODO</span>
+Linux系统函数
+</h2>
+</div>
+        <div class="post_footer">
           
-          <a href="https://jiaoshijie.github.io/tags/c/">c</a>
+          <div class="meta">
+            <div class="info">
+              <span class="field tags">
+                <i class="remixicon-stack-line"></i>
+                
+                <a href="https://jiaoshijie.github.io/tags/c/">c</a>
+                
+                <a href="https://jiaoshijie.github.io/tags/linux/">Linux</a>
+                
+                <a href="https://jiaoshijie.github.io/tags/coding/">coding</a>
+                
+              </span>
+            </div>
+          </div>
           
-          <a href="https://jiaoshijie.github.io/tags/linux/">Linux</a>
-          
-          <a href="https://jiaoshijie.github.io/tags/coding/">coding</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      
     </div>
   </div>
-</div>
-
-<div class="post animated fadeInDown">
-  <div class="post_title">
-    <h2><a href='/posts/org_mode_syntax/'>org-mode学习</a></h2>
-  </div>
-  
-  <div class="list">
-    <div class="post_content markdown">
-      <p>大纲 标题&#xa0;&#xa0;&#xa0;title 文章标题可以通过 #+TITLE: title-name 使用*+space表示标题, 最多支持10级标题 快捷键&#xa0;&#xa0;&#xa0;keybinds 折叠&#xa0;&#x......</p>
-    </div>
-  </div>
-  
-  <div class="post_footer">
-    <div class="meta">
-      <div class="info">
-        <span class="field">
-          <i class="remixicon-map-pin-time-line"></i>
-          <span class="date">2019.10.11</span>
-        </span>
-        
-        <span class="field tags">
-          <i class="remixicon-stack-line"></i>
-          
-          <a href="https://jiaoshijie.github.io/tags/eamcs/">eamcs</a>
-          
-          <a href="https://jiaoshijie.github.io/tags/org/">org</a>
-          
-        </span>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="post animated fadeInDown">
-  <div class="post_title">
-    <h2><a href='/posts/using_hugo_blog/'>使用hugo搭建Blog记录</a></h2>
-  </div>
-  
-  <div class="list">
-    <div class="post_content markdown">
-      <p>1. 安装hugo 对于Arch系Linux系统使用 sudo pacman -S hugo 其他安装方式去官网查看 2. 使用hugo创建Blog hugo new site MyBlog MyBlog为自己想创建的文件夹名称 3. 下载hugo主题 到项目的根目录下, 即MyBlog文件......</p>
-    </div>
-  </div>
-  
-  <div class="post_footer">
-    <div class="meta">
-      <div class="info">
-        <span class="field">
-          <i class="remixicon-map-pin-time-line"></i>
-          <span class="date">2019.10.01</span>
-        </span>
-        
-        <span class="field tags">
-          <i class="remixicon-stack-line"></i>
-          
-          <a href="https://jiaoshijie.github.io/tags/hugo/">hugo</a>
-          
-        </span>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="pagination">
-  
-</div>
-
-  </div>
+  <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
 </div>
 <footer class="footer">
   <div class="powered_by">

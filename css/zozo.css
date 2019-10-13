@@ -240,11 +240,12 @@ hr {
 .post .post_content a {
   text-decoration: none;
   letter-spacing: 1px;
-  color: #e42b2b;
+  color: blue;
 }
 
 .post .post_content a:hover {
-  color: #8e0000;
+  color: #000055;
+  text-decoration: underline;
 }
 
 .post .post_footer {
