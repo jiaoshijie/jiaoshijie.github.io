@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-cn" >
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  
+  <meta name="author"
+        content="jiaoshijie"/>
+
+  
+  <meta name="description" content="Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由perl"/>
+  
+
+  
+  
+  <meta name="keywords" content="Hugo, learning"/>
+  
+
+  
+  <link rel="canonical" href="https://jiaoshijie.github.io/posts/tinyhttpd_learn/"/>
+
+  
+
+  <title>Tinyhttpd学习 &middot; 名字夸张的Blog</title>
+
+  <link rel="shortcut icon" href="https://jiaoshijie.github.io/images/favicon.ico"/>
+  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/animate.min.css"/>
+  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/remixicon.css"/>
+  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/zozo.css"/>
+  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/highlight.css"/>
+
+  
+  
+</head>
+
+<body>
+<div class="main animated">
+  <div class="nav_container animated fadeInDown">
+  <div class="site_nav" id="site_nav">
+    <ul>
+      
+      <li>
+        <a href="/">首页</a>
+      </li>
+      
+      <li>
+        <a href="/posts/">归档</a>
+      </li>
+      
+      <li>
+        <a href="/tags/">标签</a>
+      </li>
+      
+      <li>
+        <a href="/about/">关于</a>
+      </li>
+      
+    </ul>
+  </div>
+  <div class="menu_icon">
+    <a id="menu_icon"><i class="remixicon-links-line"></i></a>
+  </div>
+</div>
+
+  <div class="header animated fadeInDown">
+  <div class="site_title_container">
+    <div class="site_title">
+      <h1>
+        <a href="https://jiaoshijie.github.io/">
+          <span>名字夸张的Blog</span>
+          <img src="https://jiaoshijie.github.io/images/logo.svg"/>
+        </a>
+      </h1>
+    </div>
+    <div class="description">
+      <p class="sub_title"></p>
+      <div class="my_socials">
+        
+        
+        <a href="https://github.com/jiaoshijie" title="github" target="_blank"><i class="remixicon-github-fill"></i></a>
+        
+        
+        <a href="https://jiaoshijie.github.io/index.xml" type="application/rss+xml" title="rss" target="_blank"><i class="remixicon-rss-fill"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="content">
+    <div class="post_page">
+      <div class="post animated fadeInDown">
+        <div class="post_title post_detail_title">
+          <h2><a href='/posts/tinyhttpd_learn/'>Tinyhttpd学习</a></h2>
+          <span class="date">2019.10.13</span>
+        </div>
+        <div class="post_content markdown">
+<h2 id="headline-1">
+Introduction
+</h2>
+<p>
+第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。
+</p>
+<p>
+<a href="https://sourceforge.net/projects/tiny-httpd/">tinyhttpd官方源码在这里下载</a>
+</p>
+<p>
+<a href="https://github.com/jiaoshijie/record/tree/master/c_code/tinyhttpd">我的代码在这里</a>
+</p>
+<p>
+一些改动:
+</p>
+<ul>
+<li>
+<p>
+将cgi程序由perl语言改为python3
+</p>
+</li>
+</ul>
+<h2 id="headline-2">
+函数说明
+</h2>
+<ol>
+<li>
+<p>
+startup() 初始化服务端套接字, 如果端口号没有指定，则使用随机的端口号
+</p>
+</li>
+<li>
+<p>
+error_die() 打印服务端启动过程中的错误信息, 并退出程序
+</p>
+</li>
+<li>
+<p>
+accept_request() 处理客户端请求
+</p>
+<ul>
+<li>
+<p>
+获取请求类型(<code class="verbatim">GET</code> or <code class="verbatim">POST</code>)
+</p>
+</li>
+<li>
+<p>
+获取客户端要的网页文件的路径
+</p>
+</li>
+<li>
+<p>
+使用stat()函数获取文件属性，判断是执行cgi还是发送普通网页
+</p>
+</li>
+</ul>
+</li>
+<li>
+<p>
+get_line() 获取网络字符串的一行(换行符为: <code class="verbatim">\r\n</code> )
+</p>
+</li>
+<li>
+<p>
+unimplemented() 客户端请求不正确时(服务器不支持的请求)，发送给客户端<a href="https://man.ilovefishc.com/pageHTML5/HTTP.html">501</a>错误
+</p>
+</li>
+<li>
+<p>
+not_found_file() 客户端请求网页内容不存在返回该函数404
+</p>
+</li>
+<li>
+<p>
+cannot_execute() 不能执行cgi文件
+</p>
+</li>
+<li>
+<p>
+bad_request() 客户端请求错误
+</p>
+</li>
+<li>
+<p>
+serve_file() 发送网页文件到客户端
+</p>
+</li>
+<li>
+<p>
+execute_cgi() 执行cgi文件并将结果发送到客户端
+</p>
+</li>
+</ol>
+<p>
+<img src="../../images/tinyhttpd_01.png" alt="../../images/tinyhttpd_01.png" title="../../images/tinyhttpd_01.png" />
+</p>
+<h2 id="headline-3">
+cgi介绍
+</h2>
+<p>
+cgi(Common Gateway Interface)规定Web服务器调用其他程序的接口协议(就是如何调用程序， 传递参数， 输出结果)
+</p>
+<p>
+cgi接口使用标准输入、标准输出和环境变量来交换数据
+</p>
+<p>
+该程序中使用的环境变量:
+</p>
+<ul>
+<li>
+<p>
+<code class="verbatim">REQUEST_METHOD</code>: 浏览器请求方法
+</p>
+</li>
+<li>
+<p>
+<code class="verbatim">CONTENT_LENGTH</code>: post请求时的form表单的内容长度
+</p>
+</li>
+<li>
+<p>
+<code class="verbatim">QUERY_STRING</code>: get请求时form表单的内容放到该环境变量中
+</p>
+</li>
+</ul>
+<p>
+cgi从标准输入中获取数据，把数据输出到标准输出
+</p>
+<h2 id="headline-4">
+Linux系统函数
+</h2>
+<ul>
+<li>
+<p>
+pipe()
+进程见通信的一种实现方法
+</p>
+<div class="src src-c">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// file_pipe[0] 为读取端(输出端), file_pipe[1]为写入端(输入端)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> file_pipe[<span style="color:#ae81ff">2</span>];
+pipe(file_pipe);</code></pre></div>
+</div>
+</li>
+<li>
+<p>
+fork()
+创建线程函数
+</p>
+<div class="src src-c">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> ipid <span style="color:#f92672">=</span> fork();  <span style="color:#75715e">// 创建线程
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span>(ipid <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+{
+  <span style="color:#75715e">// 子线程
+</span><span style="color:#75715e"></span>}
+<span style="color:#66d9ef">else</span>
+{
+  <span style="color:#75715e">// 主线程
+</span><span style="color:#75715e"></span>}</code></pre></div>
+</div>
+</li>
+<li>
+<p>
+dup2()
+重定向一个文件描述符
+</p>
+<div class="src src-c">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/**
+</span><span style="color:#75715e">* stdin:0, stdout:1
+</span><span style="color:#75715e">* 下面两句将重定向stdin和stdout到file[0], 和file[1]
+</span><span style="color:#75715e">*/</span>
+dup2(file[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">0</span>);
+dup2(file[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">1</span>);</code></pre></div>
+</div>
+</li>
+<li>
+<p>
+putenv()
+设置环境变量(只在该进程中生效)
+</p>
+</li>
+<li>
+<p>
+execl()
+在该进程中执行外部程序
+</p>
+<div class="src src-c">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// 程序绝对路径 程序名称 参数 目标 NULL
+</span><span style="color:#75715e"></span>execl(<span style="color:#e6db74">&#34;/bin/ls&#34;</span>, <span style="color:#e6db74">&#34;ls&#34;</span>, <span style="color:#e6db74">&#34;-al&#34;</span>, <span style="color:#e6db74">&#34;/etc/passwd&#34;</span>, NULL);</code></pre></div>
+</div>
+<p>
+Notes: 该函数执行时，会用这个新的进程替代当前进程就是该函数执行完后，就会退出整个进程，而不会执行下面的代码
+所以通常使用子线程执行该函数
+</p>
+</li>
+</ul>
+<p>
+<a href="https://blog.csdn.net/xiaominthere/article/details/32328589">cgi简介</a>
+</p>
+</div>
+        <div class="post_footer">
+          
+          <div class="meta">
+            <div class="info">
+              <span class="field tags">
+                <i class="remixicon-stack-line"></i>
+                
+                <a href="https://jiaoshijie.github.io/tags/c/">c</a>
+                
+                <a href="https://jiaoshijie.github.io/tags/linux/">Linux</a>
+                
+                <a href="https://jiaoshijie.github.io/tags/coding/">coding</a>
+                
+              </span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
+</div>
+<footer class="footer">
+  <div class="powered_by">
+    <a href="https://zeuk.me">Designed by Zeuk,</a>
+    <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+  </div>
+
+  <div class="footer_slogan">
+    <span>我的精神家园</span>
+  </div>
+</footer>
+
+
+
+<script src="https://jiaoshijie.github.io/js/jquery-3.3.1.min.js"></script>
+<script src="https://jiaoshijie.github.io/js/zozo.js"></script>
+<script src="https://jiaoshijie.github.io/js/highlight.pack.js"></script>
+<link  href="https://jiaoshijie.github.io/css/fancybox.min.css" rel="stylesheet">
+<script src="https://jiaoshijie.github.io/js/fancybox.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad()</script>
+
+
+  <script type="text/javascript" async src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>coding on 名字夸张的Blog</title>
@@ -13,10 +13,10 @@
     
     <item>
       <title>Tinyhttpd学习</title>
-      <link>https://jiaoshijie.github.io/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/</link>
+      <link>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</link>
       <pubDate>Sun, 13 Oct 2019 22:46:48 +0800</pubDate>
       
-      <guid>https://jiaoshijie.github.io/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/</guid>
+      <guid>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</guid>
       <description>Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由perl</description>
     </item>
     

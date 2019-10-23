@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn" >
 <head>
-	<meta name="generator" content="Hugo 0.58.3" />
+	<meta name="generator" content="Hugo 0.59.0" />
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -98,7 +98,31 @@
 
 <div class="post animated fadeInDown">
   <div class="post_title">
-    <h2><a href='/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/'>Tinyhttpd学习</a></h2>
+    <h2><a href='/posts/record_linuxstartup_diskcheck/'>记录Arch启动检测磁盘失败解决</a></h2>
+  </div>
+  
+  <div class="list">
+    <div class="post_content markdown">
+      <p>原因 不清楚是什么原因, 但网上说不正常关机会出现自检不正确的情况 Failed to start File System Check on /dev/sda4 See &#39;Systemctl status systemd-fask@dev-sda4.service&#39; ... (or press Control-D to continue): 解决 对于这种系统告诉了你出现错误的是哪一个硬盘的情况使用 fsck -y /dev/sda4 然后 reboot 就可以解决 对于不知道哪里出了问题的......</p>
+    </div>
+  </div>
+  
+  <div class="post_footer">
+    <div class="meta">
+      <div class="info">
+        <span class="field">
+          <i class="remixicon-map-pin-time-line"></i>
+          <span class="date">2019.10.23</span>
+        </span>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="post animated fadeInDown">
+  <div class="post_title">
+    <h2><a href='/posts/tinyhttpd_learn/'>Tinyhttpd学习</a></h2>
   </div>
   
   <div class="list">

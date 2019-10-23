@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>名字夸张的Blog</title>
@@ -6,17 +6,26 @@
     <description>Recent content on 名字夸张的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 13 Oct 2019 22:46:48 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Oct 2019 14:38:10 +0800</lastBuildDate>
     
 	<atom:link href="https://jiaoshijie.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>记录Arch启动检测磁盘失败解决</title>
+      <link>https://jiaoshijie.github.io/posts/record_linuxstartup_diskcheck/</link>
+      <pubDate>Wed, 23 Oct 2019 14:38:10 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/record_linuxstartup_diskcheck/</guid>
+      <description>原因 不清楚是什么原因, 但网上说不正常关机会出现自检不正确的情况 Failed to start File System Check on /dev/sda4 See &amp;#39;Systemctl status systemd-fask@dev-sda4.service&amp;#39; ... (or press Control-D to continue): 解决 对于这种系统告诉了你出现错误的是哪一个硬盘的情况使用 fsck -y /dev/sda4 然后 reboot 就可以解决 对于不知道哪里出了问题的</description>
+    </item>
+    
+    <item>
       <title>Tinyhttpd学习</title>
-      <link>https://jiaoshijie.github.io/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/</link>
+      <link>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</link>
       <pubDate>Sun, 13 Oct 2019 22:46:48 +0800</pubDate>
       
-      <guid>https://jiaoshijie.github.io/posts/tinyhttpd%E5%AD%A6%E4%B9%A0/</guid>
+      <guid>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</guid>
       <description>Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由perl</description>
     </item>
     
@@ -45,6 +54,15 @@
       
       <guid>https://jiaoshijie.github.io/posts/using_hugo_blog/</guid>
       <description>1. 安装hugo 对于Arch系Linux系统使用 sudo pacman -S hugo 其他安装方式去官网查看 2. 使用hugo创建Blog hugo new site MyBlog MyBlog为自己想创建的文件夹名称 3. 下载hugo主题 到项目的根目录下, 即MyBlog文件</description>
+    </item>
+    
+    <item>
+      <title>Linux下的一些配置文件说明</title>
+      <link>https://jiaoshijie.github.io/posts/linux_configure_file_insight/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/linux_configure_file_insight/</guid>
+      <description>Linux下的一些配置文件说明 以下为在CentOS8上的配置， 有些也在Arch上做了测试 /etc/profile 启动login-bash时会读取的配置文件, 并且只有login-bash才会读取。 /etc/bashrc 两种登入方式都会读取的配置</description>
     </item>
     
   </channel>

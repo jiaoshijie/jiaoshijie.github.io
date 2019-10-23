@@ -10,22 +10,20 @@
         content="jiaoshijie"/>
 
   
-  <meta name="description" content="learn record"/>
+  <meta name="description" content="原因 不清楚是什么原因, 但网上说不正常关机会出现自检不正确的情况 Failed to start File System Check on /dev/sda4 See &amp;#39;Systemctl status systemd-fask@dev-sda4.service&amp;#39; ... (or press Control-D to continue): 解决 对于这种系统告诉了你出现错误的是哪一个硬盘的情况使用 fsck -y /dev/sda4 然后 reboot 就可以解决 对于不知道哪里出了问题的"/>
   
 
   
   
-  <meta name="keywords" content="Hugo, learning"/>
+  <meta name="keywords" content="linux"/>
   
 
   
-  <link rel="canonical" href="https://jiaoshijie.github.io/tags/c/"/>
+  <link rel="canonical" href="https://jiaoshijie.github.io/posts/record_linuxstartup_diskcheck/"/>
 
   
-  <link rel="alternate" type="application/rss&#43;xml" href="https://jiaoshijie.github.io/tags/c/index.xml">
-  
 
-  <title>c &middot; 名字夸张的Blog</title>
+  <title>记录Arch启动检测磁盘失败解决 &middot; 名字夸张的Blog</title>
 
   <link rel="shortcut icon" href="https://jiaoshijie.github.io/images/favicon.ico"/>
   <link rel="stylesheet" href="https://jiaoshijie.github.io/css/animate.min.css"/>
@@ -91,22 +89,58 @@
 </div>
 
   <div class="content">
-    <div class="list_with_title">
-      
-      <div class="listing_title">2019</div>
-      <div class="listing">
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/tinyhttpd_learn/">Tinyhttpd学习</a>
-            <div class="post_time"><span class="date">10-13</span></div>
-          </div>
+    <div class="post_page">
+      <div class="post animated fadeInDown">
+        <div class="post_title post_detail_title">
+          <h2><a href='/posts/record_linuxstartup_diskcheck/'>记录Arch启动检测磁盘失败解决</a></h2>
+          <span class="date">2019.10.23</span>
         </div>
-        
+        <div class="post_content markdown">
+<h2 id="headline-1">
+原因
+</h2>
+<p>
+不清楚是什么原因, 但网上说不正常关机会出现自检不正确的情况
+</p>
+<div class="src src-text">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Failed to start File System Check on /dev/sda4
+See &#39;Systemctl status systemd-fask@dev-sda4.service&#39;
+...
+(or press Control-D to continue):</code></pre></div>
+</div>
+<h2 id="headline-2">
+解决
+</h2>
+<ol>
+<li>
+<p>
+对于这种系统告诉了你出现错误的是哪一个硬盘的情况使用 <code class="verbatim">fsck -y /dev/sda4</code> 然后 <code class="verbatim">reboot</code> 就可以解决
+</p>
+</li>
+<li>
+<p>
+对于不知道哪里出了问题的情况使用 <code class="verbatim">fsck</code> 然后在随后的对话框中输入 <code class="verbatim">:y</code> 重启就可以解决
+</p>
+</li>
+</ol>
+<p>
+使用fsck是要注意该 <strong><span style="text-decoration: underline;">磁盘分区是没有挂载</span></strong> 的不然会有问题
+</p>
+<div class="src src-text">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">-y: 对所有问题默认回答yes
+-t: 只检测指定文件系统类型的分区 例如: fsck -t ext4 /dev/sda4 等效于 fsck.ext4 /dev/sda4</code></pre></div>
+</div>
+<h4 id="headline-3">
+更详细的fsck使用可以 <code class="verbatim">man fsck</code> <code class="verbatim">fsck --help</code> 或 <a href="https://linux.cn/article-9194-1.html">看这里</a>
+</h4>
+</div>
+        <div class="post_footer">
+          
+        </div>
       </div>
       
+      
     </div>
-    <div class="pagination"></div>
   </div>
   <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
 </div>
