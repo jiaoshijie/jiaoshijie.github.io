@@ -10,7 +10,7 @@
         content="jiaoshijie"/>
 
   
-  <meta name="description" content="learn record"/>
+  <meta name="description" content="过程 使用 df -hl 确定要合并的分区 卸载要合并的两个分区 umount /dev/sdaX 使用 fdisk /dev/sda 来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的) 格式化一下没有数据的那个分区(后一块分区) 然后再将两块分区新建成一"/>
   
 
   
@@ -19,13 +19,11 @@
   
 
   
-  <link rel="canonical" href="https://jiaoshijie.github.io/posts/"/>
+  <link rel="canonical" href="https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition/"/>
 
   
-  <link rel="alternate" type="application/rss&#43;xml" href="https://jiaoshijie.github.io/posts/index.xml">
-  
 
-  <title>Posts &middot; 名字夸张的Blog</title>
+  <title>Linux没有使用lvm合并两个相邻的分区 &middot; 名字夸张的Blog</title>
 
   <link rel="shortcut icon" href="https://jiaoshijie.github.io/images/favicon.ico"/>
   <link rel="stylesheet" href="https://jiaoshijie.github.io/css/animate.min.css"/>
@@ -91,57 +89,68 @@
 </div>
 
   <div class="content">
-    <div class="list_with_title">
-      
-      <div class="listing_title">2019</div>
-      <div class="listing">
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/linux_merge_adjacent_partition/">Linux没有使用lvm合并两个相邻的分区</a>
-            <div class="post_time"><span class="date">11-05</span></div>
-          </div>
+    <div class="post_page">
+      <div class="post animated fadeInDown">
+        <div class="post_title post_detail_title">
+          <h2><a href='/posts/linux_merge_adjacent_partition/'>Linux没有使用lvm合并两个相邻的分区</a></h2>
+          <span class="date">2019.11.05</span>
         </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/linux_x_config_insight/">Linux 启动配置文件读取规则</a>
-            <div class="post_time"><span class="date">10-31</span></div>
-          </div>
+        <div class="post_content markdown">
+<h2 id="headline-1">
+过程
+</h2>
+<ol>
+<li>
+<p>
+使用 <code class="verbatim">df -hl</code> 确定要合并的分区
+</p>
+</li>
+<li>
+<p>
+卸载要合并的两个分区 <code class="verbatim">umount /dev/sdaX</code>
+</p>
+</li>
+<li>
+<p>
+使用 <code class="verbatim">fdisk /dev/sda</code> 来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的)
+</p>
+</li>
+<li>
+<p>
+格式化一下没有数据的那个分区(后一块分区)
+</p>
+</li>
+<li>
+<p>
+然后再将两块分区新建成一个分区, 但是现在在挂载上看分区大小没有改变, 需要重新调整分区的大小
+</p>
+</li>
+<li>
+<p>
+使用 <code class="verbatim">resize2fs -p /dev/sdaX</code> 来调整分区的大小
+</p>
+<ul>
+<li>
+<p>
+可能会出现错误提示使用 <code class="verbatim">e2fsck -f /dev/sdaX</code> 来进行磁盘检查
+</p>
+</li>
+</ul>
+</li>
+<li>
+<p>
+然后再挂载上扩容的分区就可以看到空间扩充完成
+</p>
+</li>
+</ol>
+</div>
+        <div class="post_footer">
+          
         </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/record_linuxstartup_diskcheck/">记录Arch启动检测磁盘失败解决</a>
-            <div class="post_time"><span class="date">10-23</span></div>
-          </div>
-        </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/tinyhttpd_learn/">Tinyhttpd学习</a>
-            <div class="post_time"><span class="date">10-13</span></div>
-          </div>
-        </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/org_mode_syntax/">org-mode学习</a>
-            <div class="post_time"><span class="date">10-11</span></div>
-          </div>
-        </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/using_hugo_blog/">使用hugo搭建Blog记录</a>
-            <div class="post_time"><span class="date">10-01</span></div>
-          </div>
-        </div>
-        
       </div>
       
+      
     </div>
-    <div class="pagination"></div>
   </div>
   <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
 </div>
