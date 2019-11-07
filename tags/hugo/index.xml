@@ -13,10 +13,10 @@
     
     <item>
       <title>使用hugo搭建Blog记录</title>
-      <link>https://jiaoshijie.github.io/posts/usinghugoblog_gitment/</link>
+      <link>https://jiaoshijie.github.io/posts/using_hugo_blog/</link>
       <pubDate>Tue, 01 Oct 2019 01:31:00 +0800</pubDate>
       
-      <guid>https://jiaoshijie.github.io/posts/usinghugoblog_gitment/</guid>
+      <guid>https://jiaoshijie.github.io/posts/using_hugo_blog/</guid>
       <description>1. 安装hugo 对于Arch系Linux系统使用 sudo pacman -S hugo 其他安装方式去官网查看 2. 使用hugo创建Blog hugo new site MyBlog MyBlog为自己想创建的文件夹名称 3. 下载hugo主题 到项目的根目录下, 即MyBlog文件</description>
     </item>
     
