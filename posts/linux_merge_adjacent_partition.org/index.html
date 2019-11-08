@@ -10,7 +10,7 @@
         content="jiaoshijie"/>
 
   
-  <meta name="description" content="原因 不清楚是什么原因, 但网上说不正常关机会出现自检不正确的情况 Failed to start File System Check on /dev/sda4 See &amp;#39;Systemctl status systemd-fask@dev-sda4.service&amp;#39; ... (or press Control-D to continue): 解决 对于这种系统告诉了你出现错误的是哪一个硬盘的情况使用 fsck -y /dev/sda4 然后 reboot 就可以解决 对于不知道哪里出了问题的"/>
+  <meta name="description" content="过程 使用 df -hl 确定要合并的分区 卸载要合并的两个分区 umount /dev/sdaX 使用 fdisk /dev/sda 来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的) 格式化一下没有数据的那个分区(后一块分区) 然后再将两块分区新建成一"/>
   
 
   
@@ -19,11 +19,11 @@
   
 
   
-  <link rel="canonical" href="https://jiaoshijie.github.io/posts/record_linuxstartup_diskcheck/"/>
+  <link rel="canonical" href="https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition.org/"/>
 
   
 
-  <title>记录Arch启动检测磁盘失败解决 &middot; 名字夸张的Blog</title>
+  <title>Linux没有使用lvm合并两个相邻的分区 &middot; 名字夸张的Blog</title>
 
   <link rel="shortcut icon" href="https://jiaoshijie.github.io/images/favicon.ico"/>
   <link rel="stylesheet" href="https://jiaoshijie.github.io/css/animate.min.css"/>
@@ -92,47 +92,57 @@
     <div class="post_page">
       <div class="post animated fadeInDown">
         <div class="post_title post_detail_title">
-          <h2><a href='/posts/record_linuxstartup_diskcheck/'>记录Arch启动检测磁盘失败解决</a></h2>
-          <span class="date">2019.10.23</span>
+          <h2><a href='/posts/linux_merge_adjacent_partition.org/'>Linux没有使用lvm合并两个相邻的分区</a></h2>
+          <span class="date">2019.11.05</span>
         </div>
         <div class="post_content markdown">
 <h2 id="headline-1">
-原因
-</h2>
-<p>
-不清楚是什么原因, 但网上说不正常关机会出现自检不正确的情况
-</p>
-<div class="src src-text">
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Failed to start File System Check on /dev/sda4
-See &#39;Systemctl status systemd-fask@dev-sda4.service&#39;
-...
-(or press Control-D to continue):</code></pre></div>
-</div>
-<h2 id="headline-2">
-解决
+过程
 </h2>
 <ol>
 <li>
 <p>
-对于这种系统告诉了你出现错误的是哪一个硬盘的情况使用 <code class="verbatim">fsck -y /dev/sda4</code> 然后 <code class="verbatim">reboot</code> 就可以解决
+使用 <code class="verbatim">df -hl</code> 确定要合并的分区
 </p>
 </li>
 <li>
 <p>
-对于不知道哪里出了问题的情况使用 <code class="verbatim">fsck</code> 然后在随后的对话框中输入 <code class="verbatim">:y</code> 重启就可以解决
+卸载要合并的两个分区 <code class="verbatim">umount /dev/sdaX</code>
+</p>
+</li>
+<li>
+<p>
+使用 <code class="verbatim">fdisk /dev/sda</code> 来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的)
+</p>
+</li>
+<li>
+<p>
+格式化一下没有数据的那个分区(后一块分区)
+</p>
+</li>
+<li>
+<p>
+然后再将两块分区新建成一个分区, 但是现在在挂载上看分区大小没有改变, 需要重新调整分区的大小
+</p>
+</li>
+<li>
+<p>
+使用 <code class="verbatim">resize2fs -p /dev/sdaX</code> 来调整分区的大小
+</p>
+<ul>
+<li>
+<p>
+可能会出现错误提示使用 <code class="verbatim">e2fsck -f /dev/sdaX</code> 来进行磁盘检查
+</p>
+</li>
+</ul>
+</li>
+<li>
+<p>
+然后再挂载上扩容的分区就可以看到空间扩充完成
 </p>
 </li>
 </ol>
-<p>
-使用fsck是要注意该 <strong><span style="text-decoration: underline;">磁盘分区是没有挂载</span></strong> 的不然会有问题
-</p>
-<div class="src src-text">
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">-y: 对所有问题默认回答yes
--t: 只检测指定文件系统类型的分区 例如: fsck -t ext4 /dev/sda4 等效于 fsck.ext4 /dev/sda4</code></pre></div>
-</div>
-<h4 id="headline-3">
-更详细的fsck使用可以 <code class="verbatim">man fsck</code> <code class="verbatim">fsck --help</code> 或 <a href="https://linux.cn/article-9194-1.html">看这里</a>
-</h4>
 </div>
         <div class="post_footer">
           
@@ -165,7 +175,7 @@ See &#39;Systemctl status systemd-fask@dev-sda4.service&#39;
         repo: 'jiaoshijie.github.io',
         owner: 'jiaoshijie',
         admin: ['jiaoshijie'],
-        id: 'record_linuxStartup_diskCheck',
+        id: 'linux_merge_adjacent_partition.org',
 
     });
     gitalk.render('gitalk-container');

@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Linux on 名字夸张的Blog</title>
+    <title>linux on 名字夸张的Blog</title>
     <link>https://jiaoshijie.github.io/tags/linux/</link>
-    <description>Recent content in Linux on 名字夸张的Blog</description>
+    <description>Recent content in linux on 名字夸张的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 13 Oct 2019 22:46:48 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 05 Nov 2019 01:15:53 +0800</lastBuildDate>
     
 	<atom:link href="https://jiaoshijie.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Linux没有使用lvm合并两个相邻的分区</title>
+      <link>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition.org/</link>
+      <pubDate>Tue, 05 Nov 2019 01:15:53 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition.org/</guid>
+      <description>过程 使用 df -hl 确定要合并的分区 卸载要合并的两个分区 umount /dev/sdaX 使用 fdisk /dev/sda 来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的) 格式化一下没有数据的那个分区(后一块分区) 然后再将两块分区新建成一</description>
+    </item>
+    
+    <item>
+      <title>Linux 启动配置文件读取规则</title>
+      <link>https://jiaoshijie.github.io/posts/linux_x_config_insight/</link>
+      <pubDate>Thu, 31 Oct 2019 10:48:34 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/linux_x_config_insight/</guid>
+      <description>bash或zsh 登入时读取的配置文件 shell 登入分为两种 login shell non login shell 只有 login shell 登入时读取的配置文件 /etc/profile ~/.bash_profile ~/.bash_login ~/.profile /etc/profile 是全局配置文件所有用户都会读取, ~/.bash_profile 是用户的配置文件只有当前用户会读取. 后面的用删除线划掉的也是只有 login shell</description>
+    </item>
+    
+    <item>
+      <title>记录Arch启动检测磁盘失败解决</title>
+      <link>https://jiaoshijie.github.io/posts/record_linuxstartup_diskcheck/</link>
+      <pubDate>Wed, 23 Oct 2019 14:38:10 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/record_linuxstartup_diskcheck/</guid>
+      <description>原因 不清楚是什么原因, 但网上说不正常关机会出现自检不正确的情况 Failed to start File System Check on /dev/sda4 See &amp;#39;Systemctl status systemd-fask@dev-sda4.service&amp;#39; ... (or press Control-D to continue): 解决 对于这种系统告诉了你出现错误的是哪一个硬盘的情况使用 fsck -y /dev/sda4 然后 reboot 就可以解决 对于不知道哪里出了问题的</description>
+    </item>
     
     <item>
       <title>Tinyhttpd学习</title>

@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition/</loc>
+    <loc>https://jiaoshijie.github.io/tags/linux/</loc>
+    <lastmod>2019-11-05T01:15:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition.org/</loc>
     <lastmod>2019-11-05T01:15:53+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://jiaoshijie.github.io/posts/</loc>
+    <lastmod>2019-11-05T01:15:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jiaoshijie.github.io/tags/</loc>
     <lastmod>2019-11-05T01:15:53+08:00</lastmod>
   </url>
   
@@ -34,16 +44,6 @@
   
   <url>
     <loc>https://jiaoshijie.github.io/tags/coding/</loc>
-    <lastmod>2019-10-13T22:46:48+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jiaoshijie.github.io/tags/linux/</loc>
-    <lastmod>2019-10-13T22:46:48+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jiaoshijie.github.io/tags/</loc>
     <lastmod>2019-10-13T22:46:48+08:00</lastmod>
   </url>
   
