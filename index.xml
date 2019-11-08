@@ -13,10 +13,10 @@
     
     <item>
       <title>Linux没有使用lvm合并两个相邻的分区</title>
-      <link>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition.org/</link>
+      <link>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition/</link>
       <pubDate>Tue, 05 Nov 2019 01:15:53 +0800</pubDate>
       
-      <guid>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition.org/</guid>
+      <guid>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition/</guid>
       <description>过程 使用 df -hl 确定要合并的分区 卸载要合并的两个分区 umount /dev/sdaX 使用 fdisk /dev/sda 来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的) 格式化一下没有数据的那个分区(后一块分区) 然后再将两块分区新建成一</description>
     </item>
     
