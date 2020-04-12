@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn" >
 <head>
-	<meta name="generator" content="Hugo 0.59.1" />
+	<meta name="generator" content="Hugo 0.68.3" />
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -103,7 +103,7 @@
   
   <div class="list">
     <div class="post_content markdown">
-      <p>过程 使用 df -hl 确定要合并的分区 卸载要合并的两个分区 umount /dev/sdaX 使用 fdisk /dev/sda 来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的) 格式化一下没有数据的那个分区(后一块分区) 然后再将两块分区新建成一......</p>
+      <p>过程 使用df -hl确定要合并的分区 卸载要合并的两个分区umount /dev/sdaX 使用fdisk /dev/sda来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的) 格式化一下没有数据的那个分区......</p>
     </div>
   </div>
   
@@ -165,7 +165,7 @@
   
   <div class="list">
     <div class="post_content markdown">
-      <p>原因 不清楚是什么原因, 但网上说不正常关机会出现自检不正确的情况 Failed to start File System Check on /dev/sda4 See &#39;Systemctl status systemd-fask@dev-sda4.service&#39; ... (or press Control-D to continue): 解决 对于这种系统告诉了你出现错误的是哪一个硬盘的情况使用 fsck -y /dev/sda4 然后 reboot 就可以解决 对于不知道哪里出了问题的......</p>
+      <p>原因 在不正常关机时会在再次启动系统的时候进行磁盘自检, 但是该自检有的时候会无法通过. Failed to start File System Check on /dev/sda4 See 'Systemctl status systemd-fask@dev-sda4.service' ... (or press Control-D to continue): 出现上述情况可通过以下方法解决: 对于这种系统告诉了你出现错误的是哪一个硬盘的情况......</p>
     </div>
   </div>
   
@@ -244,7 +244,7 @@
   </div>
 
   <div class="footer_slogan">
-    <span>我的精神家园</span>
+    <span>永远不要停止思考</span>
   </div>
 </footer>
 

@@ -23,11 +23,6 @@
   </url>
   
   <url>
-    <loc>https://jiaoshijie.github.io/</loc>
-    <lastmod>2019-11-05T01:15:53+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://jiaoshijie.github.io/posts/linux_x_config_insight/</loc>
     <lastmod>2019-10-31T10:48:34+08:00</lastmod>
   </url>
@@ -53,22 +48,12 @@
   </url>
   
   <url>
-    <loc>https://jiaoshijie.github.io/tags/eamcs/</loc>
-    <lastmod>2019-10-11T15:41:06+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jiaoshijie.github.io/tags/org/</loc>
-    <lastmod>2019-10-11T15:41:06+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jiaoshijie.github.io/posts/org_mode_syntax/</loc>
-    <lastmod>2019-10-11T15:41:06+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://jiaoshijie.github.io/about/</loc>
+    <lastmod>2019-10-01T10:55:08+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jiaoshijie.github.io/</loc>
     <lastmod>2019-10-01T10:55:08+08:00</lastmod>
   </url>
   

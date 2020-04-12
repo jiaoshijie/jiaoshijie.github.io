@@ -6,7 +6,7 @@
     <description>Recent content on 名字夸张的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 05 Nov 2019 01:15:53 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 01 Oct 2019 10:55:08 +0800</lastBuildDate>
     
 	<atom:link href="https://jiaoshijie.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -17,7 +17,7 @@
       <pubDate>Tue, 05 Nov 2019 01:15:53 +0800</pubDate>
       
       <guid>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition/</guid>
-      <description>过程 使用 df -hl 确定要合并的分区 卸载要合并的两个分区 umount /dev/sdaX 使用 fdisk /dev/sda 来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的) 格式化一下没有数据的那个分区(后一块分区) 然后再将两块分区新建成一</description>
+      <description>过程 使用df -hl确定要合并的分区 卸载要合并的两个分区umount /dev/sdaX 使用fdisk /dev/sda来删除相邻的两块分区(确定后一个分区没有数据)(删除分区数据是不会丢失的) 格式化一下没有数据的那个分区</description>
     </item>
     
     <item>
@@ -35,7 +35,7 @@
       <pubDate>Wed, 23 Oct 2019 14:38:10 +0800</pubDate>
       
       <guid>https://jiaoshijie.github.io/posts/record_linuxstartup_diskcheck/</guid>
-      <description>原因 不清楚是什么原因, 但网上说不正常关机会出现自检不正确的情况 Failed to start File System Check on /dev/sda4 See &amp;#39;Systemctl status systemd-fask@dev-sda4.service&amp;#39; ... (or press Control-D to continue): 解决 对于这种系统告诉了你出现错误的是哪一个硬盘的情况使用 fsck -y /dev/sda4 然后 reboot 就可以解决 对于不知道哪里出了问题的</description>
+      <description>原因 在不正常关机时会在再次启动系统的时候进行磁盘自检, 但是该自检有的时候会无法通过. Failed to start File System Check on /dev/sda4 See &#39;Systemctl status systemd-fask@dev-sda4.service&#39; ... (or press Control-D to continue): 出现上述情况可通过以下方法解决: 对于这种系统告诉了你出现错误的是哪一个硬盘的情况</description>
     </item>
     
     <item>
@@ -45,15 +45,6 @@
       
       <guid>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</guid>
       <description>Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。 tinyhttpd官方源码在这里下载 我的代码在这里 一些改动: 将cgi程序由perl</description>
-    </item>
-    
-    <item>
-      <title>org-mode学习</title>
-      <link>https://jiaoshijie.github.io/posts/org_mode_syntax/</link>
-      <pubDate>Fri, 11 Oct 2019 15:41:06 +0800</pubDate>
-      
-      <guid>https://jiaoshijie.github.io/posts/org_mode_syntax/</guid>
-      <description>大纲 标题&amp;#xa0;&amp;#xa0;&amp;#xa0;title 文章标题可以通过 #+TITLE: title-name 使用*+space表示标题, 最多支持10级标题 快捷键&amp;#xa0;&amp;#xa0;&amp;#xa0;keybinds 折叠&amp;#xa0;&amp;#x</description>
     </item>
     
     <item>
