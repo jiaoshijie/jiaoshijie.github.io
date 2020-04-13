@@ -95,258 +95,102 @@
           <h2><a href='/posts/linux_x_config_insight/'>Linux 启动配置文件读取规则</a></h2>
           <span class="date">2019.10.31</span>
         </div>
-        <div class="post_content markdown">
-<h3 id="headline-1">
-bash或zsh 登入时读取的配置文件
-</h3>
+        <div class="post_content markdown"><h2 id="bash或zsh-登入时读取的配置文件">bash或zsh 登入时读取的配置文件</h2>
 <ol>
-<li>
-<p>
-shell 登入分为两种 <code class="verbatim">login shell</code> <code class="verbatim">non login shell</code>
-</p>
-</li>
-<li>
-<p>
-只有 <code class="verbatim">login shell</code> 登入时读取的配置文件 <code class="verbatim">/etc/profile</code> <code class="verbatim">~/.bash_profile</code> <del>~/.bash_login</del> <del>~/.profile</del>
-</p>
-<ul>
-<li>
-<p>
-<code class="verbatim">/etc/profile</code> 是全局配置文件所有用户都会读取, <code class="verbatim">~/.bash_profile</code> 是用户的配置文件只有当前用户会读取.
-</p>
-</li>
-<li>
-<p>
-后面的用删除线划掉的也是只有 <code class="verbatim">login shell</code> 才会读取的用户配置文件, 但只有在 <code class="verbatim">~/.bash_profile</code> 文件不存在时才会读取
-</p>
-</li>
-<li>
-<p>
-<code class="verbatim">~/.bash_profile</code> <del>~/.bash_login</del> <del>~/.profile</del> 这三个配置文件只会读取一个, 优先级为 <code class="verbatim">~/.bash_profile</code> &gt; <code class="verbatim">~/.bash_login</code> &gt; <code class="verbatim">~/.profile</code> 所以后两个基本不会用到.
-</p>
-</li>
-<li>
-<p>
-<code class="verbatim">zsh</code> 的 <code class="verbatim">login shell</code> 配置文件为 <code class="verbatim">/etc/zsh/zprofile</code> <code class="verbatim">~/.zprofile</code> 更具体的zsh说明可以看<a href="https://wiki.archlinux.org/index.php/Zsh">这里</a>
-</p>
-</li>
-</ul>
-</li>
-<li>
-<p>
-两种登入都会读取的配置文件 <code class="verbatim">/etc/bashrc</code> <code class="verbatim">~/.bashrc</code>
-</p>
-<ul>
-<li>
-<p>
-<code class="verbatim">/etc/bashrc</code> 全局配置文件, 并且会调用 <code class="verbatim">/etc/profile</code> 来设置 PATH umask等
-</p>
-</li>
-<li>
-<p>
-Arch 发行版好像没有 <code class="verbatim">/etc/bashrc</code> 文件, 用 <code class="verbatim">/etc/bash.bashrc</code> 来替代了
-</p>
-</li>
-<li>
-<p>
-<code class="verbatim">~/.bashrc</code> 用户配置文件, 两种登入都会读取, 没什么可说的
-</p>
-</li>
-</ul>
-</li>
+<li>shell 登入分为两种 <code>login shell</code> <code>non login shell</code></li>
+<li>只有 <code>login shell</code> 登入时读取的配置文件 <code>/etc/profile</code> <code>~/.bash_profile</code> ~<del>/.bash_login</del> ~<del>/.profile</del></li>
 </ol>
-<h3 id="headline-2">
-X-Window 启动时读取的配置文件
-</h3>
-<ol>
-<li>
-<p>
-xserver 启动配置文件 <code class="verbatim">~/.xserverrc</code> <code class="verbatim">/etc/X11/xinit/xserverrc</code>
-</p>
 <ul>
-<li>
-<p>
-由 <code class="verbatim">X</code> 程序执行
-</p>
-</li>
-<li>
-<p>
-就是设置一些启动参数什么的, 比如: 允不允许网络登录, 监不监听tcp端口什么的
-</p>
-</li>
+<li><code>/etc/profile</code> 是全局配置文件所有用户都会读取, <code>~/.bash_profile</code> 是用户的配置文件只有当前用户会读取.</li>
+<li>后面的用删除线划掉的也是只有 <code>login shell</code> 才会读取的用户配置文件, 但只有在 <code>~/.bash_profile</code> 文件不存在时才会读取</li>
+<li><code>~/.bash_profile</code> ~<del>/.bash_login</del> ~<del>/.profile</del> 这三个配置文件只会读取一个, 优先级为 <code>~/.bash_profile</code> &gt; <code>~/.bash_login</code> &gt; <code>~/.profile</code> 所以后两个基本不会用到.</li>
+<li><code>zsh</code> 的 <code>login shell</code> 配置文件为 <code>/etc/zsh/zprofile</code> <code>~/.zprofile</code> 更具体的zsh说明可以看<a href="https://wiki.archlinux.org/index.php/Zsh">这里</a></li>
 </ul>
-</li>
-<li>
-<p>
-xserver 设备配置文件 <code class="verbatim">/ect/X11/xorg.conf</code> <code class="verbatim">/etc/X11/xorg.conf.d/*</code>
-</p>
-<ul>
-<li>
-<p>
-设备的设置选项, 比如: 显卡、触控板、鼠标等<a href="https://wiki.archlinux.org/index.php/Xorg">更详细的说明可以看这里</a>
-</p>
-</li>
-<li>
-<p>
-<code class="verbatim">/etc/X11/xorg.conf.d/*</code> 文件 <code class="verbatim">30-touchpad.conf</code> 前面的数字是读取顺序(10会在30之前被读取)
-</p>
-</li>
-</ul>
-</li>
-<li>
-<p>
-xclient 启动配置文件 <code class="verbatim">~/.xinitrc</code> <code class="verbatim">/etc/X11/xinit/xinitrc</code>
-</p>
-<ul>
-<li>
-<p>
-由 <code class="verbatim">xinit</code> 程序执行
-</p>
-</li>
-</ul>
-</li>
+<ol start="3">
+<li>两种登入都会读取的配置文件 <code>/etc/bashrc</code> <code>~/.bashrc</code></li>
 </ol>
-<h4 id="headline-3">
-X-window 其他配置文件
-</h4>
-<ol>
-<li>
-<p>
-<code class="verbatim">Xsession</code> <code class="verbatim">~/.xsession</code> <code class="verbatim">~/.xsessionrc</code>
-</p>
 <ul>
-<li>
-<p>
-一些登入管理器会使用Xsession进行登入
-</p>
-</li>
+<li><code>/etc/bashrc</code> 全局配置文件, 并且会调用 <code>/etc/profile</code> 来设置 PATH umask等</li>
+<li>Arch 发行版好像没有 <code>/etc/bashrc</code> 文件, 用 <code>/etc/bash.bashrc</code> 来替代了</li>
+<li><code>~/.bashrc</code> 用户配置文件, 两种登入都会读取, 没什么可说的</li>
 </ul>
-<div class="src src-text">
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">GDM - /etc/gdm/Xsession
+<h2 id="x-window-启动时读取的配置文件">X-Window 启动时读取的配置文件</h2>
+<ol>
+<li>xserver 启动配置文件 <code>~/.xserverrc</code> <code>/etc/X11/xinit/xserverrc</code></li>
+</ol>
+<ul>
+<li>由 <code>X</code> 程序执行</li>
+<li>就是设置一些启动参数什么的, 比如: 允不允许网络登录, 监不监听tcp端口什么的</li>
+</ul>
+<ol start="2">
+<li>xserver 设备配置文件 <code>/ect/X11/xorg.conf</code> <code>/etc/X11/xorg.conf.d/*</code></li>
+</ol>
+<ul>
+<li>设备的设置选项, 比如: 显卡、触控板、鼠标等<a href="https://wiki.archlinux.org/index.php/Xorg">更详细的说明可以看这里</a></li>
+<li><code>/etc/X11/xorg.conf.d/*</code> 文件 <code>30-touchpad.conf</code> 前面的数字是读取顺序(10会在30之前被读取)</li>
+</ul>
+<ol start="3">
+<li>xclient 启动配置文件 <code>~/.xinitrc</code> <code>/etc/X11/xinit/xinitrc</code></li>
+</ol>
+<ul>
+<li>由 <code>xinit</code> 程序执行</li>
+</ul>
+<h3 id="x-window-其他配置文件">X-window 其他配置文件</h3>
+<ol>
+<li><code>Xsession</code> <code>~/.xsession</code> <code>~/.xsessionrc</code></li>
+</ol>
+<ul>
+<li>一些登入管理器会使用Xsession进行登入</li>
+</ul>
+<pre><code>GDM - /etc/gdm/Xsession
 LightDM - /etc/lightdm/Xsession
 LXDM - /etc/lxdm/Xsession
-SDDM - /usr/share/sddm/scripts/Xsession</code></pre></div>
-</div>
-<ul>
-<li>
-<p>
-有一些登录管理器像XDM就默认不使用Xsession而是使用 <code class="verbatim">~/.xsession</code> 来进行登入的设置, 具体可以看<a href="https://wiki.archlinux.org/index.php/XDM">这里</a>
-</p>
-</li>
-<li>
-<p>
-<code class="verbatim">~/.xsessionrc</code> 只有debian分支才会使用的一个配置文件而且好像还要使用debian默认的登入管理器才会用到, 具体可以看看<a href="https://wiki.debian.org/Xsession">debian官方说明</a> 和 <a href="https://unix.stackexchange.com/questions/281858/difference-between-xinitrc-xsession-and-xsessionrc">论坛介绍</a>
-</p>
-</li>
+SDDM - /usr/share/sddm/scripts/Xsession
+</code></pre><ul>
+<li>有一些登录管理器像XDM就默认不使用Xsession而是使用 <code>~/.xsession</code> 来进行登入的设置, 具体可以看<a href="https://wiki.archlinux.org/index.php/XDM">这里</a></li>
+<li><code>~/.xsessionrc</code> 只有debian分支才会使用的一个配置文件而且好像还要使用debian默认的登入管理器才会用到, 具体可以看看<a href="https://wiki.debian.org/Xsession">debian官方说明</a>和<a href="https://unix.stackexchange.com/questions/281858/difference-between-xinitrc-xsession-and-xsessionrc">论坛介绍</a></li>
 </ul>
-</li>
-<li>
-<p>
-<code class="verbatim">/etc/xprofile</code> <code class="verbatim">~/.xprofile</code>
-</p>
-<ul>
-<li>
-<p>
-默认情况下只有一些 <code class="verbatim">display manager(DM)</code> 才会读取的配置文件<br>
-display manager(DM) 登入管理器(GDM、LightDM、LXDM、SDDM)
-</p>
-</li>
-<li>
-<p>
-但也可以配置使(startx、xinit、XDM、和其他使用 <code class="verbatim">~/.xsession</code> 或 <code class="verbatim">~/.xinitrc</code> 的DM)读取 <code class="verbatim">xprofile</code>
-</p>
-</li>
-<li>
-<p>
-在 .xsession 或 .xinitrc 中添加一下内容
-</p>
-</li>
-</ul>
-<div class="src src-config">
-<pre><code class="language-config" data-lang="config"># Make sure this is before the &#39;exec&#39; command or it won&#39;t be sourced.
-[ -f /etc/xprofile ] &amp;&amp; . /etc/xprofile
-[ -f ~/.xprofile ] &amp;&amp; . ~/.xprofile</code></pre>
-</div>
-</li>
-<li>
-<p>
-<code class="verbatim">~/.Xresources</code> <code class="verbatim">~/.Xdefaults</code>
-</p>
-<ul>
-<li>
-<p>
-这两个文件都是用户级别的配置文件，功能基本相同. 通过 <code class="verbatim">xrdb</code> 程序加载.
-</p>
-</li>
-<li>
-<p>
-设置终端一些参数, 设置DPI, 字体, 设置一些底层的应用程序(xorg-xclock, xpdf, urxvt)等.
-</p>
-</li>
-<li>
-<p>
-其实, xrdb 默认是不会加载任何配置文件的. 所以这两个配置文件的名称只是一种约定, 现在都使用 <code class="verbatim">~/.Xresources</code> 来代替 <code class="verbatim">~/.Xdefaults</code>
-</p>
-</li>
-</ul>
-</li>
-<li>
-<p>
-<code class="verbatim">~/.Xmodmap</code>
-</p>
-<ul>
-<li>
-<p>
-由 <code class="verbatim">xmodmap</code> 程序执行
-</p>
-</li>
-<li>
-<p>
-设置键盘的键位映射
-</p>
-</li>
-</ul>
-</li>
-<li>
-<p>
-xdg目录
-</p>
-<ul>
-<li>
-<p>
-一些 <code class="verbatim">x application</code> 的配置文件
-</p>
-</li>
-<li>
-<p>
-<code class="verbatim">/etc/xdg/autostart/</code> 一些支持XDG的桌面环境会自动启动程序的目录
-</p>
-</li>
-</ul>
-</li>
-<li>
-<p>
-<code class="verbatim">~/.Xauthority</code> 文件
-</p>
-<ul>
-<li>
-<p>
-startx 启动脚本中默认会创建并使用这个文件(但是可以取消通过 <code class="verbatim">enable_xauth</code> 变量)
-</p>
-</li>
-<li>
-<p>
-DM 也会创建并使用这个文件如果创建不成功会无法登入进系统，一直返回DM界面
-</p>
-</li>
-<li>
-<p>
-<code class="verbatim">ssh -Y</code> 通过网络来链接客户端会创建并使用这个文件当启动GUI程序时, 会通过这个文件来区分本地用户还是网络用户
-</p>
-</li>
-</ul>
-</li>
+<ol start="2">
+<li><code>/etc/xprofile</code> <code>~/.xprofile</code></li>
 </ol>
+<ul>
+<li>默认情况下只有一些 <code>display manager(DM)</code> 才会读取的配置文件display manager(DM) 登入管理器(GDM、LightDM、LXDM、SDDM)</li>
+<li>但也可以配置使(startx、xinit、XDM、和其他使用 <code>~/.xsession</code> 或 <code>~/.xinitrc</code> 的DM)读取 <code>xprofile</code></li>
+<li>在 .xsession 或 .xinitrc 中添加一下内容</li>
+</ul>
+<pre><code># Make sure this is before the 'exec' command or it won't be sourced.
+[ -f /etc/xprofile ] &amp;&amp; . /etc/xprofile
+[ -f ~/.xprofile ] &amp;&amp; . ~/.xprofile
+</code></pre><ol start="3">
+<li><code>~/.Xresources</code> <code>~/.Xdefaults</code></li>
+</ol>
+<ul>
+<li>这两个文件都是用户级别的配置文件，功能基本相同. 通过 <code>xrdb</code> 程序加载.</li>
+<li>设置终端一些参数, 设置DPI, 字体, 设置一些底层的应用程序(xorg-xclock, xpdf, urxvt)等.</li>
+<li>其实, xrdb 默认是不会加载任何配置文件的. 所以这两个配置文件的名称只是一种约定, 现在都使用 <code>~/.Xresources</code> 来代替 <code>~/.Xdefaults</code></li>
+</ul>
+<ol start="4">
+<li><code>~/.Xmodmap</code></li>
+</ol>
+<ul>
+<li>由 <code>xmodmap</code> 程序执行</li>
+<li>设置键盘的键位映射</li>
+</ul>
+<ol start="5">
+<li>xdg(X Desktop Group)目录</li>
+</ol>
+<ul>
+<li>一些 <code>x application</code> 的配置文件</li>
+<li><code>/etc/xdg/autostart/</code> 一些支持XDG的桌面环境会自动启动程序的目录</li>
+</ul>
+<ol start="6">
+<li><code>~/.Xauthority</code> 文件</li>
+</ol>
+<ul>
+<li>startx 启动脚本中默认会创建并使用这个文件(但是可以取消通过 <code>enable_xauth</code> 变量)</li>
+<li>DM 也会创建并使用这个文件如果创建不成功会无法登入进系统，一直返回DM界面</li>
+<li><code>ssh -Y</code> 通过网络来链接客户端会创建并使用这个文件当启动GUI程序时, 会通过这个文件来区分本地用户还是网络用户</li>
+</ul>
 </div>
         <div class="post_footer">
           
