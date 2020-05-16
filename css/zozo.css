@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*basic styles starts*/
 html {
-  background-color: #f7f7f7;
+  background-color: #1D2021;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -10,7 +10,7 @@ body {
   font-family: 'source-han-sans-simplified-c', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   font-size: 18px;
   width: 100%;
-  background-color: #f7f7f7;
+  background-color: #1D2021;
   margin: 0;
   padding: 0;
 }

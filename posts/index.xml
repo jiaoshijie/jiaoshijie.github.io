@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 名字夸张的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 05 Nov 2019 01:15:53 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2020 23:00:33 +0800</lastBuildDate>
     
 	<atom:link href="https://jiaoshijie.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>关于C二维数组, 二重指针, 指针数组的内存布局</title>
+      <link>https://jiaoshijie.github.io/posts/about_cdoublepointer_and_cdoublearray/</link>
+      <pubDate>Wed, 13 May 2020 23:00:33 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/about_cdoublepointer_and_cdoublearray/</guid>
+      <description>开始 前提: 在main函数中申请的各个变量, 不使用全局变量. 1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量. char str[][5] = { &amp;#34;jiao&amp;#34;, &amp;#34;_shi&amp;#34;, &amp;#34;_jie&amp;#34;, }; 可以通过如下代码打印各个部分的地址 printf(&amp;#34;str</description>
+    </item>
     
     <item>
       <title>Linux没有使用lvm合并两个相邻的分区</title>

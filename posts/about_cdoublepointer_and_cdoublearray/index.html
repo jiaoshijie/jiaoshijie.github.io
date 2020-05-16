@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-cn" >
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  
+  <meta name="author"
+        content="jiaoshijie"/>
+
+  
+  <meta name="description" content="开始 前提: 在main函数中申请的各个变量, 不使用全局变量. 1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量. char str[][5] = { &amp;#34;jiao&amp;#34;, &amp;#34;_shi&amp;#34;, &amp;#34;_jie&amp;#34;, }; 可以通过如下代码打印各个部分的地址 printf(&amp;#34;str"/>
+  
+
+  
+  
+  <meta name="keywords" content="Hugo, learning"/>
+  
+
+  
+  <link rel="canonical" href="https://jiaoshijie.github.io/posts/about_cdoublepointer_and_cdoublearray/"/>
+
+  
+
+  <title>关于C二维数组, 二重指针, 指针数组的内存布局 &middot; 名字夸张的Blog</title>
+
+  <link rel="shortcut icon" href="https://jiaoshijie.github.io/images/favicon.ico"/>
+  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/animate.min.css"/>
+  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/remixicon.css"/>
+  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/zozo.css"/>
+  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/highlight.css"/>
+
+  
+  
+</head>
+
+<body>
+<div class="main animated">
+  <div class="nav_container animated fadeInDown">
+  <div class="site_nav" id="site_nav">
+    <ul>
+      
+      <li>
+        <a href="/">首页</a>
+      </li>
+      
+      <li>
+        <a href="/posts/">归档</a>
+      </li>
+      
+      <li>
+        <a href="/tags/">标签</a>
+      </li>
+      
+      <li>
+        <a href="/about/">关于</a>
+      </li>
+      
+    </ul>
+  </div>
+  <div class="menu_icon">
+    <a id="menu_icon"><i class="remixicon-links-line"></i></a>
+  </div>
+</div>
+
+  <div class="header animated fadeInDown">
+  <div class="site_title_container">
+    <div class="site_title">
+      <h1>
+        <a href="https://jiaoshijie.github.io/">
+          <span>名字夸张的Blog</span>
+          <img src="https://jiaoshijie.github.io/images/logo.svg"/>
+        </a>
+      </h1>
+    </div>
+    <div class="description">
+      <p class="sub_title"></p>
+      <div class="my_socials">
+        
+        
+        <a href="https://github.com/jiaoshijie" title="github" target="_blank"><i class="remixicon-github-fill"></i></a>
+        
+        
+        <a href="https://jiaoshijie.github.io/index.xml" type="application/rss+xml" title="rss" target="_blank"><i class="remixicon-rss-fill"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="content">
+    <div class="post_page">
+      <div class="post animated fadeInDown">
+        <div class="post_title post_detail_title">
+          <h2><a href='/posts/about_cdoublepointer_and_cdoublearray/'>关于C二维数组, 二重指针, 指针数组的内存布局</a></h2>
+          <span class="date">2020.05.13</span>
+        </div>
+        <div class="post_content markdown"><h2 id="开始">开始</h2>
+<p>前提: 在main函数中申请的各个变量, 不使用全局变量.</p>
+<h3 id="1-二维数组">1. 二维数组</h3>
+<p>首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">char</span> str[][<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> {
+  <span style="color:#e6db74">&#34;jiao&#34;</span>,
+  <span style="color:#e6db74">&#34;_shi&#34;</span>,
+  <span style="color:#e6db74">&#34;_jie&#34;</span>,
+};
+</code></pre></div><p>可以通过如下代码打印各个部分的地址</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">printf(<span style="color:#e6db74">&#34;str addr: %p</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">&amp;</span>str);
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>)
+{
+  printf(<span style="color:#e6db74">&#34;str[%d] addr: %p</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>, i, <span style="color:#f92672">&amp;</span>str[i]);
+}
+printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>)
+{
+  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>; j<span style="color:#f92672">++</span>)
+  {
+    printf(<span style="color:#e6db74">&#34;str[%d][%d] addr: %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i, j, <span style="color:#f92672">&amp;</span>str[i][j]);
+  }
+  printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+}
+</code></pre></div><p>可以看到地址从<code>str[0][0]</code>开始到结束是从低到高连续的. 因为是在main函数中申请的这个二维数组, 因此它被存储在栈空间中(栈空间地址是高地址到低地址走的), 存储布局大致如下:</p>
+<p><img src="../../images/cdoublearray.png" alt="doublearray"></p>
+<h3 id="2-指针数组">2. 指针数组</h3>
+<p>对于指针数组首先做一个如下的简单申请:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>str[] <span style="color:#f92672">=</span> {
+  <span style="color:#e6db74">&#34;jiao&#34;</span>,
+  <span style="color:#e6db74">&#34;_shi&#34;</span>,
+  <span style="color:#e6db74">&#34;_jie&#34;</span>,
+};
+</code></pre></div><p>通过如下代码打印各个部分的地址:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">printf(<span style="color:#e6db74">&#34;str addr: %p</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">&amp;</span>str);
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>)
+{
+  printf(<span style="color:#e6db74">&#34;str[%d] addr: %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i, <span style="color:#f92672">&amp;</span>str[i]);
+}
+printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>)
+{
+  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>; j<span style="color:#f92672">++</span>)
+  {
+    printf(<span style="color:#e6db74">&#34;str[%d][%d] addr: %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i, j, <span style="color:#f92672">&amp;</span>str[i][j]);
+  }
+  printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+}
+</code></pre></div><p>可以看到str[0], str[1], str[2]地址空间连续(偏移了一个指针的大小), 但是和str[0][0]地址相差很多, 而str[0][0], str[0][1]到str[2][4]地址空间都是连续的.</p>
+<p>这是因为指针数组是存储的指针类型, 而使用类似<code>&quot;jiao&quot;</code>方式来复制c会自动在堆空间中创建一块区域来存储该字符串, 因此str[0]中存储的是堆空间的地址(即str[0]指向堆空间).</p>
+<p>因此指针数组的内存布局如下:</p>
+<p><img src="../../images/cpointerarray01.png" alt="cpointerarray01"></p>
+<h3 id="3-双重指针">3. 双重指针</h3>
+<p>使用如下代码申请双重指针空间:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>d_ptr <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)malloc(<span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>);
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>)
+{
+  d_ptr[i] <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)malloc(<span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">char</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>);
+}
+
+memcpy(d_ptr[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74">&#34;jiao&#34;</span>, <span style="color:#ae81ff">5</span>);
+memcpy(d_ptr[<span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#34;_shi&#34;</span>, <span style="color:#ae81ff">5</span>);
+memcpy(d_ptr[<span style="color:#ae81ff">2</span>], <span style="color:#e6db74">&#34;_jie&#34;</span>, <span style="color:#ae81ff">5</span>);
+</code></pre></div><p>使用如下代码输出各个部分的地址:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">printf(<span style="color:#e6db74">&#34;d_ptr addr: %p</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">&amp;</span>d_ptr);
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>)
+{
+  printf(<span style="color:#e6db74">&#34;d_ptr[%d] addr: %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i, <span style="color:#f92672">&amp;</span>d_ptr[i]);
+}
+printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>)
+{
+  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>; j<span style="color:#f92672">++</span>)
+  {
+    printf(<span style="color:#e6db74">&#34;d_ptr[%d][%d] addr: %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i, j, <span style="color:#f92672">&amp;</span>d_ptr[i][j]);
+  }
+  printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+}
+</code></pre></div><p>可以看到只有d_ptr的地址是在栈空间中的, 其余部分均是在堆空间中.</p>
+<p>因此双重指针的内存布局如下:</p>
+<p><img src="../../images/cdoublepointer01.png" alt="cdoublepointer01"></p>
+</div>
+        <div class="post_footer">
+          
+        </div>
+      </div>
+      
+      
+      
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+    <script type="text/javascript">
+    var gitalk = new Gitalk({
+
+    
+        clientID: '947103adbdb2c4f76eab',
+        clientSecret: '24009f1d64e55d5c25b024613261675e3a741a5d',
+        repo: 'jiaoshijie.github.io',
+        owner: 'jiaoshijie',
+        admin: ['jiaoshijie'],
+        id: '',
+
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+      
+    </div>
+  </div>
+  <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
+</div>
+<footer class="footer">
+  <div class="powered_by">
+    <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+  </div>
+
+  <div class="footer_slogan">
+    <span>永远不要停止思考</span>
+  </div>
+</footer>
+
+
+
+<script src="https://jiaoshijie.github.io/js/jquery-3.3.1.min.js"></script>
+<script src="https://jiaoshijie.github.io/js/zozo.js"></script>
+<script src="https://jiaoshijie.github.io/js/highlight.pack.js"></script>
+<link  href="https://jiaoshijie.github.io/css/fancybox.min.css" rel="stylesheet">
+<script src="https://jiaoshijie.github.io/js/fancybox.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad()</script>
+
+
+  <script type="text/javascript" async src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-151868568-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+</body>
+</html>
