@@ -12,12 +12,21 @@
     
     
     <item>
+      <title>关于数组array和&amp;array地址相同问题</title>
+      <link>https://jiaoshijie.github.io/posts/about_array_addree_question/</link>
+      <pubDate>Sun, 17 May 2020 16:28:28 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/about_array_addree_question/</guid>
+      <description>开始 测试代码 对于如下代码: int array[] = { 0, 1, 2, 3, 4 }; printf(&amp;#34;%p\n&amp;#34;, &amp;amp;array); printf(&amp;#34;%p\n&amp;#34;, array); 可以看到输出的地址是相同的. 而对于如下代码: int **array = (int **)malloc(sizeof(int *) * 5); for (int i = 0; i &amp;lt; 5; i++) array[i] = (int *)malloc(sizeof(int)); printf(&amp;#34;%p\n&amp;#34;, &amp;amp;array); printf(&amp;#34;%p\n&amp;#34;, array); 可以看到输出的地址是不同的. 其实对于这一段代码是没有</description>
+    </item>
+    
+    <item>
       <title>关于C二维数组, 二重指针, 指针数组的内存布局</title>
       <link>https://jiaoshijie.github.io/posts/about_cdoublepointer_and_cdoublearray/</link>
       <pubDate>Wed, 13 May 2020 23:00:33 +0800</pubDate>
       
       <guid>https://jiaoshijie.github.io/posts/about_cdoublepointer_and_cdoublearray/</guid>
-      <description>开始 前提: 在main函数中申请的各个变量, 不使用全局变量. 1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量. char str[][5] = { &amp;#34;jiao&amp;#34;, &amp;#34;_shi&amp;#34;, &amp;#34;_jie&amp;#34;, }; 可以通过如下代码打印各个部分的地址 printf(&amp;#34;str</description>
+      <description>开始 前提: 在main函数中申请的各个变量, 不使用全局变量. 一些测试代码在这里 1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量. char str[][5] = { &amp;#34;jiao&amp;#34;, &amp;#34;_shi&amp;#34;, &amp;#34;_jie&amp;#34;, }; 可以通过如下代码打</description>
     </item>
     
     <item>

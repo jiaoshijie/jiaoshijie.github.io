@@ -98,12 +98,36 @@
 
 <div class="post animated fadeInDown">
   <div class="post_title">
+    <h2><a href='/posts/about_array_addree_question/'>关于数组array和&amp;array地址相同问题</a></h2>
+  </div>
+  
+  <div class="list">
+    <div class="post_content markdown">
+      <p>开始 测试代码 对于如下代码: int array[] = { 0, 1, 2, 3, 4 }; printf(&#34;%p\n&#34;, &amp;array); printf(&#34;%p\n&#34;, array); 可以看到输出的地址是相同的. 而对于如下代码: int **array = (int **)malloc(sizeof(int *) * 5); for (int i = 0; i &lt; 5; i++) array[i] = (int *)malloc(sizeof(int)); printf(&#34;%p\n&#34;, &amp;array); printf(&#34;%p\n&#34;, array); 可以看到输出的地址是不同的. 其实对于这一段代码是没有......</p>
+    </div>
+  </div>
+  
+  <div class="post_footer">
+    <div class="meta">
+      <div class="info">
+        <span class="field">
+          <i class="remixicon-map-pin-time-line"></i>
+          <span class="date">2020.05.17</span>
+        </span>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="post animated fadeInDown">
+  <div class="post_title">
     <h2><a href='/posts/about_cdoublepointer_and_cdoublearray/'>关于C二维数组, 二重指针, 指针数组的内存布局</a></h2>
   </div>
   
   <div class="list">
     <div class="post_content markdown">
-      <p>开始 前提: 在main函数中申请的各个变量, 不使用全局变量. 1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量. char str[][5] = { &#34;jiao&#34;, &#34;_shi&#34;, &#34;_jie&#34;, }; 可以通过如下代码打印各个部分的地址 printf(&#34;str......</p>
+      <p>开始 前提: 在main函数中申请的各个变量, 不使用全局变量. 一些测试代码在这里 1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量. char str[][5] = { &#34;jiao&#34;, &#34;_shi&#34;, &#34;_jie&#34;, }; 可以通过如下代码打......</p>
     </div>
   </div>
   
@@ -168,37 +192,6 @@
         <span class="field">
           <i class="remixicon-map-pin-time-line"></i>
           <span class="date">2019.10.31</span>
-        </span>
-        
-        <span class="field tags">
-          <i class="remixicon-stack-line"></i>
-          
-          <a href="https://jiaoshijie.github.io/tags/linux/">linux</a>
-          
-        </span>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="post animated fadeInDown">
-  <div class="post_title">
-    <h2><a href='/posts/record_linuxstartup_diskcheck/'>记录Arch启动检测磁盘失败解决</a></h2>
-  </div>
-  
-  <div class="list">
-    <div class="post_content markdown">
-      <p>原因 在不正常关机时会在再次启动系统的时候进行磁盘自检, 但是该自检有的时候会无法通过. Failed to start File System Check on /dev/sda4 See 'Systemctl status systemd-fask@dev-sda4.service' ... (or press Control-D to continue): 出现上述情况可通过以下方法解决: 对于这种系统告诉了你出现错误的是哪一个硬盘的情况......</p>
-    </div>
-  </div>
-  
-  <div class="post_footer">
-    <div class="meta">
-      <div class="info">
-        <span class="field">
-          <i class="remixicon-map-pin-time-line"></i>
-          <span class="date">2019.10.23</span>
         </span>
         
         <span class="field tags">

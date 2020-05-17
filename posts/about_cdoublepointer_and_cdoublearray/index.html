@@ -10,7 +10,7 @@
         content="jiaoshijie"/>
 
   
-  <meta name="description" content="开始 前提: 在main函数中申请的各个变量, 不使用全局变量. 1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量. char str[][5] = { &amp;#34;jiao&amp;#34;, &amp;#34;_shi&amp;#34;, &amp;#34;_jie&amp;#34;, }; 可以通过如下代码打印各个部分的地址 printf(&amp;#34;str"/>
+  <meta name="description" content="开始 前提: 在main函数中申请的各个变量, 不使用全局变量. 一些测试代码在这里 1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量. char str[][5] = { &amp;#34;jiao&amp;#34;, &amp;#34;_shi&amp;#34;, &amp;#34;_jie&amp;#34;, }; 可以通过如下代码打"/>
   
 
   
@@ -97,6 +97,7 @@
         </div>
         <div class="post_content markdown"><h2 id="开始">开始</h2>
 <p>前提: 在main函数中申请的各个变量, 不使用全局变量.</p>
+<p><a href="https://gitee.com/jiaoshijie/Record/tree/master/c_code/cdoublepointer">一些测试代码在这里</a></p>
 <h3 id="1-二维数组">1. 二维数组</h3>
 <p>首先讨论二维数组, 他在内存中的布局是最简单的, 首先在main函数中申请如下变量.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">char</span> str[][<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> {
