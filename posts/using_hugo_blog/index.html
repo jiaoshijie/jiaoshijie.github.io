@@ -1,101 +1,41 @@
 <!DOCTYPE html>
-<html lang="zh-cn" >
-<head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-  
-  <meta name="author"
-        content="jiaoshijie"/>
-
-  
-  <meta name="description" content="1. 安装hugo 对于Arch系Linux系统使用 sudo pacman -S hugo 其他安装方式去官网查看 2. 使用hugo创建Blog hugo new site MyBlog MyBlog为自己想创建的文件夹名称 3. 下载hugo主题 到项目的根目录下, 即MyBlog文件"/>
-  
-
-  
-  
-  <meta name="keywords" content="Hugo, learning"/>
-  
-
-  
-  <link rel="canonical" href="https://jiaoshijie.github.io/posts/using_hugo_blog/"/>
-
-  
-
-  <title>使用hugo搭建Blog记录 &middot; 名字夸张的Blog</title>
-
-  <link rel="shortcut icon" href="https://jiaoshijie.github.io/images/favicon.ico"/>
-  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/animate.min.css"/>
-  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/remixicon.css"/>
-  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/zozo.css"/>
-  <link rel="stylesheet" href="https://jiaoshijie.github.io/css/highlight.css"/>
-
-  
-  
+<html><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial=scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>MyTheme</title>
 </head>
-
 <body>
-<div class="main animated">
-  <div class="nav_container animated fadeInDown">
-  <div class="site_nav" id="site_nav">
+      <main><header>
+  <div class="logo">
+    <a href="/">
+      Blog
+    </a>
+  </div>
+  <nav>
     <ul>
       
-      <li>
-        <a href="/">首页</a>
-      </li>
+      <li><a href="/">首页</a></li>
       
-      <li>
-        <a href="/posts/">归档</a>
-      </li>
+      <li><a href="/posts/">归档</a></li>
       
-      <li>
-        <a href="/tags/">标签</a>
-      </li>
+      <li><a href="/tags/">标签</a></li>
       
-      <li>
-        <a href="/about/">关于</a>
-      </li>
+      <li><a href="/about/">关于</a></li>
       
     </ul>
-  </div>
-  <div class="menu_icon">
-    <a id="menu_icon"><i class="remixicon-links-line"></i></a>
-  </div>
-</div>
-
-  <div class="header animated fadeInDown">
-  <div class="site_title_container">
-    <div class="site_title">
-      <h1>
-        <a href="https://jiaoshijie.github.io/">
-          <span>名字夸张的Blog</span>
-          <img src="https://jiaoshijie.github.io/images/logo.svg"/>
-        </a>
-      </h1>
+    <div class="burger">
+      <div class="top-line"></div>
+      <div class="middle-line"></div>
+      <div class="bottom-line"></div>
     </div>
-    <div class="description">
-      <p class="sub_title"></p>
-      <div class="my_socials">
-        
-        
-        <a href="https://github.com/jiaoshijie" title="github" target="_blank"><i class="remixicon-github-fill"></i></a>
-        
-        
-        <a href="https://jiaoshijie.github.io/index.xml" type="application/rss+xml" title="rss" target="_blank"><i class="remixicon-rss-fill"></i></a>
-      </div>
-    </div>
-  </div>
-</div>
+  </nav>
+</header>
+<div class="content-wrapper">
 
-  <div class="content">
-    <div class="post_page">
-      <div class="post animated fadeInDown">
-        <div class="post_title post_detail_title">
-          <h2><a href='/posts/using_hugo_blog/'>使用hugo搭建Blog记录</a></h2>
-          <span class="date">2019.10.01</span>
-        </div>
-        <div class="post_content markdown"><h2 id="1-安装hugohttpsgohugoio">1. 安装<a href="https://gohugo.io/">hugo</a></h2>
+  <div class="post-content">
+    <h1>使用hugo搭建Blog记录</h1>
+    <h2 id="1-安装hugohttpsgohugoio">1. 安装<a href="https://gohugo.io/">hugo</a></h2>
 <ul>
 <li>对于Arch系Linux系统使用 <code>sudo pacman -S hugo</code></li>
 <li>其他安装方式去<a href="https://gohugo.io/getting-started/installing/">官网</a>查看</li>
@@ -162,120 +102,33 @@
 * <code>git init</code> <code>git add .</code> <code>git commit -m &quot;MyBlog&quot;</code> <code>git remote add origin github_link</code> <code>git push -u origin master</code></li>
 <li>在浏览器中输入<code>username.github.io</code></li>
 </ol>
-</div>
-        <div class="post_footer">
-          
-          <div class="meta">
-            <div class="info">
-              <span class="field tags">
-                <i class="remixicon-stack-line"></i>
-                
-                <a href="https://jiaoshijie.github.io/tags/hugo/">hugo</a>
-                
-              </span>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-      
-      
-      
+
+  </div>
 <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
 <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
 
-<div id="gitalk-container"></div>
-    <script type="text/javascript">
-    var gitalk = new Gitalk({
+<div id="gitalk-container" class="page_gitalk"></div>
+<script type="text/javascript">
+  var gitalk = new Gitalk({
 
     
-        clientID: '947103adbdb2c4f76eab',
-        clientSecret: '24009f1d64e55d5c25b024613261675e3a741a5d',
-        repo: 'jiaoshijie.github.io',
-        owner: 'jiaoshijie',
-        admin: ['jiaoshijie'],
-        id: 'using_hugo_Blog',
+    clientID: '947103adbdb2c4f76eab',
+    clientSecret: '24009f1d64e55d5c25b024613261675e3a741a5d',
+    repo: 'jiaoshijie.github.io',
+    owner: 'jiaoshijie',
+    admin: ['jiaoshijie'],
+    id: '',
 
-    });
-    gitalk.render('gitalk-container');
+  });
+gitalk.render('gitalk-container');
 </script>
 
-      
-    </div>
-  </div>
-  <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
-</div>
-<footer class="footer">
-  <div class="powered_by">
-    <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
-  </div>
-
-  <div class="footer_slogan">
-    <span>永远不要停止思考</span>
+        </div><footer>
+  <div>
+    <p>No matter how great one is, there is always someone greater</p>
+    <p>Powered by <a href="https://gohugo.io">Hugo</a> | Theme - <a href="/">Dark</a></p>
   </div>
 </footer>
-
-
-
-<script src="https://jiaoshijie.github.io/js/jquery-3.3.1.min.js"></script>
-<script src="https://jiaoshijie.github.io/js/zozo.js"></script>
-<script src="https://jiaoshijie.github.io/js/highlight.pack.js"></script>
-<link  href="https://jiaoshijie.github.io/css/fancybox.min.css" rel="stylesheet">
-<script src="https://jiaoshijie.github.io/js/fancybox.min.js"></script>
-
-<script>hljs.initHighlightingOnLoad()</script>
-
-
-  <script type="text/javascript" async src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [['$','$'], ['\\(','\\)']],
-    displayMath: [['$$','$$'], ['\\[','\\]']],
-    processEscapes: true,
-    processEnvironments: true,
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-    TeX: { equationNumbers: { autoNumber: "AMS" },
-         extensions: ["AMSmath.js", "AMSsymbols.js"] }
-  }
-});
-
-MathJax.Hub.Queue(function() {
-    
-    
-    
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i = 0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-});
-</script>
-
-<style>
-code.has-jax {
-    font: inherit;
-    font-size: 100%;
-    background: inherit;
-    border: inherit;
-    color: #515151;
-}
-</style>
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-151868568-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-
+</main><script src="/js/darktheme.js" type="text/javascript"></script>
 </body>
 </html>
