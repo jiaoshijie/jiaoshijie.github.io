@@ -283,8 +283,7 @@ footer a {
 
 /* TODO 有序列表, 无序列表 */
 
-/* responsive-navMenu */
-/* TODO */
+/* TODO: responsive-navMenu */
 @media screen and (max-width: 768px) {
   .burger {
     display: block;
@@ -292,7 +291,7 @@ footer a {
   }
 
   .burger.active div {
-    transition: 0.3s ease-in-out 0.3s;
+    transition: 0.3s ease-in-out;
   }
 
   .burger.active .top-line {
@@ -306,7 +305,7 @@ footer a {
   .burger.active .middle-line {
     opacity: 0;
     transform: translate(10px);
-    transition: 0.3 ease-in-out;
+    transition: 0.1 ease-in-out;
   }
 
   nav ul {
@@ -319,15 +318,11 @@ footer a {
     justify-content: flex-start;
     align-items: center;
     background-color: var(--color-bg-o);
-
-    transform: translateX(100%);
-    /* display: none; */
+    display: none;
   }
 
   nav ul.open {
-    transform: translateX(0);
-    /* display: flex; */
-    transition: 0.4s ease-in-out;
+    display: flex;
   }
 
   nav ul li {

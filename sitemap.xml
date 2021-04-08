@@ -1,84 +1,52 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://jiaoshijie.github.io/</loc>
     <lastmod>2020-05-17T16:28:28+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/posts/</loc>
     <lastmod>2020-05-17T16:28:28+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/posts/about_array_addree_question/</loc>
     <lastmod>2020-05-17T16:28:28+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/posts/about_cdoublepointer_and_cdoublearray/</loc>
     <lastmod>2020-05-13T23:00:33+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/tags/linux/</loc>
     <lastmod>2019-11-05T01:15:53+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/posts/linux_merge_adjacent_partition/</loc>
     <lastmod>2019-11-05T01:15:53+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/tags/</loc>
     <lastmod>2019-11-05T01:15:53+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/posts/linux_x_config_insight/</loc>
     <lastmod>2019-10-31T10:48:34+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/posts/record_linuxstartup_diskcheck/</loc>
     <lastmod>2019-10-23T14:38:10+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/tags/c/</loc>
     <lastmod>2019-10-13T22:46:48+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/tags/coding/</loc>
     <lastmod>2019-10-13T22:46:48+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</loc>
     <lastmod>2019-10-13T22:46:48+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/about/</loc>
     <lastmod>2019-10-01T10:55:08+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/tags/hugo/</loc>
     <lastmod>2019-10-01T01:31:00+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/posts/using_hugo_blog/</loc>
     <lastmod>2019-10-01T01:31:00+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://jiaoshijie.github.io/categories/</loc>
   </url>
-  
 </urlset>
