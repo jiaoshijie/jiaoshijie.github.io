@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Math on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/math/</link>
+    <description>Recent content in Math on Jsj&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 11 Mar 2024 20:09:17 +0800</lastBuildDate><atom:link href="https://jiaoshijie.github.io/tags/math/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>快速计算正整数的平方根</title>
+      <link>https://jiaoshijie.github.io/posts/quick_clac_square_root/</link>
+      <pubDate>Mon, 11 Mar 2024 20:09:17 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/quick_clac_square_root/</guid>
+      <description>如何求一个正整数的平方根，最直接的方法就是
+int i_sqrt(int N) { int res = 1; while (res * res &amp;lt;= N) { res++; } return res - 1; } 但上面的计算方法非常的低效，而对于求正整数的平方根，已经有非常多的算法。
+下面介绍一个常用的正整数开平方根的算法。
+Digit by digit calculation Digit by digit calculation
+假设 $x = \sqrt{N}$ 则 $x^2 = N$ 以二进制表示 $x$，则 $x^2$ 为
+$$ x^2 = (000b_0b_1b_2 \cdots b_{n-1}b_n)^2 \tag{1} $$
+其中，$b_0$ 为 $x$ 的二进制表示中第一个为 1 的二进制位。但要注意 $b_1 \cdots b_n$ 并不一定全为 1。我们可以将公式 (1) 改为加法形式。$a_n$ 对应的为 $b_0$。
+$$ x^2 = (a_n + a_{n-1} + \cdots + a_1 + a_0)^2 \tag{2} $$</description>
+    </item>
+    
+    <item>
+      <title>Colors of Balls Problem</title>
+      <link>https://jiaoshijie.github.io/posts/colorsofproblem/</link>
+      <pubDate>Wed, 20 Apr 2022 13:37:58 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/colorsofproblem/</guid>
+      <description>n balls with N different colors, number of balls with each color is same, randomly choose k balls from the n balls, the expected number of colors of the k balls can be estimated as:
+$$ N\left [ 1-\prod_{r=1}^{k} \left ( \frac{\frac{n(N-1)}{N}-r+1}{n-r+1} \right ) \right ] $$
+证明 要算取出的k个球的颜色数的期望, 根据期望的定义来算的话太复杂了.
+因此, 可以先构造一个0-1分布, 取出的球中不包含一种颜色的情况用0表示, 则包含这种颜色的情况用1表示.
+可以轻易的求出取出的球中不包含一种颜色的概率为:
+$$ P_{0}=\frac{C_{n - \frac{n}{N}}^{k}}{C_{n}^{k}}=\frac{(n-\frac{n}{N})(n-\frac{n}{N}-1)\cdots(n-\frac{n}{N}-k+1)}{n(n-1)\cdots(n-k+1)}=\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1} $$
+易得$P_1=1-P_0$, 则该事件的期望为:
+$$ E_{0-1}=0\times P_0 + 1\times P_1=1-P_0=1-\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1} $$
+而对于取出k个球中颜色数的数学期望, 可以先对N个不同的颜色编号$1\cdots N$, 利用上面的0-1分布, 设1号颜色的0-1分布为{0, 1}, 2号颜色的0-1分布为{0, 1}, &amp;hellip;, N号颜色的0-1分布为{0, 1}(彼此为相互独立事件, 非互斥事件).</description>
+    </item>
+    
+  </channel>
+</rss>

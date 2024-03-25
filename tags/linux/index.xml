@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Linux on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Jsj&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 23 Mar 2024 14:33:19 +0800</lastBuildDate><atom:link href="https://jiaoshijie.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>阅读 Linux 核心源代码 lib/list_sort.c</title>
+      <link>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</link>
+      <pubDate>Sat, 23 Mar 2024 14:33:19 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</guid>
+      <description>Linux 核心代码中，对链表的排序算法是一种归并排序的变种。采用的排序方式为自下而上 的排序，这种方式可以避免 cache thrashing。
+合并时机 Linux 中的对归并排序的改进主要是改变了两个链表的合并时机。该算法会有一个 pending 链表用来记录排序好的子链表，且保证每个子链表的长度都为 $2^k$。当 pending 中 即将出现第三个 $2^k$ 长度的链表时，就会合并已存在的两个 $2^k$ 长度的链表使其 变为一个 $2^{k+1}$ 长度的链表，所以在 pending 链表中永远不会存在超过 2 个 长度为 $2^k$ 的链表。
+使用一个变量 count 来追踪 pending 中 $2^k$ 长度链表的个数，可以通过 count 中 k+1 k k-1 这 3 个 bits 来确定 pending 中 $2^k$ 长度链表的个数。下表 中的 3 个 bits 分别表示 k+1 k k-1，当 k 为 0 时，认为 -1 bit 为 1。
+count $2^k$ 长度链表个数 &amp;hellip;000&amp;hellip; 0 &amp;hellip;001&amp;hellip; 0 &amp;hellip;010&amp;hellip; 0 &amp;hellip;011&amp;hellip; 1 &amp;hellip;100&amp;hellip; 1 &amp;hellip;101&amp;hellip; 2 源码分析 __attribute__((nonnull(2,3))) void list_sort(void *priv, struct list_head *head, list_cmp_func_t cmp) { struct list_head *list = head-&amp;gt;next, *pending = NULL; size_t count = 0; /* Count of pending */ if (list == head-&amp;gt;prev) /* Zero or one elements */ return; /* Convert to a null-terminated singly-linked list.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>C on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/c/</link>
+    <description>Recent content in C on Jsj&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 23 Mar 2024 14:33:19 +0800</lastBuildDate><atom:link href="https://jiaoshijie.github.io/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>阅读 Linux 核心源代码 lib/list_sort.c</title>
+      <link>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</link>
+      <pubDate>Sat, 23 Mar 2024 14:33:19 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</guid>
+      <description>Linux 核心代码中，对链表的排序算法是一种归并排序的变种。采用的排序方式为自下而上 的排序，这种方式可以避免 cache thrashing。
+合并时机 Linux 中的对归并排序的改进主要是改变了两个链表的合并时机。该算法会有一个 pending 链表用来记录排序好的子链表，且保证每个子链表的长度都为 $2^k$。当 pending 中 即将出现第三个 $2^k$ 长度的链表时，就会合并已存在的两个 $2^k$ 长度的链表使其 变为一个 $2^{k+1}$ 长度的链表，所以在 pending 链表中永远不会存在超过 2 个 长度为 $2^k$ 的链表。
+使用一个变量 count 来追踪 pending 中 $2^k$ 长度链表的个数，可以通过 count 中 k+1 k k-1 这 3 个 bits 来确定 pending 中 $2^k$ 长度链表的个数。下表 中的 3 个 bits 分别表示 k+1 k k-1，当 k 为 0 时，认为 -1 bit 为 1。
+count $2^k$ 长度链表个数 &amp;hellip;000&amp;hellip; 0 &amp;hellip;001&amp;hellip; 0 &amp;hellip;010&amp;hellip; 0 &amp;hellip;011&amp;hellip; 1 &amp;hellip;100&amp;hellip; 1 &amp;hellip;101&amp;hellip; 2 源码分析 __attribute__((nonnull(2,3))) void list_sort(void *priv, struct list_head *head, list_cmp_func_t cmp) { struct list_head *list = head-&amp;gt;next, *pending = NULL; size_t count = 0; /* Count of pending */ if (list == head-&amp;gt;prev) /* Zero or one elements */ return; /* Convert to a null-terminated singly-linked list.</description>
+    </item>
+    
+    <item>
+      <title>快速计算正整数的平方根</title>
+      <link>https://jiaoshijie.github.io/posts/quick_clac_square_root/</link>
+      <pubDate>Mon, 11 Mar 2024 20:09:17 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/quick_clac_square_root/</guid>
+      <description>如何求一个正整数的平方根，最直接的方法就是
+int i_sqrt(int N) { int res = 1; while (res * res &amp;lt;= N) { res++; } return res - 1; } 但上面的计算方法非常的低效，而对于求正整数的平方根，已经有非常多的算法。
+下面介绍一个常用的正整数开平方根的算法。
+Digit by digit calculation Digit by digit calculation
+假设 $x = \sqrt{N}$ 则 $x^2 = N$ 以二进制表示 $x$，则 $x^2$ 为
+$$ x^2 = (000b_0b_1b_2 \cdots b_{n-1}b_n)^2 \tag{1} $$
+其中，$b_0$ 为 $x$ 的二进制表示中第一个为 1 的二进制位。但要注意 $b_1 \cdots b_n$ 并不一定全为 1。我们可以将公式 (1) 改为加法形式。$a_n$ 对应的为 $b_0$。
+$$ x^2 = (a_n + a_{n-1} + \cdots + a_1 + a_0)^2 \tag{2} $$</description>
+    </item>
+    
+    <item>
+      <title>关于数组array和&amp;array地址相同问题</title>
+      <link>https://jiaoshijie.github.io/posts/about_array_addree_question/</link>
+      <pubDate>Sun, 17 May 2020 16:28:28 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/about_array_addree_question/</guid>
+      <description>文中代码
+对于如下代码:
+int array[] = { 0, 1, 2, 3, 4 }; printf(&amp;#34;%p\n&amp;#34;, &amp;amp;array); printf(&amp;#34;%p\n&amp;#34;, array); 可以看到输出的地址是相同的.
+而对于如下代码:
+int **array = (int **)malloc(sizeof(int *) * 5); for (int i = 0; i &amp;lt; 5; i++) array[i] = (int *)malloc(sizeof(int)); printf(&amp;#34;%p\n&amp;#34;, &amp;amp;array); printf(&amp;#34;%p\n&amp;#34;, array); 可以看到输出的地址是不同的. 其实对于这一段代码是没有任何疑问的, 可以很轻松的 明白为什么输出的地址不同.
+那么编译器是如何处理第一部分代码，使输出的地址相同的。
+可以通过gdb调试可以很清晰的看到编译器是如何处理这种情况的。
+int array[] = { 0, 1, 2, 3, 4 }; void *a1 = (void *)&amp;amp;array, *a2 = (void *)array; 可以看到void这一行的汇编代码为:
+0x565561e4 &amp;lt;main+71&amp;gt;: lea 0x8(%esp),%eax 0x565561e8 &amp;lt;main+75&amp;gt;: mov %eax,(%esp) 0x565561eb &amp;lt;main+78&amp;gt;: lea 0x8(%esp),%eax 0x565561ef &amp;lt;main+82&amp;gt;: mov %eax,0x4(%esp) 0x565561f3 &amp;lt;main+86&amp;gt;: mov $0x0,%eax 可以看到不管是 array 还是 &amp;amp;array 的操作都是使用的 lea 操作将 0x8(%esp) 移动到 %eax 中然后在 mov 操作赋值到相关变量中.</description>
+    </item>
+    
+    <item>
+      <title>&#39;二维数组&#39;, &#39;指针数组&#39;和&#39;指针的指针&#39;的内存布局</title>
+      <link>https://jiaoshijie.github.io/posts/doublearray_and_pointer2pointer_in_c/</link>
+      <pubDate>Wed, 13 May 2020 23:00:33 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/doublearray_and_pointer2pointer_in_c/</guid>
+      <description>开始 下面提到的变量均是在 main 函数中申请的变量。
+文中代码
+1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 考虑如下变量
+char str[][5] = { &amp;#34;jiao&amp;#34;, &amp;#34;_shi&amp;#34;, &amp;#34;_jie&amp;#34;, }; 可以通过如下代码打印各个部分的地址
+printf(&amp;#34;str addr: %p\n\n&amp;#34;, &amp;amp;str); for (int i = 0; i &amp;lt; 3; i++) { printf(&amp;#34;str[%d] addr: %p\t&amp;#34;, i, &amp;amp;str[i]); } printf(&amp;#34;\n\n&amp;#34;); for (int i = 0; i &amp;lt; 3; i++) { for (int j = 0; j &amp;lt; 5; j++) { printf(&amp;#34;str[%d][%d] addr: %p\n&amp;#34;, i, j, &amp;amp;str[i][j]); } printf(&amp;#34;\n&amp;#34;); } 可以看到地址从str[0][0]开始到结束是从低到高连续的。因为是在main函数中申请的 这个二维数组，因此它被存储在栈空间中(栈空间地址是高地址到低地址走的)，存储布局 大致如下：</description>
+    </item>
+    
+    <item>
+      <title>Tinyhttpd学习</title>
+      <link>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</link>
+      <pubDate>Sun, 13 Oct 2019 22:46:48 +0800</pubDate>
+      
+      <guid>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</guid>
+      <description>Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。
+tinyhttpd官方源码在这里下载
+我的代码在这里
+一些改动:
+将cgi程序由perl语言改为python3 函数说明 startup() 初始化服务端套接字, 如果端口号没有指定，则使用随机的端口号 error_die() 打印服务端启动过程中的错误信息, 并退出程序 accept_request() 处理客户端请求 获取请求类型(GET or POST) 获取客户端要的网页文件的路径 使用stat()函数获取文件属性，判断是执行cgi还是发送普通网页 get_line() 获取网络字符串的一行(换行符为: \r\n ) unimplemented() 客户端请求不正确时(服务器不支持的请求)，发送给客户端501错误 not_found_file() 客户端请求网页内容不存在返回该函数404 cannot_execute() 不能执行cgi文件 bad_request() 客户端请求错误 serve_file() 发送网页文件到客户端 execute_cgi() 执行cgi文件并将结果发送到客户端 cgi介绍 cgi(Common Gateway Interface)规定Web服务器调用其他程序的接口协议(就是如何调用程序， 传递参数， 输出结果), 详细的cgi简介.
+cgi接口使用标准输入、标准输出和环境变量来交换数据
+该程序中使用的环境变量:
+REQUEST_METHOD: 浏览器请求方法 CONTENT_LENGTH: post请求时的form表单的内容长度 QUERY_STRING: get请求时form表单的内容放到该环境变量中 cgi从标准输入中获取数据，把数据输出到标准输出
+Linux系统函数 pipe()进程见通信的一种实现方法 // file_pipe[0] 为读取端(输出端), file_pipe[1]为写入端(输入端) int file_pipe[2]; pipe(file_pipe); fork()创建线程函数 int ipid = fork(); // 创建线程 if(ipid == 0) { // 子线程 } else { // 主线程 } dup2()重定向一个文件描述符 /** * stdin:0, stdout:1 * 下面两句将重定向stdin和stdout到file[0], 和file[1] */ dup2(file[0], 0); dup2(file[1], 1); putenv()设置环境变量(只在该进程中生效) execl()在该进程中执行外部程序 // 程序绝对路径 程序名称 参数 目标 NULL execl(&amp;#34;/bin/ls&amp;#34;, &amp;#34;ls&amp;#34;, &amp;#34;-al&amp;#34;, &amp;#34;/etc/passwd&amp;#34;, NULL); Notes: 该函数执行时，会用这个新的进程替代当前进程就是该函数执行完后，就会退出整个进程，而不会执行下面的代码, 所以通常使用子线程执行该函数 </description>
+    </item>
+    
+  </channel>
+</rss>
