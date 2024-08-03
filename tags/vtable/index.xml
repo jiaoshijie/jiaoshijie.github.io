@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Vtable on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/vtable/</link>
+    <description>Recent content in Vtable on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.131.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 11 Jul 2023 21:35:28 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/vtable/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>c&#43;&#43; 使用函数指针结构体改变类的虚函数表</title>
+      <link>https://jiaoshijie.github.io/posts/cpp_change_vtable_using_otable/</link>
+      <pubDate>Tue, 11 Jul 2023 21:35:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/cpp_change_vtable_using_otable/</guid>
+      <description>文中代码
+如果c++的类有虚函数那么这个类的实例对象就会有一个虚表. 我们可以通过一下代码来 改变虚表.
+#include &amp;lt;cstring&amp;gt; #include &amp;lt;iostream&amp;gt; class A { public: virtual void vfoo_1() { std::cout &amp;lt;&amp;lt; &amp;#34;a_vfoo_1\n&amp;#34;; } virtual void vfoo_2(long long a) { std::cout &amp;lt;&amp;lt; &amp;#34;a_vfoo_2: &amp;#34; &amp;lt;&amp;lt; a &amp;lt;&amp;lt; std::endl; } virtual int vfoo_3(int a, int b) { return a + b; } }; typedef void (*void_pfunc_void)(); typedef void (*void_pfunc_int)(long long); typedef int (*int_pfunc_int_int)(int, int); struct other_vtable { void_pfunc_void pf1; void_pfunc_int pf2; int_pfunc_int_int pf3; }; void g_f1() { std::cout &amp;lt;&amp;lt; &amp;#34;g_f1\n&amp;#34;; } void g_f2(long long a) { ((A *)a)-&amp;gt;vfoo_1(); printf(&amp;#34;%p\n&amp;#34;, (void *)a); // std::cout &amp;lt;&amp;lt; &amp;#34;g_f2: &amp;#34; &amp;lt;&amp;lt; a &amp;lt;&amp;lt; std::endl; } int g_f3(int a, int b) { return b * 10; } int main(void) { A *a = new A; other_vtable *ovt = new other_vtable; ovt-&amp;gt;pf1 = g_f1; ovt-&amp;gt;pf2 = g_f2; ovt-&amp;gt;pf3 = g_f3; void *ptr = a; printf(&amp;#34;%p\n&amp;#34;, a); a-&amp;gt;vfoo_1(); a-&amp;gt;vfoo_2(10); printf(&amp;#34;a-&amp;gt;vfoo_3: %d\n&amp;#34;, a-&amp;gt;vfoo_3(2, 5)); puts(&amp;#34;-------------------------------&amp;#34;); memcpy(ptr, &amp;amp;ovt, sizeof(void *)); a-&amp;gt;vfoo_1(); a-&amp;gt;vfoo_2(10); printf(&amp;#34;a-&amp;gt;vfoo_3: %d\n&amp;#34;, a-&amp;gt;vfoo_3(2, 5)); int breakpoint = 0; return 0; } 内存布局大致如下图所示:</description>
+    </item>
+    <item>
+      <title>使用 gdb 查看 c&#43;&#43; 中的虚函数表</title>
+      <link>https://jiaoshijie.github.io/posts/inspect_vtables_using_gdb_in_cpp/</link>
+      <pubDate>Sun, 09 Jul 2023 21:18:46 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/inspect_vtables_using_gdb_in_cpp/</guid>
+      <description>文中代码
+1. 使用info vtbl obj查看vtable vtable function class A { public: A() = default; ~A() = default; virtual void vfoo_1() {} virtual void vfoo_2() {} }; int main(void) { A *a = new A; int breakpoint = 0; return 0; } 当一个class有virtual function时, 这个类会有一个vtable(virtual table)来记录这些函数的入口.
+编译上面的代码, 使用gdb来debug这个程序, 使用info vtbl a可以可视化该实例对象a的vtable. 如下图所示:
+vtable class // A // / \ // / \ // B C // \ / // \ / // D class A { public: ~A() = default; virtual void a_foo() {} }; class B : virtual public A { public: virtual void b_foo() {} }; class C : virtual public A { public: virtual void c_foo() {} }; class D : public B, public C { public: }; int main(void) { D *d = new D; int breakpoint = 0; return 0; } 同样使用info vtbl d可以查看实例对象d的vtable.</description>
+    </item>
+  </channel>
+</rss>

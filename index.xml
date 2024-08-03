@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/</link>
+    <description>Recent content on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.131.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Aug 2024 00:29:55 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pacman Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pacman_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pacman_usage/</guid>
+      <description>To use pactree and paccache install pacman-contrib To install packages pacman -S package_name1 package_name2 来安装软件 pacman -S $(pacman -Ssq package_regex)来安装不太清楚名字的包 pacman -Sg package_group_name 查看一个软件包组有什么软件 pacman -S -needed package_name1 pacman 默认会重新安装软件, 即使软件已经是up to date. --needed 会避免安装已经up to date软件 一些软件会有选项, 例如Enter a selection (default=all): 1-10 15这将安装1到10和15号软件包 ^5-8 ^2 这将安装除了5-8和2号软件包之外的其他软件包 To remove packages pacman -R package_name 只移除目标软件包, 留下其依赖的软件包 pacman -Rs package_name 移除目标软件包和没有被其他软件依赖的软件包 pacman -Rsu 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令 pacman -Rsc 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件 pacman -Rdd 移除被其他包依赖的软件包, 而不移除依赖它的包.</description>
+    </item>
+    <item>
+      <title>mpv Usage</title>
+      <link>https://jiaoshijie.github.io/posts/mpv_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:26:44 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/mpv_usage/</guid>
+      <description>基础快捷键 keys description q 退出mpv不记录进度 Q 退出mpv记录进度 o P 查看播放进度并显示进度条 f 全屏 O 在左上角持久显示播放进度, 但不显示进度条 p space pause 9 / 调小音量 0 * 调大音量 m 静音 s 截图 T 设置mpv窗口置顶 i 查看文件详细信息 A 调整视频高宽比 { } 成倍调节播放速度 [ ] 缓慢调节播放速度 backspace 恢复速度为1 F8 列出播放列表 &amp;lt; &amp;gt; 切换播放列表中的视频 hjkl 上下左右 快进后退 循环播放 keys description l 第一下标记开始, 第二下标记结束, 第三下清除 L 设置是否循环标记段 高级快捷键 keys description C-h 开关硬件解码 , . 逐帧播放 1 2 调节对比度 3 4 亮度 5 6 调节Gamma 7 8 调节色彩饱和度Saturation d 开关Deinterlace 音视频流 keys description # 选择音频流 _ 选择视频流 Ctrl+- 调大audio-video延迟 F9 列出所有的音频流和字幕流 字幕 keys description j 选择字幕流 v 设置字幕可见 u 开关ass字幕特效 z x 调节播放字幕时间 r 调低字幕在屏幕中的位置 R t 调高字幕在屏幕中的位置 参考 mpv config </description>
+    </item>
+    <item>
+      <title>Ctags Usage</title>
+      <link>https://jiaoshijie.github.io/posts/ctags_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:18:07 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/ctags_usage/</guid>
+      <description>ctags gun/global
+C and C++ 1. 通常使用 ctags ctags -R . -f .tags -R 从当前目录递归开始生成 ctags 索引 . 当前目录 -f -o 指定生成的文件名 ctags -R --c-kinds=+p --fields=+iaS --extra=+q . -f .tags 获取更多的信息 2. 一些 ctags 基础参数 ctags 支持多种语言的索引 ctags --list-maps 查看支持的语言种类 ctags 支持很多语义但并不是默认都开启的 ctags --list-kinds 查看所有语言支持的语义及默认开启状态(后面有 off 表示默认没有开启) ctags --list-kinds={lang} 查看{lang}语言支持的语义及开启状态 使用 ctags --{lang}-kinds=+px 来开启默认不支持的语义 ctags --langmap={lang}:+.inl 可以指定某种扩展名也为该 lang 的源文件 ctags -h +.inc 指定 .inc 文件也为头文件 ctags --fields=+aiKSz 如何描述语法元素 a 表示如果是类的成员, 要标明其 access 属性(即是 public 的还是 private 的) i 表示如果有继承, 要标明父类 S 表示如果是函数, 要标明函数的 signature K 表示要显示语法元素类型的全称 z 表示在显示语法元素的类型时, 使用格式 kind:type ctags --extras=+q 要求 ctags 记录全名(类和函数名), 可以更精确的定位 ctags --exclude=lex.</description>
+    </item>
+    <item>
+      <title>Bluetooth Setup On Arch Linux</title>
+      <link>https://jiaoshijie.github.io/posts/bluetooth_setup_on_arch_linux/</link>
+      <pubDate>Sun, 04 Aug 2024 00:02:32 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/bluetooth_setup_on_arch_linux/</guid>
+      <description>Xbox series x controller 首先安装蓝牙服务 pacman -S bluez bluez-utils pulseaudio-bluetooth
+bluez 提供bluetooth服务 bluez-utils 提供bluetoothctl工具 bluez-utils-compat(开机后无法NOT Default controller available)使用这个包据说可以修复这个问题. (optional)blueman显示systray pulseaudio-bluetooth 可以连接蓝牙耳机 启动连接设备 sudo systemctl start bluetooth.service开启bluetooth服务. sudo systemctl enable bluetooth.service设置为开机启动. 然后使用bluetoothctl进行蓝牙的连接. 将用户添加到lp用户组中, 添加方法usermod -G Groupname Username, 或直接修改/etc/group文件. 首次启动蓝牙 使用help查看帮助. 首先选择设备select MAC_address 然后使用power on开启蓝牙设备 如果开启失败检查是否是蓝牙设备被block了. 使用rfkill list观察. 如果是可以rfkill unblock all or connmanctl enable bluetooth来取消所有的被block的设备. 详细使用man rfkill. 然后使用devices查看可以使用的设备. (optional)如果devices没有可用的设备. 使用scan on来扫描附近可连接的蓝牙设备. (optional)agent on或选择其他的模式(DisplayOnly KeyboardDisplay NoInputNoOutput DisplayYesNO KeyboardOnly off on)如果你清楚的话. pair MAC_address开始配对设备. 如果设备没有PIN, 可能还需要手动trust MAC_address在重新连接之前.</description>
+    </item>
+    <item>
+      <title>Pass Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pass_usage/</link>
+      <pubDate>Sat, 03 Aug 2024 23:06:40 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pass_usage/</guid>
+      <description>install pass pacman -S pass 设置GnuPG pass使用PGP(Pretty Good Privacy)密钥, 最常用的PGP实现是GnuPG(GPG), 它随linux系统一起安装.
+gpg --generate-key 来产生PGP密钥 在这个过程中会提示你输入你的名字和电子邮箱 并为密钥创建一个密码 密钥加密, 密码解密(但只有密码没有密钥也无法解密) gpg --list-keys 可以查看你创建的PGP密钥 $ gpg --list-keys /home/seth/.gnupg/pubring.kbx ----------------------------- pub ed25519 2022-01-06 [SC] [expires: 2024-01-06] 2BFF94286461216C907CBA52F067996F13EF10D8 uid [ultimate] Seth Kenlon &amp;lt;seth@example.com&amp;gt; sub cv25519 2022-01-06 [E] [expires: 2024-01-06] export and import gpg key export a gpg public key gpg --export [-a] {key-id} &amp;gt; public-key.asc export a gpg private key gpg --export-secret-keys [-a] {key-id} &amp;gt; private-key.</description>
+    </item>
+    <item>
+      <title>regular expressions cheatsheet</title>
+      <link>https://jiaoshijie.github.io/posts/regexp/</link>
+      <pubDate>Fri, 03 May 2024 19:51:21 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/regexp/</guid>
+      <description>Regular Expressions Matching Table metacharacter matching things \d \D matching all the digits(0 to 9), matching any non-digit character .(dot) matching any single character(letter, digit, whitespace, everything) [] matching a single letter inside [](square brackets) [^] matching any single character except for the letters inside [](square brackets) with the ^(hat) [-] [^-] indicating a character range to match a single character \w \W this is equivalent to the character range [A-Za-z0-9_], matching any non-alphanumeric character {} to match repetition of character * + to match either 0 or more or 1 or more of the character that it follows(it always follows a character or group) ?</description>
+    </item>
+    <item>
+      <title>Linux_Little_Tricks</title>
+      <link>https://jiaoshijie.github.io/posts/linux_little_tricks/</link>
+      <pubDate>Fri, 03 May 2024 19:48:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/linux_little_tricks/</guid>
+      <description>Linux Little Tricks data model LLP64 and LP64 搜索引擎小技巧 cats and dogs Result about cats or dogs &amp;quot;cats and dogs&amp;quot; Result about exact term &amp;ldquo;cats and dogs&amp;rdquo; cats -dogs Fewer dogs in result cats +dogs More dogs in result cats filetype:pdf PDFs about cats Supported types: pdf, doc(x), xls(x), ppt(x), html * 模糊 .... 范围 intitle:标题 inurl:网址 related:相关类型 define:word etymology:&amp;quot;word,&amp;quot; joker site:drive.google.com Proxy Browser: SwitchyOmega gfwlist: https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt Terminal Proxy CapsLock -&amp;gt; Ctrl X11 xev 展示按下按键的信息 pacman -S xorg-xmodmap: xmodmap xmodmap -pke xmodmap -pke &amp;gt; ~/.</description>
+    </item>
+    <item>
+      <title>ArchLinux_Installation</title>
+      <link>https://jiaoshijie.github.io/posts/archlinux_installation/</link>
+      <pubDate>Fri, 03 May 2024 19:46:54 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/archlinux_installation/</guid>
+      <description>一. Basic Install 制作启动盘 1. 系统启动方式 输入 ls /sys/firmware/efi/efivars 查看系统的启动方式 如果有输出，则为UEFI启动 2. 网络连接 ip link 查看网卡的名称等信息
+有线网络 使用 dhcpcd 进行有线网络连接, 和激活无限网络dhcp功能
+无线网络 使用 rfkill(Radio Frequency Kill) 检查 wifi 是否被禁用 $ rfkill list 0: phy0: Wireless LAN Soft blocked: yes // yes 为禁用, no 为未禁用(软件禁用) Hard blocked: yes // yes 为禁用, no 为未禁用(硬件禁用) 如果被禁用使用 rfkill unblock wifi 取消禁用 使用 iwctl 进行无线网络连接 iwctl$ help iwctl$ device list iwctl$ station device(name) scan iwctl$ station device(name) get-networks iwctl$ station device(name) connect SSID(name) 使用 ping archlinux.</description>
+    </item>
+    <item>
+      <title>常数变易法(微分方程求解)</title>
+      <link>https://jiaoshijie.github.io/posts/variation_of_parameters/</link>
+      <pubDate>Fri, 03 May 2024 19:06:23 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/variation_of_parameters/</guid>
+      <description>1. 常数变易法求解一阶线性微分方程过程 对于一阶线性微分方程:
+$$ \frac{\mathrm{d}y}{\mathrm{d}x}+P(x)y=Q(x) \tag{1} $$
+如果$Q(x)=0$则方程为齐次, $Q(x)\ne0$则方程为非齐次.
+而常数变易法的求解就是先求出齐次方程的通解
+$$ \frac{\mathrm{d}y}{\mathrm{d}x}+P(x)y=0 \tag{2} $$
+该齐次方程的通解为$y=Ce^{-\int{P(x)\mathrm{d}x}}$ $(C=\pm e^{C_1})$
+然后使用$u(x)$(以后简写为$u$)替换该通解中的常数$C$, 即便换为:
+$$ y=ue^{-\int{P(x)\mathrm{d}x}} \tag{3} $$
+然后, 将(3)代入(1)中, 得:
+$$ u^{\prime}e^{-\int{P(x)}\mathrm{d}x}=Q(x) \tag{4} $$
+通过&amp;quot;分离变量&amp;quot;即可求出$u$:
+$$ u=\int{Q(x)e^{\int{P(x)\mathrm{d}x}}\mathrm{d}x}+C \tag{5} $$
+将(5)在带回到(3)中即可求出$y$:
+$$ y=Ce^{-\int{P(x)\mathrm{d}x}}+e^{-\int{P(x)\mathrm{d}x}}\int{Q(x)e^{\int{P(x)\mathrm{d}x}}\mathrm{d}x} $$
+于是, 便得到了(1)的通解, 观察可以发现, 前面为(1)对应的齐次方程的通解, 后面为当C=0是(1)的特解, 因此得到结论:
+一阶非齐次线性方程的通解等于对应的齐次方程的通解与非齐次方程的一个特解之和.
+但是问题就是 为什么可以使用非齐次方程对应的齐次方程的通解来进行求解?, 上面的方法一气呵成只是告诉了我们应该这样做, 但我们却不知道为什么这么做.
+但我学的很蒙, 于是进行了一番搜索找到了一些好的文章, 打算自己总结一下, 相关文章都放在了参考处.
+2. 原理探讨 通过《&amp;ldquo;常数变易法&amp;quot;的探讨》文章知道我们现在使用的常数变易法只是结论, 而非推导过程.
+该结论是拉格朗日十一年的研究成果.
+因此在此介绍一些该结论得出的过程.
+首先, 对于求解一阶线性微分方程最先想到的方法就是&amp;quot;分离常量&amp;rdquo;, 于是首先对(1)进行移项操作得:
+$$ \mathrm{d}y=[Q(x)-P(x)y]\mathrm{d}x $$
+观察怎样都无法将y单独移动到左边, 因此分离常量的方法不可以求解此方程.
+于是想到使用$u=\frac{y}{x}$的方法进行求解得到:
+$$ u\prime{}x+u(1+P(x)x)=Q(x) $$</description>
+    </item>
+    <item>
+      <title>C 语言函数调用和VLA和alloca栈的变化探讨</title>
+      <link>https://jiaoshijie.github.io/posts/function_call_and_vla_and_alloca/</link>
+      <pubDate>Wed, 17 Apr 2024 11:36:45 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/function_call_and_vla_and_alloca/</guid>
+      <description>NOTE: 以下讨论使用的平台为 x86-64，使用的编译器为 gcc，以下提供的伪汇编码 采用 intel 格式。
+文章中提到的代码，可以在 Code 找到。
+一些重要的寄存器和指令 函数调用过程中，比较重要的寄存器主要有三个 rip rbp rsp。
+rip 寄存器存放的为下一条要执行指令的地址，Instruction Pointer。 rbp 为基寄存器，存放的为前一个 rbp 的值，Base Pointer。 rsp 为栈寄存器，一直指向函数调用栈的底部，Stack Pointer。 比较重要的指令有 call push pop leave ret。
+call addr 指令会首先将 call 返回之后要执行的地址压入栈中(返回地址)，设置 rip 的值为 addr，然后跳转的这个位置去执行，大致可以等效于一下指令。
+# 假设当执行到 call 指令时 CPU 就会自动设置 rip 寄存器为下一条要执行的指令 push rip mov rip, addr # 按理设置了 rip 寄存器，CPU 就会去执行 rip 地址的指令，这里写 jmp 只是想要更清晰的表示 call 的流程 jmp addr push rbp 指令会将 rsp 寄存器下移一个 word 的长度，rbp 中的内容移动到 rsp 寄存器所指向的地址中。</description>
+    </item>
+    <item>
+      <title>阅读 Linux 核心源代码 lib/list_sort.c</title>
+      <link>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</link>
+      <pubDate>Sat, 23 Mar 2024 14:33:19 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</guid>
+      <description>Linux 核心代码中，对链表的排序算法是一种归并排序的变种。采用的排序方式为自下而上 的排序，这种方式可以避免 cache thrashing。
+合并时机 Linux 中的对归并排序的改进主要是改变了两个链表的合并时机。该算法会有一个 pending 链表用来记录排序好的子链表，且保证每个子链表的长度都为 $2^k$。当 pending 中 即将出现第三个 $2^k$ 长度的链表时，就会合并已存在的两个 $2^k$ 长度的链表使其 变为一个 $2^{k+1}$ 长度的链表，所以在 pending 链表中永远不会存在超过 2 个 长度为 $2^k$ 的链表。
+使用一个变量 count 来追踪 pending 中 $2^k$ 长度链表的个数，可以通过 count 中 k+1 k k-1 这 3 个 bits 来确定 pending 中 $2^k$ 长度链表的个数。下表 中的 3 个 bits 分别表示 k+1 k k-1，当 k 为 0 时，认为 -1 bit 为 1。
+count $2^k$ 长度链表个数 &amp;hellip;000&amp;hellip; 0 &amp;hellip;001&amp;hellip; 0 &amp;hellip;010&amp;hellip; 0 &amp;hellip;011&amp;hellip; 1 &amp;hellip;100&amp;hellip; 1 &amp;hellip;101&amp;hellip; 2 源码分析 __attribute__((nonnull(2,3))) void list_sort(void *priv, struct list_head *head, list_cmp_func_t cmp) { struct list_head *list = head-&amp;gt;next, *pending = NULL; size_t count = 0; /* Count of pending */ if (list == head-&amp;gt;prev) /* Zero or one elements */ return; /* Convert to a null-terminated singly-linked list.</description>
+    </item>
+    <item>
+      <title>七个高效的文本编辑习惯(翻译)</title>
+      <link>https://jiaoshijie.github.io/posts/seven_habits_of_effective_text_editing_translation/</link>
+      <pubDate>Fri, 22 Mar 2024 14:48:11 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/seven_habits_of_effective_text_editing_translation/</guid>
+      <description>原作者：Bram Moolenaar
+发表日期：November 2000
+原文章：Seven habits of effective text editing
+原作者的 Talk：Talk
+如果你经常编辑文本文件(比如，写代码或HTML)，你可以通过高效的使用一个好的编辑器 来节省大量的时间。这篇文章将提供一些让你可以减少错误和更快速编辑文件的方法。
+本文将使用开源文本编辑器 VIM(Vi IMproved) 来展示这些高效编辑方法，当然这些方法 同样适用于其它文本编辑器。选择一个正确的编辑器是迈向高效编辑的第一步。关于你 适合使用什么样的编辑器这样的讨论，是非常浪费时间的本文不对这个问题进行讨论。但 如果你想要寻找一个合适的编辑器，可以尝试一下 VIM，我相信它不会让你失望的。
+NOTE: VIM 命令和选项使用 this (font) 显示
+Part 1: 编辑单个文件 1. 在文件中快速移动 其实，大部分情况下，当我们在编辑一个文件时，并不是真的在编辑它(输入文本/改变文本)， 而仅仅是在阅读它(检查错误/寻找一个位置来编辑)。浏览整个文件才是我们经常做的事情， 因此如何在文件中快速移动是我们要学习的第一件事。
+在浏览文件时，我们可能经常想要搜索一段文本在文件的什么位置出现了，或找到所有 包含一个特定单词或短语的所有行。在 VIM 中，可以简单的使用搜索命令 /pattern 来查找文本，但可以使用一些更高效的方式来代替：
+如果你想要查找一个单词是否在该文件的其它位置出现了，可以使用 * 命令来快速 搜素光标下的单词出现的下一个位置。# 做同样的事，但方向相反。 设置 incsearch 选项，这个选项会告诉 VIM 实时地匹配你输入的字符，以便你可以 立刻发现你的输入错误。 设置 hlsearch 选项，这个选项会告诉 VIM 高亮全部的匹配结果，以便你可以清楚地 知道当你按下 n 和 N 时，你的光标将会跳转到哪里。在写代码时这个功能可以让你 在不移动光标的情况下，看到一个变量被使用的位置。 对于结构化的文件 VIM 提供了一些更加快速的移动方式。对于 C-like 文件，可以使用 使用一些特定的命令，在某些特定的结构中快速移动。</description>
+    </item>
+    <item>
+      <title>快速计算正整数的平方根</title>
+      <link>https://jiaoshijie.github.io/posts/quick_clac_square_root/</link>
+      <pubDate>Mon, 11 Mar 2024 20:09:17 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/quick_clac_square_root/</guid>
+      <description>如何求一个正整数的平方根，最直接的方法就是
+int i_sqrt(int N) { int res = 1; while (res * res &amp;lt;= N) { res++; } return res - 1; } 但上面的计算方法非常的低效，而对于求正整数的平方根，已经有非常多的算法。
+下面介绍一个常用的正整数开平方根的算法。
+Digit by digit calculation Digit by digit calculation
+假设 $x = \sqrt{N}$ 则 $x^2 = N$ 以二进制表示 $x$，则 $x^2$ 为
+$$ x^2 = (000b_0b_1b_2 \cdots b_{n-1}b_n)^2 \tag{1} $$
+其中，$b_0$ 为 $x$ 的二进制表示中第一个为 1 的二进制位。但要注意 $b_1 \cdots b_n$ 并不一定全为 1。我们可以将公式 (1) 改为加法形式。$a_n$ 对应的为 $b_0$。
+$$ x^2 = (a_n + a_{n-1} + \cdots + a_1 + a_0)^2 \tag{2} $$</description>
+    </item>
+    <item>
+      <title>c&#43;&#43; 使用函数指针结构体改变类的虚函数表</title>
+      <link>https://jiaoshijie.github.io/posts/cpp_change_vtable_using_otable/</link>
+      <pubDate>Tue, 11 Jul 2023 21:35:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/cpp_change_vtable_using_otable/</guid>
+      <description>文中代码
+如果c++的类有虚函数那么这个类的实例对象就会有一个虚表. 我们可以通过一下代码来 改变虚表.
+#include &amp;lt;cstring&amp;gt; #include &amp;lt;iostream&amp;gt; class A { public: virtual void vfoo_1() { std::cout &amp;lt;&amp;lt; &amp;#34;a_vfoo_1\n&amp;#34;; } virtual void vfoo_2(long long a) { std::cout &amp;lt;&amp;lt; &amp;#34;a_vfoo_2: &amp;#34; &amp;lt;&amp;lt; a &amp;lt;&amp;lt; std::endl; } virtual int vfoo_3(int a, int b) { return a + b; } }; typedef void (*void_pfunc_void)(); typedef void (*void_pfunc_int)(long long); typedef int (*int_pfunc_int_int)(int, int); struct other_vtable { void_pfunc_void pf1; void_pfunc_int pf2; int_pfunc_int_int pf3; }; void g_f1() { std::cout &amp;lt;&amp;lt; &amp;#34;g_f1\n&amp;#34;; } void g_f2(long long a) { ((A *)a)-&amp;gt;vfoo_1(); printf(&amp;#34;%p\n&amp;#34;, (void *)a); // std::cout &amp;lt;&amp;lt; &amp;#34;g_f2: &amp;#34; &amp;lt;&amp;lt; a &amp;lt;&amp;lt; std::endl; } int g_f3(int a, int b) { return b * 10; } int main(void) { A *a = new A; other_vtable *ovt = new other_vtable; ovt-&amp;gt;pf1 = g_f1; ovt-&amp;gt;pf2 = g_f2; ovt-&amp;gt;pf3 = g_f3; void *ptr = a; printf(&amp;#34;%p\n&amp;#34;, a); a-&amp;gt;vfoo_1(); a-&amp;gt;vfoo_2(10); printf(&amp;#34;a-&amp;gt;vfoo_3: %d\n&amp;#34;, a-&amp;gt;vfoo_3(2, 5)); puts(&amp;#34;-------------------------------&amp;#34;); memcpy(ptr, &amp;amp;ovt, sizeof(void *)); a-&amp;gt;vfoo_1(); a-&amp;gt;vfoo_2(10); printf(&amp;#34;a-&amp;gt;vfoo_3: %d\n&amp;#34;, a-&amp;gt;vfoo_3(2, 5)); int breakpoint = 0; return 0; } 内存布局大致如下图所示:</description>
+    </item>
+    <item>
+      <title>使用 gdb 查看 c&#43;&#43; 中的虚函数表</title>
+      <link>https://jiaoshijie.github.io/posts/inspect_vtables_using_gdb_in_cpp/</link>
+      <pubDate>Sun, 09 Jul 2023 21:18:46 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/inspect_vtables_using_gdb_in_cpp/</guid>
+      <description>文中代码
+1. 使用info vtbl obj查看vtable vtable function class A { public: A() = default; ~A() = default; virtual void vfoo_1() {} virtual void vfoo_2() {} }; int main(void) { A *a = new A; int breakpoint = 0; return 0; } 当一个class有virtual function时, 这个类会有一个vtable(virtual table)来记录这些函数的入口.
+编译上面的代码, 使用gdb来debug这个程序, 使用info vtbl a可以可视化该实例对象a的vtable. 如下图所示:
+vtable class // A // / \ // / \ // B C // \ / // \ / // D class A { public: ~A() = default; virtual void a_foo() {} }; class B : virtual public A { public: virtual void b_foo() {} }; class C : virtual public A { public: virtual void c_foo() {} }; class D : public B, public C { public: }; int main(void) { D *d = new D; int breakpoint = 0; return 0; } 同样使用info vtbl d可以查看实例对象d的vtable.</description>
+    </item>
+    <item>
+      <title>00 编译器简介</title>
+      <link>https://jiaoshijie.github.io/posts/compiler/00_compiler_introduction/</link>
+      <pubDate>Sun, 17 Jul 2022 14:57:04 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/compiler/00_compiler_introduction/</guid>
+      <description>1 语言处理器(language processor) language processor可以分为两种, 一种是编译器(compiler), 一种是解释器(interpreter).
+编译器(compiler) 是将一种语言转换为另一种语言, 通常是高级语言向low-level语言转换. 在转化过程中如果有错误要向用户报告这个错误. 如果这个low-level语言是可执行的机器语言那它还可以被用户执行.
+解释器(interpreter) 是另一类的language processor, 它不会将高级语言编译成low-level语言来执行, 而是直接执行该高级语言.
+通常来说, 编译型语言要比解释型语言运行快, 但解释型语言可以更好的检查错误, 因为很多runtime error在编译期很难检测出来.
+接下来主要以编译器为主进行介绍, 首先看一下编译器在编译一个文件时的流程图.
+根据上图可以看出编译器在将源程序编译目标程序时是分步骤完成的:
+预处理(preprocess) 编译(compile) 汇编(assemble) 链接(link) 加载(load) 预处理器(preprocessor) 的作用就是将这些分散的文件聚集起来和将替换文件中的宏(macros), 将结果传递至下一个阶段(编译). 编译器(compiler) 的作用就是将预处理器的结果转化成汇编语言(assembly language), 但是也可以直接转化为机器码, 这样也就可以跳过第3步的汇编阶段了, 但是因为汇编语言也是有语义的语言因此转化起来效率高, 且汇编器的效率也很高, 因此比较典型的编译型语言(C, C++)都是先转成汇编再编译为机器码. 且汇编语言debug也比较简单. 汇编器(assembler) 的作用是将上一步产生的汇编程序转换为可重定位机器码(relocatable machine code). Relocatable code is software whose execution address can be changed.
+链接器(linker) 的作用是将产生的各个relocatable machine code文件链接在一起, 确定最终的执行地址. 加载器(loader) 的作用就是将linker生成的执行程序加载到内存当中运行. 2 编译器的结构 在上面我们提到编译器就是将一种语言转化为另一种语言. 这是很笼统的一个说法, 如果将编译器在进行细分它又可以分为两部分解析(analysis)和合成(synthesis).
+解析(analysis) 就是将源程序通过分析产生一种源程序的中间表示(中间程序), 在这个过程种如果发现语法或语义错误要提供错误信息, 以便改错.</description>
+    </item>
+    <item>
+      <title>Colors of Balls Problem</title>
+      <link>https://jiaoshijie.github.io/posts/colorsofproblem/</link>
+      <pubDate>Wed, 20 Apr 2022 13:37:58 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/colorsofproblem/</guid>
+      <description>n balls with N different colors, number of balls with each color is same, randomly choose k balls from the n balls, the expected number of colors of the k balls can be estimated as:
+$$ N\left [ 1-\prod_{r=1}^{k} \left ( \frac{\frac{n(N-1)}{N}-r+1}{n-r+1} \right ) \right ] $$
+证明 要算取出的k个球的颜色数的期望, 根据期望的定义来算的话太复杂了.
+因此, 可以先构造一个0-1分布, 取出的球中不包含一种颜色的情况用0表示, 则包含这种颜色的情况用1表示.
+可以轻易的求出取出的球中不包含一种颜色的概率为:
+$$ P_{0}=\frac{C_{n - \frac{n}{N}}^{k}}{C_{n}^{k}}=\frac{(n-\frac{n}{N})(n-\frac{n}{N}-1)\cdots(n-\frac{n}{N}-k+1)}{n(n-1)\cdots(n-k+1)}=\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1} $$
+易得$P_1=1-P_0$, 则该事件的期望为:
+$$ E_{0-1}=0\times P_0 + 1\times P_1=1-P_0=1-\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1} $$
+而对于取出k个球中颜色数的数学期望, 可以先对N个不同的颜色编号$1\cdots N$, 利用上面的0-1分布, 设1号颜色的0-1分布为{0, 1}, 2号颜色的0-1分布为{0, 1}, &amp;hellip;, N号颜色的0-1分布为{0, 1}(彼此为相互独立事件, 非互斥事件).</description>
+    </item>
+    <item>
+      <title>关于数组array和&amp;array地址相同问题</title>
+      <link>https://jiaoshijie.github.io/posts/about_array_addree_question/</link>
+      <pubDate>Sun, 17 May 2020 16:28:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/about_array_addree_question/</guid>
+      <description>文中代码
+对于如下代码:
+int array[] = { 0, 1, 2, 3, 4 }; printf(&amp;#34;%p\n&amp;#34;, &amp;amp;array); printf(&amp;#34;%p\n&amp;#34;, array); 可以看到输出的地址是相同的.
+而对于如下代码:
+int **array = (int **)malloc(sizeof(int *) * 5); for (int i = 0; i &amp;lt; 5; i++) array[i] = (int *)malloc(sizeof(int)); printf(&amp;#34;%p\n&amp;#34;, &amp;amp;array); printf(&amp;#34;%p\n&amp;#34;, array); 可以看到输出的地址是不同的. 其实对于这一段代码是没有任何疑问的, 可以很轻松的 明白为什么输出的地址不同.
+那么编译器是如何处理第一部分代码，使输出的地址相同的。
+可以通过gdb调试可以很清晰的看到编译器是如何处理这种情况的。
+int array[] = { 0, 1, 2, 3, 4 }; void *a1 = (void *)&amp;amp;array, *a2 = (void *)array; 可以看到void这一行的汇编代码为:
+0x565561e4 &amp;lt;main+71&amp;gt;: lea 0x8(%esp),%eax 0x565561e8 &amp;lt;main+75&amp;gt;: mov %eax,(%esp) 0x565561eb &amp;lt;main+78&amp;gt;: lea 0x8(%esp),%eax 0x565561ef &amp;lt;main+82&amp;gt;: mov %eax,0x4(%esp) 0x565561f3 &amp;lt;main+86&amp;gt;: mov $0x0,%eax 可以看到不管是 array 还是 &amp;amp;array 的操作都是使用的 lea 操作将 0x8(%esp) 移动到 %eax 中然后在 mov 操作赋值到相关变量中.</description>
+    </item>
+    <item>
+      <title>&#39;二维数组&#39;, &#39;指针数组&#39;和&#39;指针的指针&#39;的内存布局</title>
+      <link>https://jiaoshijie.github.io/posts/doublearray_and_pointer2pointer_in_c/</link>
+      <pubDate>Wed, 13 May 2020 23:00:33 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/doublearray_and_pointer2pointer_in_c/</guid>
+      <description>开始 下面提到的变量均是在 main 函数中申请的变量。
+文中代码
+1. 二维数组 首先讨论二维数组, 他在内存中的布局是最简单的, 考虑如下变量
+char str[][5] = { &amp;#34;jiao&amp;#34;, &amp;#34;_shi&amp;#34;, &amp;#34;_jie&amp;#34;, }; 可以通过如下代码打印各个部分的地址
+printf(&amp;#34;str addr: %p\n\n&amp;#34;, &amp;amp;str); for (int i = 0; i &amp;lt; 3; i++) { printf(&amp;#34;str[%d] addr: %p\t&amp;#34;, i, &amp;amp;str[i]); } printf(&amp;#34;\n\n&amp;#34;); for (int i = 0; i &amp;lt; 3; i++) { for (int j = 0; j &amp;lt; 5; j++) { printf(&amp;#34;str[%d][%d] addr: %p\n&amp;#34;, i, j, &amp;amp;str[i][j]); } printf(&amp;#34;\n&amp;#34;); } 可以看到地址从str[0][0]开始到结束是从低到高连续的。因为是在main函数中申请的 这个二维数组，因此它被存储在栈空间中(栈空间地址是高地址到低地址走的)，存储布局 大致如下：</description>
+    </item>
+    <item>
+      <title>Tinyhttpd学习</title>
+      <link>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</link>
+      <pubDate>Sun, 13 Oct 2019 22:46:48 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</guid>
+      <description>Introduction 第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。
+tinyhttpd官方源码在这里下载
+我的代码在这里
+一些改动:
+将cgi程序由perl语言改为python3 函数说明 startup() 初始化服务端套接字, 如果端口号没有指定，则使用随机的端口号 error_die() 打印服务端启动过程中的错误信息, 并退出程序 accept_request() 处理客户端请求 获取请求类型(GET or POST) 获取客户端要的网页文件的路径 使用stat()函数获取文件属性，判断是执行cgi还是发送普通网页 get_line() 获取网络字符串的一行(换行符为: \r\n ) unimplemented() 客户端请求不正确时(服务器不支持的请求)，发送给客户端501错误 not_found_file() 客户端请求网页内容不存在返回该函数404 cannot_execute() 不能执行cgi文件 bad_request() 客户端请求错误 serve_file() 发送网页文件到客户端 execute_cgi() 执行cgi文件并将结果发送到客户端 cgi介绍 cgi(Common Gateway Interface)规定Web服务器调用其他程序的接口协议(就是如何调用程序， 传递参数， 输出结果), 详细的cgi简介.
+cgi接口使用标准输入、标准输出和环境变量来交换数据
+该程序中使用的环境变量:
+REQUEST_METHOD: 浏览器请求方法 CONTENT_LENGTH: post请求时的form表单的内容长度 QUERY_STRING: get请求时form表单的内容放到该环境变量中 cgi从标准输入中获取数据，把数据输出到标准输出
+Linux系统函数 pipe()进程见通信的一种实现方法 // file_pipe[0] 为读取端(输出端), file_pipe[1]为写入端(输入端) int file_pipe[2]; pipe(file_pipe); fork()创建线程函数 int ipid = fork(); // 创建线程 if(ipid == 0) { // 子线程 } else { // 主线程 } dup2()重定向一个文件描述符 /** * stdin:0, stdout:1 * 下面两句将重定向stdin和stdout到file[0], 和file[1] */ dup2(file[0], 0); dup2(file[1], 1); putenv()设置环境变量(只在该进程中生效) execl()在该进程中执行外部程序 // 程序绝对路径 程序名称 参数 目标 NULL execl(&amp;#34;/bin/ls&amp;#34;, &amp;#34;ls&amp;#34;, &amp;#34;-al&amp;#34;, &amp;#34;/etc/passwd&amp;#34;, NULL); Notes: 该函数执行时，会用这个新的进程替代当前进程就是该函数执行完后，就会退出整个进程，而不会执行下面的代码, 所以通常使用子线程执行该函数 </description>
+    </item>
+    <item>
+      <title>使用 hugo 搭建 Blog 记录</title>
+      <link>https://jiaoshijie.github.io/posts/using_hugo_blog/</link>
+      <pubDate>Tue, 01 Oct 2019 01:31:00 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/using_hugo_blog/</guid>
+      <description>1. 安装 hugo 对于Arch系Linux系统使用 pacman -S hugo 其他安装方式去官网查看 2. 使用 hugo 创建 Blog hugo new site &amp;lt;MyBlog&amp;gt; &amp;lt;MyBlog&amp;gt; 为自己想创建的文件夹名称 3. 下载 hugo 主题 到项目的根目录下, 即 MyBlog 文件夹下 我个人比较喜欢使用的主题为PaperMod 有两种使用 git 管理主题的方式 第一种是直接将主题 clone 到指定目录 git clone --depth 1 &amp;lt;github url&amp;gt; themes/&amp;lt;theme name&amp;gt; 第二种是使用 git submodule 来管理主题(以PaperMod主题为例) git submodule add --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod 然后 cd themes/PaperMod git ls-remote --tags 用来查看该仓库的tag名称 git fetch --tags 将 tag 从远程仓库拉取下来 git tag 可以查看 tag 的名称 git checkout &amp;lt;tag_name&amp;gt; 切换到指定tag 切换到指定 tag 后，可以主git目录使用 git commit -a 来更改 submodule 的 tag 进行提交 日后重新 clone 该仓库到本地，不会自动 clone submodule 可以使用 git submodule update --init --depth 1 --recursive 来手动 clone 一般主题下面都有一个 exampleSite/config.</description>
+    </item>
+  </channel>
+</rss>

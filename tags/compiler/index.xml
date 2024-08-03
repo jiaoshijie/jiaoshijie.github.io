@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Compiler on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/compiler/</link>
+    <description>Recent content in Compiler on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.131.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 17 Jul 2022 14:57:04 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/compiler/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>00 编译器简介</title>
+      <link>https://jiaoshijie.github.io/posts/compiler/00_compiler_introduction/</link>
+      <pubDate>Sun, 17 Jul 2022 14:57:04 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/compiler/00_compiler_introduction/</guid>
+      <description>1 语言处理器(language processor) language processor可以分为两种, 一种是编译器(compiler), 一种是解释器(interpreter).
+编译器(compiler) 是将一种语言转换为另一种语言, 通常是高级语言向low-level语言转换. 在转化过程中如果有错误要向用户报告这个错误. 如果这个low-level语言是可执行的机器语言那它还可以被用户执行.
+解释器(interpreter) 是另一类的language processor, 它不会将高级语言编译成low-level语言来执行, 而是直接执行该高级语言.
+通常来说, 编译型语言要比解释型语言运行快, 但解释型语言可以更好的检查错误, 因为很多runtime error在编译期很难检测出来.
+接下来主要以编译器为主进行介绍, 首先看一下编译器在编译一个文件时的流程图.
+根据上图可以看出编译器在将源程序编译目标程序时是分步骤完成的:
+预处理(preprocess) 编译(compile) 汇编(assemble) 链接(link) 加载(load) 预处理器(preprocessor) 的作用就是将这些分散的文件聚集起来和将替换文件中的宏(macros), 将结果传递至下一个阶段(编译). 编译器(compiler) 的作用就是将预处理器的结果转化成汇编语言(assembly language), 但是也可以直接转化为机器码, 这样也就可以跳过第3步的汇编阶段了, 但是因为汇编语言也是有语义的语言因此转化起来效率高, 且汇编器的效率也很高, 因此比较典型的编译型语言(C, C++)都是先转成汇编再编译为机器码. 且汇编语言debug也比较简单. 汇编器(assembler) 的作用是将上一步产生的汇编程序转换为可重定位机器码(relocatable machine code). Relocatable code is software whose execution address can be changed.
+链接器(linker) 的作用是将产生的各个relocatable machine code文件链接在一起, 确定最终的执行地址. 加载器(loader) 的作用就是将linker生成的执行程序加载到内存当中运行. 2 编译器的结构 在上面我们提到编译器就是将一种语言转化为另一种语言. 这是很笼统的一个说法, 如果将编译器在进行细分它又可以分为两部分解析(analysis)和合成(synthesis).
+解析(analysis) 就是将源程序通过分析产生一种源程序的中间表示(中间程序), 在这个过程种如果发现语法或语义错误要提供错误信息, 以便改错.</description>
+    </item>
+  </channel>
+</rss>

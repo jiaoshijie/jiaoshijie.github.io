@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Math on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/math/</link>
+    <description>Recent content in Math on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.131.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 03 May 2024 19:06:23 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/math/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>常数变易法(微分方程求解)</title>
+      <link>https://jiaoshijie.github.io/posts/variation_of_parameters/</link>
+      <pubDate>Fri, 03 May 2024 19:06:23 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/variation_of_parameters/</guid>
+      <description>1. 常数变易法求解一阶线性微分方程过程 对于一阶线性微分方程:
+$$ \frac{\mathrm{d}y}{\mathrm{d}x}+P(x)y=Q(x) \tag{1} $$
+如果$Q(x)=0$则方程为齐次, $Q(x)\ne0$则方程为非齐次.
+而常数变易法的求解就是先求出齐次方程的通解
+$$ \frac{\mathrm{d}y}{\mathrm{d}x}+P(x)y=0 \tag{2} $$
+该齐次方程的通解为$y=Ce^{-\int{P(x)\mathrm{d}x}}$ $(C=\pm e^{C_1})$
+然后使用$u(x)$(以后简写为$u$)替换该通解中的常数$C$, 即便换为:
+$$ y=ue^{-\int{P(x)\mathrm{d}x}} \tag{3} $$
+然后, 将(3)代入(1)中, 得:
+$$ u^{\prime}e^{-\int{P(x)}\mathrm{d}x}=Q(x) \tag{4} $$
+通过&amp;quot;分离变量&amp;quot;即可求出$u$:
+$$ u=\int{Q(x)e^{\int{P(x)\mathrm{d}x}}\mathrm{d}x}+C \tag{5} $$
+将(5)在带回到(3)中即可求出$y$:
+$$ y=Ce^{-\int{P(x)\mathrm{d}x}}+e^{-\int{P(x)\mathrm{d}x}}\int{Q(x)e^{\int{P(x)\mathrm{d}x}}\mathrm{d}x} $$
+于是, 便得到了(1)的通解, 观察可以发现, 前面为(1)对应的齐次方程的通解, 后面为当C=0是(1)的特解, 因此得到结论:
+一阶非齐次线性方程的通解等于对应的齐次方程的通解与非齐次方程的一个特解之和.
+但是问题就是 为什么可以使用非齐次方程对应的齐次方程的通解来进行求解?, 上面的方法一气呵成只是告诉了我们应该这样做, 但我们却不知道为什么这么做.
+但我学的很蒙, 于是进行了一番搜索找到了一些好的文章, 打算自己总结一下, 相关文章都放在了参考处.
+2. 原理探讨 通过《&amp;ldquo;常数变易法&amp;quot;的探讨》文章知道我们现在使用的常数变易法只是结论, 而非推导过程.
+该结论是拉格朗日十一年的研究成果.
+因此在此介绍一些该结论得出的过程.
+首先, 对于求解一阶线性微分方程最先想到的方法就是&amp;quot;分离常量&amp;rdquo;, 于是首先对(1)进行移项操作得:
+$$ \mathrm{d}y=[Q(x)-P(x)y]\mathrm{d}x $$
+观察怎样都无法将y单独移动到左边, 因此分离常量的方法不可以求解此方程.
+于是想到使用$u=\frac{y}{x}$的方法进行求解得到:
+$$ u\prime{}x+u(1+P(x)x)=Q(x) $$</description>
+    </item>
+    <item>
+      <title>快速计算正整数的平方根</title>
+      <link>https://jiaoshijie.github.io/posts/quick_clac_square_root/</link>
+      <pubDate>Mon, 11 Mar 2024 20:09:17 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/quick_clac_square_root/</guid>
+      <description>如何求一个正整数的平方根，最直接的方法就是
+int i_sqrt(int N) { int res = 1; while (res * res &amp;lt;= N) { res++; } return res - 1; } 但上面的计算方法非常的低效，而对于求正整数的平方根，已经有非常多的算法。
+下面介绍一个常用的正整数开平方根的算法。
+Digit by digit calculation Digit by digit calculation
+假设 $x = \sqrt{N}$ 则 $x^2 = N$ 以二进制表示 $x$，则 $x^2$ 为
+$$ x^2 = (000b_0b_1b_2 \cdots b_{n-1}b_n)^2 \tag{1} $$
+其中，$b_0$ 为 $x$ 的二进制表示中第一个为 1 的二进制位。但要注意 $b_1 \cdots b_n$ 并不一定全为 1。我们可以将公式 (1) 改为加法形式。$a_n$ 对应的为 $b_0$。
+$$ x^2 = (a_n + a_{n-1} + \cdots + a_1 + a_0)^2 \tag{2} $$</description>
+    </item>
+    <item>
+      <title>Colors of Balls Problem</title>
+      <link>https://jiaoshijie.github.io/posts/colorsofproblem/</link>
+      <pubDate>Wed, 20 Apr 2022 13:37:58 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/colorsofproblem/</guid>
+      <description>n balls with N different colors, number of balls with each color is same, randomly choose k balls from the n balls, the expected number of colors of the k balls can be estimated as:
+$$ N\left [ 1-\prod_{r=1}^{k} \left ( \frac{\frac{n(N-1)}{N}-r+1}{n-r+1} \right ) \right ] $$
+证明 要算取出的k个球的颜色数的期望, 根据期望的定义来算的话太复杂了.
+因此, 可以先构造一个0-1分布, 取出的球中不包含一种颜色的情况用0表示, 则包含这种颜色的情况用1表示.
+可以轻易的求出取出的球中不包含一种颜色的概率为:
+$$ P_{0}=\frac{C_{n - \frac{n}{N}}^{k}}{C_{n}^{k}}=\frac{(n-\frac{n}{N})(n-\frac{n}{N}-1)\cdots(n-\frac{n}{N}-k+1)}{n(n-1)\cdots(n-k+1)}=\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1} $$
+易得$P_1=1-P_0$, 则该事件的期望为:
+$$ E_{0-1}=0\times P_0 + 1\times P_1=1-P_0=1-\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1} $$
+而对于取出k个球中颜色数的数学期望, 可以先对N个不同的颜色编号$1\cdots N$, 利用上面的0-1分布, 设1号颜色的0-1分布为{0, 1}, 2号颜色的0-1分布为{0, 1}, &amp;hellip;, N号颜色的0-1分布为{0, 1}(彼此为相互独立事件, 非互斥事件).</description>
+    </item>
+  </channel>
+</rss>
