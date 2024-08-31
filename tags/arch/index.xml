@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Arch on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/arch/</link>
+    <description>Recent content in Arch on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.133.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Aug 2024 00:29:55 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/arch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pacman Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pacman_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pacman_usage/</guid>
+      <description>To use pactree and paccache install pacman-contrib To install packages pacman -S package_name1 package_name2 来安装软件 pacman -S $(pacman -Ssq package_regex)来安装不太清楚名字的包 pacman -Sg package_group_name 查看一个软件包组有什么软件 pacman -S -needed package_name1 pacman 默认会重新安装软件, 即使软件已经是up to date. --needed 会避免安装已经up to date软件 一些软件会有选项, 例如Enter a selection (default=all): 1-10 15这将安装1到10和15号软件包 ^5-8 ^2 这将安装除了5-8和2号软件包之外的其他软件包 To remove packages pacman -R package_name 只移除目标软件包, 留下其依赖的软件包 pacman -Rs package_name 移除目标软件包和没有被其他软件依赖的软件包 pacman -Rsu 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令 pacman -Rsc 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件 pacman -Rdd 移除被其他包依赖的软件包, 而不移除依赖它的包.</description>
+    </item>
+    <item>
+      <title>ArchLinux_Installation</title>
+      <link>https://jiaoshijie.github.io/posts/archlinux_installation/</link>
+      <pubDate>Fri, 03 May 2024 19:46:54 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/archlinux_installation/</guid>
+      <description>一. Basic Install 制作启动盘 1. 系统启动方式 输入 ls /sys/firmware/efi/efivars 查看系统的启动方式 如果有输出，则为UEFI启动 2. 网络连接 ip link 查看网卡的名称等信息
+有线网络 使用 dhcpcd 进行有线网络连接, 和激活无限网络dhcp功能
+无线网络 使用 rfkill(Radio Frequency Kill) 检查 wifi 是否被禁用 $ rfkill list 0: phy0: Wireless LAN Soft blocked: yes // yes 为禁用, no 为未禁用(软件禁用) Hard blocked: yes // yes 为禁用, no 为未禁用(硬件禁用) 如果被禁用使用 rfkill unblock wifi 取消禁用 使用 iwctl 进行无线网络连接 iwctl$ help iwctl$ device list iwctl$ station device(name) scan iwctl$ station device(name) get-networks iwctl$ station device(name) connect SSID(name) 使用 ping archlinux.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Linux on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.133.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Aug 2024 00:29:55 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pacman Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pacman_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pacman_usage/</guid>
+      <description>To use pactree and paccache install pacman-contrib To install packages pacman -S package_name1 package_name2 来安装软件 pacman -S $(pacman -Ssq package_regex)来安装不太清楚名字的包 pacman -Sg package_group_name 查看一个软件包组有什么软件 pacman -S -needed package_name1 pacman 默认会重新安装软件, 即使软件已经是up to date. --needed 会避免安装已经up to date软件 一些软件会有选项, 例如Enter a selection (default=all): 1-10 15这将安装1到10和15号软件包 ^5-8 ^2 这将安装除了5-8和2号软件包之外的其他软件包 To remove packages pacman -R package_name 只移除目标软件包, 留下其依赖的软件包 pacman -Rs package_name 移除目标软件包和没有被其他软件依赖的软件包 pacman -Rsu 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令 pacman -Rsc 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件 pacman -Rdd 移除被其他包依赖的软件包, 而不移除依赖它的包.</description>
+    </item>
+    <item>
+      <title>mpv Usage</title>
+      <link>https://jiaoshijie.github.io/posts/mpv_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:26:44 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/mpv_usage/</guid>
+      <description>基础快捷键 keys description q 退出mpv不记录进度 Q 退出mpv记录进度 o P 查看播放进度并显示进度条 f 全屏 O 在左上角持久显示播放进度, 但不显示进度条 p space pause 9 / 调小音量 0 * 调大音量 m 静音 s 截图 T 设置mpv窗口置顶 i 查看文件详细信息 A 调整视频高宽比 { } 成倍调节播放速度 [ ] 缓慢调节播放速度 backspace 恢复速度为1 F8 列出播放列表 &amp;lt; &amp;gt; 切换播放列表中的视频 hjkl 上下左右 快进后退 循环播放 keys description l 第一下标记开始, 第二下标记结束, 第三下清除 L 设置是否循环标记段 高级快捷键 keys description C-h 开关硬件解码 , . 逐帧播放 1 2 调节对比度 3 4 亮度 5 6 调节Gamma 7 8 调节色彩饱和度Saturation d 开关Deinterlace 音视频流 keys description # 选择音频流 _ 选择视频流 Ctrl+- 调大audio-video延迟 F9 列出所有的音频流和字幕流 字幕 keys description j 选择字幕流 v 设置字幕可见 u 开关ass字幕特效 z x 调节播放字幕时间 r 调低字幕在屏幕中的位置 R t 调高字幕在屏幕中的位置 参考 mpv config </description>
+    </item>
+    <item>
+      <title>Ctags Usage</title>
+      <link>https://jiaoshijie.github.io/posts/ctags_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:18:07 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/ctags_usage/</guid>
+      <description>ctags gun/global
+C and C++ 1. 通常使用 ctags ctags -R . -f .tags -R 从当前目录递归开始生成 ctags 索引 . 当前目录 -f -o 指定生成的文件名 ctags -R --c-kinds=+p --fields=+iaS --extra=+q . -f .tags 获取更多的信息 2. 一些 ctags 基础参数 ctags 支持多种语言的索引 ctags --list-maps 查看支持的语言种类 ctags 支持很多语义但并不是默认都开启的 ctags --list-kinds 查看所有语言支持的语义及默认开启状态(后面有 off 表示默认没有开启) ctags --list-kinds={lang} 查看{lang}语言支持的语义及开启状态 使用 ctags --{lang}-kinds=+px 来开启默认不支持的语义 ctags --langmap={lang}:+.inl 可以指定某种扩展名也为该 lang 的源文件 ctags -h +.inc 指定 .inc 文件也为头文件 ctags --fields=+aiKSz 如何描述语法元素 a 表示如果是类的成员, 要标明其 access 属性(即是 public 的还是 private 的) i 表示如果有继承, 要标明父类 S 表示如果是函数, 要标明函数的 signature K 表示要显示语法元素类型的全称 z 表示在显示语法元素的类型时, 使用格式 kind:type ctags --extras=+q 要求 ctags 记录全名(类和函数名), 可以更精确的定位 ctags --exclude=lex.</description>
+    </item>
+    <item>
+      <title>Bluetooth Setup On Arch Linux</title>
+      <link>https://jiaoshijie.github.io/posts/bluetooth_setup_on_arch_linux/</link>
+      <pubDate>Sun, 04 Aug 2024 00:02:32 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/bluetooth_setup_on_arch_linux/</guid>
+      <description>Xbox series x controller 首先安装蓝牙服务 pacman -S bluez bluez-utils pulseaudio-bluetooth
+bluez 提供bluetooth服务 bluez-utils 提供bluetoothctl工具 bluez-utils-compat(开机后无法NOT Default controller available)使用这个包据说可以修复这个问题. (optional)blueman显示systray pulseaudio-bluetooth 可以连接蓝牙耳机 启动连接设备 sudo systemctl start bluetooth.service开启bluetooth服务. sudo systemctl enable bluetooth.service设置为开机启动. 然后使用bluetoothctl进行蓝牙的连接. 将用户添加到lp用户组中, 添加方法usermod -G Groupname Username, 或直接修改/etc/group文件. 首次启动蓝牙 使用help查看帮助. 首先选择设备select MAC_address 然后使用power on开启蓝牙设备 如果开启失败检查是否是蓝牙设备被block了. 使用rfkill list观察. 如果是可以rfkill unblock all or connmanctl enable bluetooth来取消所有的被block的设备. 详细使用man rfkill. 然后使用devices查看可以使用的设备. (optional)如果devices没有可用的设备. 使用scan on来扫描附近可连接的蓝牙设备. (optional)agent on或选择其他的模式(DisplayOnly KeyboardDisplay NoInputNoOutput DisplayYesNO KeyboardOnly off on)如果你清楚的话. pair MAC_address开始配对设备. 如果设备没有PIN, 可能还需要手动trust MAC_address在重新连接之前.</description>
+    </item>
+    <item>
+      <title>Pass Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pass_usage/</link>
+      <pubDate>Sat, 03 Aug 2024 23:06:40 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pass_usage/</guid>
+      <description>install pass pacman -S pass 设置GnuPG pass使用PGP(Pretty Good Privacy)密钥, 最常用的PGP实现是GnuPG(GPG), 它随linux系统一起安装.
+gpg --generate-key 来产生PGP密钥 在这个过程中会提示你输入你的名字和电子邮箱 并为密钥创建一个密码 密钥加密, 密码解密(但只有密码没有密钥也无法解密) gpg --list-keys 可以查看你创建的PGP密钥 $ gpg --list-keys /home/seth/.gnupg/pubring.kbx ----------------------------- pub ed25519 2022-01-06 [SC] [expires: 2024-01-06] 2BFF94286461216C907CBA52F067996F13EF10D8 uid [ultimate] Seth Kenlon &amp;lt;seth@example.com&amp;gt; sub cv25519 2022-01-06 [E] [expires: 2024-01-06] export and import gpg key export a gpg public key gpg --export [-a] {key-id} &amp;gt; public-key.asc export a gpg private key gpg --export-secret-keys [-a] {key-id} &amp;gt; private-key.</description>
+    </item>
+    <item>
+      <title>Linux_Little_Tricks</title>
+      <link>https://jiaoshijie.github.io/posts/linux_little_tricks/</link>
+      <pubDate>Fri, 03 May 2024 19:48:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/linux_little_tricks/</guid>
+      <description>Linux Little Tricks data model LLP64 and LP64 搜索引擎小技巧 cats and dogs Result about cats or dogs &amp;quot;cats and dogs&amp;quot; Result about exact term &amp;ldquo;cats and dogs&amp;rdquo; cats -dogs Fewer dogs in result cats +dogs More dogs in result cats filetype:pdf PDFs about cats Supported types: pdf, doc(x), xls(x), ppt(x), html * 模糊 .... 范围 intitle:标题 inurl:网址 related:相关类型 define:word etymology:&amp;quot;word,&amp;quot; joker site:drive.google.com Proxy Browser: SwitchyOmega gfwlist: https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt Terminal Proxy CapsLock -&amp;gt; Ctrl X11 xev 展示按下按键的信息 pacman -S xorg-xmodmap: xmodmap xmodmap -pke xmodmap -pke &amp;gt; ~/.</description>
+    </item>
+    <item>
+      <title>ArchLinux_Installation</title>
+      <link>https://jiaoshijie.github.io/posts/archlinux_installation/</link>
+      <pubDate>Fri, 03 May 2024 19:46:54 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/archlinux_installation/</guid>
+      <description>一. Basic Install 制作启动盘 1. 系统启动方式 输入 ls /sys/firmware/efi/efivars 查看系统的启动方式 如果有输出，则为UEFI启动 2. 网络连接 ip link 查看网卡的名称等信息
+有线网络 使用 dhcpcd 进行有线网络连接, 和激活无限网络dhcp功能
+无线网络 使用 rfkill(Radio Frequency Kill) 检查 wifi 是否被禁用 $ rfkill list 0: phy0: Wireless LAN Soft blocked: yes // yes 为禁用, no 为未禁用(软件禁用) Hard blocked: yes // yes 为禁用, no 为未禁用(硬件禁用) 如果被禁用使用 rfkill unblock wifi 取消禁用 使用 iwctl 进行无线网络连接 iwctl$ help iwctl$ device list iwctl$ station device(name) scan iwctl$ station device(name) get-networks iwctl$ station device(name) connect SSID(name) 使用 ping archlinux.</description>
+    </item>
+    <item>
+      <title>阅读 Linux 核心源代码 lib/list_sort.c</title>
+      <link>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</link>
+      <pubDate>Sat, 23 Mar 2024 14:33:19 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</guid>
+      <description>Linux 核心代码中，对链表的排序算法是一种归并排序的变种。采用的排序方式为自下而上 的排序，这种方式可以避免 cache thrashing。
+合并时机 Linux 中的对归并排序的改进主要是改变了两个链表的合并时机。该算法会有一个 pending 链表用来记录排序好的子链表，且保证每个子链表的长度都为 $2^k$。当 pending 中 即将出现第三个 $2^k$ 长度的链表时，就会合并已存在的两个 $2^k$ 长度的链表使其 变为一个 $2^{k+1}$ 长度的链表，所以在 pending 链表中永远不会存在超过 2 个 长度为 $2^k$ 的链表。
+使用一个变量 count 来追踪 pending 中 $2^k$ 长度链表的个数，可以通过 count 中 k+1 k k-1 这 3 个 bits 来确定 pending 中 $2^k$ 长度链表的个数。下表 中的 3 个 bits 分别表示 k+1 k k-1，当 k 为 0 时，认为 -1 bit 为 1。
+count $2^k$ 长度链表个数 &amp;hellip;000&amp;hellip; 0 &amp;hellip;001&amp;hellip; 0 &amp;hellip;010&amp;hellip; 0 &amp;hellip;011&amp;hellip; 1 &amp;hellip;100&amp;hellip; 1 &amp;hellip;101&amp;hellip; 2 源码分析 __attribute__((nonnull(2,3))) void list_sort(void *priv, struct list_head *head, list_cmp_func_t cmp) { struct list_head *list = head-&amp;gt;next, *pending = NULL; size_t count = 0; /* Count of pending */ if (list == head-&amp;gt;prev) /* Zero or one elements */ return; /* Convert to a null-terminated singly-linked list.</description>
+    </item>
+  </channel>
+</rss>

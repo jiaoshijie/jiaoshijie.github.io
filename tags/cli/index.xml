@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Cli on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/cli/</link>
+    <description>Recent content in Cli on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.133.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Aug 2024 00:29:55 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/cli/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pacman Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pacman_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pacman_usage/</guid>
+      <description>To use pactree and paccache install pacman-contrib To install packages pacman -S package_name1 package_name2 来安装软件 pacman -S $(pacman -Ssq package_regex)来安装不太清楚名字的包 pacman -Sg package_group_name 查看一个软件包组有什么软件 pacman -S -needed package_name1 pacman 默认会重新安装软件, 即使软件已经是up to date. --needed 会避免安装已经up to date软件 一些软件会有选项, 例如Enter a selection (default=all): 1-10 15这将安装1到10和15号软件包 ^5-8 ^2 这将安装除了5-8和2号软件包之外的其他软件包 To remove packages pacman -R package_name 只移除目标软件包, 留下其依赖的软件包 pacman -Rs package_name 移除目标软件包和没有被其他软件依赖的软件包 pacman -Rsu 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令 pacman -Rsc 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件 pacman -Rdd 移除被其他包依赖的软件包, 而不移除依赖它的包.</description>
+    </item>
+    <item>
+      <title>Pass Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pass_usage/</link>
+      <pubDate>Sat, 03 Aug 2024 23:06:40 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pass_usage/</guid>
+      <description>install pass pacman -S pass 设置GnuPG pass使用PGP(Pretty Good Privacy)密钥, 最常用的PGP实现是GnuPG(GPG), 它随linux系统一起安装.
+gpg --generate-key 来产生PGP密钥 在这个过程中会提示你输入你的名字和电子邮箱 并为密钥创建一个密码 密钥加密, 密码解密(但只有密码没有密钥也无法解密) gpg --list-keys 可以查看你创建的PGP密钥 $ gpg --list-keys /home/seth/.gnupg/pubring.kbx ----------------------------- pub ed25519 2022-01-06 [SC] [expires: 2024-01-06] 2BFF94286461216C907CBA52F067996F13EF10D8 uid [ultimate] Seth Kenlon &amp;lt;seth@example.com&amp;gt; sub cv25519 2022-01-06 [E] [expires: 2024-01-06] export and import gpg key export a gpg public key gpg --export [-a] {key-id} &amp;gt; public-key.asc export a gpg private key gpg --export-secret-keys [-a] {key-id} &amp;gt; private-key.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Regexp on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/regexp/</link>
+    <description>Recent content in Regexp on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.133.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 03 May 2024 19:51:21 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/regexp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>regular expressions cheatsheet</title>
+      <link>https://jiaoshijie.github.io/posts/regexp/</link>
+      <pubDate>Fri, 03 May 2024 19:51:21 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/regexp/</guid>
+      <description>Regular Expressions Matching Table metacharacter matching things \d \D matching all the digits(0 to 9), matching any non-digit character .(dot) matching any single character(letter, digit, whitespace, everything) [] matching a single letter inside [](square brackets) [^] matching any single character except for the letters inside [](square brackets) with the ^(hat) [-] [^-] indicating a character range to match a single character \w \W this is equivalent to the character range [A-Za-z0-9_], matching any non-alphanumeric character {} to match repetition of character * + to match either 0 or more or 1 or more of the character that it follows(it always follows a character or group) ?</description>
+    </item>
+  </channel>
+</rss>
