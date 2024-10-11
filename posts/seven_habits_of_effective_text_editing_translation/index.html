@@ -1,0 +1,237 @@
+<!doctype html><html lang=zh-cn dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>七个高效的文本编辑习惯(翻译) | Jsj's Blog</title>
+<meta name=keywords content><meta name=description content="
+原作者：Bram Moolenaar
+发表日期：November 2000
+原文章：Seven habits of effective text editing
+原作者的 Talk：Talk
+
+如果你经常编辑文本文件(比如，写代码或HTML)，你可以通过高效的使用一个好的编辑器
+来节省大量的时间。这篇文章将提供一些让你可以减少错误和更快速编辑文件的方法。
+本文将使用开源文本编辑器 VIM(Vi IMproved) 来展示这些高效编辑方法，当然这些方法
+同样适用于其它文本编辑器。选择一个正确的编辑器是迈向高效编辑的第一步。关于你
+适合使用什么样的编辑器这样的讨论，是非常浪费时间的本文不对这个问题进行讨论。但
+如果你想要寻找一个合适的编辑器，可以尝试一下 VIM，我相信它不会让你失望的。
+NOTE: VIM 命令和选项使用 this (font) 显示
+Part 1: 编辑单个文件
+1. 在文件中快速移动
+其实，大部分情况下，当我们在编辑一个文件时，并不是真的在编辑它(输入文本/改变文本)，
+而仅仅是在阅读它(检查错误/寻找一个位置来编辑)。浏览整个文件才是我们经常做的事情，
+因此如何在文件中快速移动是我们要学习的第一件事。
+在浏览文件时，我们可能经常想要搜索一段文本在文件的什么位置出现了，或找到所有
+包含一个特定单词或短语的所有行。在 VIM 中，可以简单的使用搜索命令 /pattern
+来查找文本，但可以使用一些更高效的方式来代替：
+
+如果你想要查找一个单词是否在该文件的其它位置出现了，可以使用 * 命令来快速
+搜素光标下的单词出现的下一个位置。# 做同样的事，但方向相反。
+设置 incsearch 选项，这个选项会告诉 VIM 实时地匹配你输入的字符，以便你可以
+立刻发现你的输入错误。
+设置 hlsearch 选项，这个选项会告诉 VIM 高亮全部的匹配结果，以便你可以清楚地
+知道当你按下 n 和 N 时，你的光标将会跳转到哪里。在写代码时这个功能可以让你
+在不移动光标的情况下，看到一个变量被使用的位置。
+
+对于结构化的文件 VIM 提供了一些更加快速的移动方式。对于 C-like 文件，可以使用
+使用一些特定的命令，在某些特定的结构中快速移动。"><meta name=author content="Jiao shijie"><link rel=canonical href=https://jiaoshijie.github.io/posts/seven_habits_of_effective_text_editing_translation/><meta name=google-site-verification content="XYZabc"><meta name=yandex-verification content="XYZabc"><meta name=msvalidate.01 content="XYZabc"><link crossorigin=anonymous href=/assets/css/stylesheet.611cf8c8c671ee20d7166886b78e57ad24c8123fb1dc0fde4edee77b5f66d2e2.css integrity="sha256-YRz4yMZx7iDXFmiGt45XrSTIEj+x3A/eTt7ne19m0uI=" rel="preload stylesheet" as=style><link rel=icon href=https://jiaoshijie.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://jiaoshijie.github.io/favicon.ico><link rel=icon type=image/png sizes=32x32 href=https://jiaoshijie.github.io/favicon.ico><link rel=apple-touch-icon href=https://jiaoshijie.github.io/favicon.ico><link rel=mask-icon href=https://jiaoshijie.github.io/favicon.ico><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh-cn href=https://jiaoshijie.github.io/posts/seven_habits_of_effective_text_editing_translation/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="七个高效的文本编辑习惯(翻译)"><meta property="og:description" content="
+原作者：Bram Moolenaar
+发表日期：November 2000
+原文章：Seven habits of effective text editing
+原作者的 Talk：Talk
+
+如果你经常编辑文本文件(比如，写代码或HTML)，你可以通过高效的使用一个好的编辑器
+来节省大量的时间。这篇文章将提供一些让你可以减少错误和更快速编辑文件的方法。
+本文将使用开源文本编辑器 VIM(Vi IMproved) 来展示这些高效编辑方法，当然这些方法
+同样适用于其它文本编辑器。选择一个正确的编辑器是迈向高效编辑的第一步。关于你
+适合使用什么样的编辑器这样的讨论，是非常浪费时间的本文不对这个问题进行讨论。但
+如果你想要寻找一个合适的编辑器，可以尝试一下 VIM，我相信它不会让你失望的。
+NOTE: VIM 命令和选项使用 this (font) 显示
+Part 1: 编辑单个文件
+1. 在文件中快速移动
+其实，大部分情况下，当我们在编辑一个文件时，并不是真的在编辑它(输入文本/改变文本)，
+而仅仅是在阅读它(检查错误/寻找一个位置来编辑)。浏览整个文件才是我们经常做的事情，
+因此如何在文件中快速移动是我们要学习的第一件事。
+在浏览文件时，我们可能经常想要搜索一段文本在文件的什么位置出现了，或找到所有
+包含一个特定单词或短语的所有行。在 VIM 中，可以简单的使用搜索命令 /pattern
+来查找文本，但可以使用一些更高效的方式来代替：
+
+如果你想要查找一个单词是否在该文件的其它位置出现了，可以使用 * 命令来快速
+搜素光标下的单词出现的下一个位置。# 做同样的事，但方向相反。
+设置 incsearch 选项，这个选项会告诉 VIM 实时地匹配你输入的字符，以便你可以
+立刻发现你的输入错误。
+设置 hlsearch 选项，这个选项会告诉 VIM 高亮全部的匹配结果，以便你可以清楚地
+知道当你按下 n 和 N 时，你的光标将会跳转到哪里。在写代码时这个功能可以让你
+在不移动光标的情况下，看到一个变量被使用的位置。
+
+对于结构化的文件 VIM 提供了一些更加快速的移动方式。对于 C-like 文件，可以使用
+使用一些特定的命令，在某些特定的结构中快速移动。"><meta property="og:type" content="article"><meta property="og:url" content="https://jiaoshijie.github.io/posts/seven_habits_of_effective_text_editing_translation/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-03-22T14:48:11+08:00"><meta property="article:modified_time" content="2024-03-22T14:48:11+08:00"><meta property="og:site_name" content="Jsj's Blog"><meta name=twitter:card content="summary"><meta name=twitter:title content="七个高效的文本编辑习惯(翻译)"><meta name=twitter:description content="
+原作者：Bram Moolenaar
+发表日期：November 2000
+原文章：Seven habits of effective text editing
+原作者的 Talk：Talk
+
+如果你经常编辑文本文件(比如，写代码或HTML)，你可以通过高效的使用一个好的编辑器
+来节省大量的时间。这篇文章将提供一些让你可以减少错误和更快速编辑文件的方法。
+本文将使用开源文本编辑器 VIM(Vi IMproved) 来展示这些高效编辑方法，当然这些方法
+同样适用于其它文本编辑器。选择一个正确的编辑器是迈向高效编辑的第一步。关于你
+适合使用什么样的编辑器这样的讨论，是非常浪费时间的本文不对这个问题进行讨论。但
+如果你想要寻找一个合适的编辑器，可以尝试一下 VIM，我相信它不会让你失望的。
+NOTE: VIM 命令和选项使用 this (font) 显示
+Part 1: 编辑单个文件
+1. 在文件中快速移动
+其实，大部分情况下，当我们在编辑一个文件时，并不是真的在编辑它(输入文本/改变文本)，
+而仅仅是在阅读它(检查错误/寻找一个位置来编辑)。浏览整个文件才是我们经常做的事情，
+因此如何在文件中快速移动是我们要学习的第一件事。
+在浏览文件时，我们可能经常想要搜索一段文本在文件的什么位置出现了，或找到所有
+包含一个特定单词或短语的所有行。在 VIM 中，可以简单的使用搜索命令 /pattern
+来查找文本，但可以使用一些更高效的方式来代替：
+
+如果你想要查找一个单词是否在该文件的其它位置出现了，可以使用 * 命令来快速
+搜素光标下的单词出现的下一个位置。# 做同样的事，但方向相反。
+设置 incsearch 选项，这个选项会告诉 VIM 实时地匹配你输入的字符，以便你可以
+立刻发现你的输入错误。
+设置 hlsearch 选项，这个选项会告诉 VIM 高亮全部的匹配结果，以便你可以清楚地
+知道当你按下 n 和 N 时，你的光标将会跳转到哪里。在写代码时这个功能可以让你
+在不移动光标的情况下，看到一个变量被使用的位置。
+
+对于结构化的文件 VIM 提供了一些更加快速的移动方式。对于 C-like 文件，可以使用
+使用一些特定的命令，在某些特定的结构中快速移动。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://jiaoshijie.github.io/posts/"},{"@type":"ListItem","position":2,"name":"七个高效的文本编辑习惯(翻译)","item":"https://jiaoshijie.github.io/posts/seven_habits_of_effective_text_editing_translation/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"七个高效的文本编辑习惯(翻译)","name":"七个高效的文本编辑习惯(翻译)","description":" 原作者：Bram Moolenaar\n发表日期：November 2000\n原文章：Seven habits of effective text editing\n原作者的 Talk：Talk\n如果你经常编辑文本文件(比如，写代码或HTML)，你可以通过高效的使用一个好的编辑器 来节省大量的时间。这篇文章将提供一些让你可以减少错误和更快速编辑文件的方法。\n本文将使用开源文本编辑器 VIM(Vi IMproved) 来展示这些高效编辑方法，当然这些方法 同样适用于其它文本编辑器。选择一个正确的编辑器是迈向高效编辑的第一步。关于你 适合使用什么样的编辑器这样的讨论，是非常浪费时间的本文不对这个问题进行讨论。但 如果你想要寻找一个合适的编辑器，可以尝试一下 VIM，我相信它不会让你失望的。\nNOTE: VIM 命令和选项使用 this (font) 显示\nPart 1: 编辑单个文件 1. 在文件中快速移动 其实，大部分情况下，当我们在编辑一个文件时，并不是真的在编辑它(输入文本/改变文本)， 而仅仅是在阅读它(检查错误/寻找一个位置来编辑)。浏览整个文件才是我们经常做的事情， 因此如何在文件中快速移动是我们要学习的第一件事。\n在浏览文件时，我们可能经常想要搜索一段文本在文件的什么位置出现了，或找到所有 包含一个特定单词或短语的所有行。在 VIM 中，可以简单的使用搜索命令 /pattern 来查找文本，但可以使用一些更高效的方式来代替：\n如果你想要查找一个单词是否在该文件的其它位置出现了，可以使用 * 命令来快速 搜素光标下的单词出现的下一个位置。# 做同样的事，但方向相反。 设置 incsearch 选项，这个选项会告诉 VIM 实时地匹配你输入的字符，以便你可以 立刻发现你的输入错误。 设置 hlsearch 选项，这个选项会告诉 VIM 高亮全部的匹配结果，以便你可以清楚地 知道当你按下 n 和 N 时，你的光标将会跳转到哪里。在写代码时这个功能可以让你 在不移动光标的情况下，看到一个变量被使用的位置。 对于结构化的文件 VIM 提供了一些更加快速的移动方式。对于 C-like 文件，可以使用 使用一些特定的命令，在某些特定的结构中快速移动。\n","keywords":[""],"articleBody":" 原作者：Bram Moolenaar\n发表日期：November 2000\n原文章：Seven habits of effective text editing\n原作者的 Talk：Talk\n如果你经常编辑文本文件(比如，写代码或HTML)，你可以通过高效的使用一个好的编辑器 来节省大量的时间。这篇文章将提供一些让你可以减少错误和更快速编辑文件的方法。\n本文将使用开源文本编辑器 VIM(Vi IMproved) 来展示这些高效编辑方法，当然这些方法 同样适用于其它文本编辑器。选择一个正确的编辑器是迈向高效编辑的第一步。关于你 适合使用什么样的编辑器这样的讨论，是非常浪费时间的本文不对这个问题进行讨论。但 如果你想要寻找一个合适的编辑器，可以尝试一下 VIM，我相信它不会让你失望的。\nNOTE: VIM 命令和选项使用 this (font) 显示\nPart 1: 编辑单个文件 1. 在文件中快速移动 其实，大部分情况下，当我们在编辑一个文件时，并不是真的在编辑它(输入文本/改变文本)， 而仅仅是在阅读它(检查错误/寻找一个位置来编辑)。浏览整个文件才是我们经常做的事情， 因此如何在文件中快速移动是我们要学习的第一件事。\n在浏览文件时，我们可能经常想要搜索一段文本在文件的什么位置出现了，或找到所有 包含一个特定单词或短语的所有行。在 VIM 中，可以简单的使用搜索命令 /pattern 来查找文本，但可以使用一些更高效的方式来代替：\n如果你想要查找一个单词是否在该文件的其它位置出现了，可以使用 * 命令来快速 搜素光标下的单词出现的下一个位置。# 做同样的事，但方向相反。 设置 incsearch 选项，这个选项会告诉 VIM 实时地匹配你输入的字符，以便你可以 立刻发现你的输入错误。 设置 hlsearch 选项，这个选项会告诉 VIM 高亮全部的匹配结果，以便你可以清楚地 知道当你按下 n 和 N 时，你的光标将会跳转到哪里。在写代码时这个功能可以让你 在不移动光标的情况下，看到一个变量被使用的位置。 对于结构化的文件 VIM 提供了一些更加快速的移动方式。对于 C-like 文件，可以使用 使用一些特定的命令，在某些特定的结构中快速移动。\n% 可以在一对括号之间进行跳转，#if 和 #endif 也是支持的。% 在检查 () 和 {} 是否匹配时非常有用。 [{ 可以跳转到当前代码块开始的 { 处。 gd 可以跳转到光标下变量的定义处(只支持单一文件，如定义在其它文件则无法跳转)。 这样的命令在 VIM 中还有很多(有些简单，有些非常灵巧)，要使用它们的前期是你要知道 这些命令。你可能对此非常抵触，单单要将这些命令学习一遍就可能要几周的时间，并且 学了还会忘，根本不可能记住全部的命令。但其实，你并不需要记住全部的这些命令，你 只需要记住那些能让你编辑效率提高的命令就好了。\n要发现这样的命令，可以分为以下三个步骤：\n当你在编辑时，留意你经常重复的编辑操作和这个操作会花费多少时间。 尝试寻找是否有一个命令可以更快地完成这个操作。可以通过阅读文档，询问朋友或 网络上的人来看看它们是如何完成这个操作的。 有意识地在下一次编辑中使用这个命令，训练自己，做到不用思考就使用它。 下面通过一个例子来展示如何遵循这三个步骤来找到这样的一个命令。\n比如你发现你在写 C 代码时，经常花费大量的时间寻找一个函数定义的位置。你知道 可以使用 * 来快速搜索函数的名字，但这个命令会产生大量的搜索结果(并且大部分 都是函数被调用的匹配项，而不是你想要找的定义的匹配项)。因此你想要寻找一个方式 来让这个操作变得更快。 通过浏览 VIM 的帮助文档 :h quickref，你发现了一个跳转到标签(tags)的方法。 文档详细描述了如何使用这个方法跳转到一个函数的定义，这就是你想要的。 你尝试使用 ctags 程序(一般会作为 VIM 的依赖安装上)创建了一个 tags 文件， 并学会了使用 Ctrl-] 命令，你发现它真的为你节省了大量的时间。为了简化 tags 文件 的创建流程，你在 Makefile 中添加了几行代码来自动创建该文件。 在使用上面的三个步骤时要注意以下问题：\n“我只想要完成我的工作，我没有时间来看文档然后发现新的命令”。如果你有这样的想法， 你将永远停留在计算的石器时代。有些人用记事本来完成他的所有工作，然后困惑有人可以 只用一半的时间就完成他的工作。 不要过度使用这三个步骤。如果每一件小事你都要寻找一个完美的命令来解决，你 就会没时间去思考你真正要做的事情。因此，只需要将那些重复并且消耗大量时间的操作 替换掉，然后练习可以做到肌肉记忆就可以了。这样你就可以专注在你要处理的文本上了。 在下面的讨论中将会举出一个很多人都要使用的操作，并提供一些建议。你可以将这些建议 作为你应用三个步骤来提升你编辑能力的一个启发。\n2. 不要重复的输入相同的东西 我们输入的单词是在一个有限的集合范围内的，我们输入的短语和句子也是有限的。这在 编程中更为明显。显然，你不想重复输入相同的东西。\n在编辑中，你可能经常想要将一个单词替换成另一个单词。但如果你是要对整个文件进行 这个操作，可以使用 :%s(substitute) 命令。如果是一个比较小的范围的话，还可以 使用 * 命令来这个单词的下一个位置，然后使用 cw 来改变这个单词。然后使用 n 来查找下一个位置，使用 .(dot) 来重复 cw 命令。\n. 命令是重复上一次的修改。这个个修改可以是对文本插入、删除或替换。重复(repeat) 是一个非常强大的机制。如果你能善用 .，你会发现很多的修改仅仅只需要按一下 . 键。在使用 . 时要格外小心，不能进行其它修改，不然这将会替换现在的修改。另外， 还可以使用 m 命令来标记现在的位置，以便在修改完成后回到原位置。\n有一些函数或变量的名称是很难输入的。例如，你可以又快又准的输入 XpmCreatePixmapFromData 吗？VIM 有一个补全机制可以让这件事变得非常容易。它会 查看你正在编辑的文件和其中 #include 中的文件。当你键入 XpmCr 后，按下 Ctrl-N VIM 会将它展开为 XpmCreatePixmapFromData。这个功能不仅能减少大量的重复输入， 也能避免输入错误，从而避免编译器告诉你让你去修正拼写错误。\n当你需要重复输入一个短语或句子时，也有一个比较快速的方法。VIM 有一个宏机制。你 可以输入 qa 来开始记录宏到 a 寄存器。然后你向平常那样去输入，再次按下 q 结束 记录。然后可以通过 @a 来重复宏中的操作。26 个英文字母都可以作为宏的寄存器。\n宏功能可以做很多操作，不仅仅是插入文本。当你需要做重复的事情时，可以尝试使用宏 来试试。\n在使用宏操作时要格外注意一件事，它只是单纯的重复你之前的输入。你必须要知道 你记录这个宏时要处理的文本和你重复这个宏时要处理的文本可能是不同的。比如，你记录 宏时要处理的文本向左移动 4 个字符就可以了，但你重复这个宏时所要处理的文本可能 需要向左移动 5 个字符才可以。因此在记录宏时移动操作通常使用文本对象(word, sentence) 或移动到一个特定的字符(find)。\n但需要重复的命令非常复杂时，无误地输入一次都是非常困难的。这种情况你应该写一个 脚本来取代宏操作。例如，你可以为你经常要重复输入的代码创建一个模板(一个函数头)。 你可以做任何你想做的事情。\n3. 立刻改正输错的文本 编辑时出现输入错误是很平常的，这是很难避免的。解决这个问题的诀窍是快速定位然后 更正。而编辑器应该要帮助你去做这件事。但你要告诉编辑器什么文本是错的，什么文本 是对的。\n大部分时候你会重复犯相同的错误。你的手指就是不会做你脑子想的事。可以通过定义 缩写(abbreviations)来自动更正拼写错误。下面是一些例子：\n:abbr Lunix Linux :abbr accross across :abbr hte the 这些单词将会在你输入完它们后自动更正.\n也可以使用这个方法来定义缩写。但要输入的单词很长时是非常有用的，而且这还可以避免 输入错误。例如：\n:abbr pn penguin :abbr MS mandrake Software 然而，当你真的想要输入 MS 时 VIM 依然会展开它，所以最好使用完全没有意义的字符 序列来使用这个功能。\nVIM 提供来一个智能的文本高亮机制来突出显示你的输入错误。这个机制本来是为编程语言 提供语法高亮的，但它也可以找出并高亮拼写错误。\n语法高亮(Syntax Highlighting)也支持对注释进行高亮。这听起来不是一个很有用的功能， 但一旦你使用过它，你就离不开它了。通过语法高亮你能很快地发现文本中本该是注释的 文本高亮不正确(很可能是没有输入注释前缀)，或发现代码行变成了注释(很可能是忘记 了输入注释结束符，比如 */)。这些错误在黑白文本中非常难以发现，而且要修复这些 错误通常要浪费大量时间。\n语法高亮也能够检查括号没有正确匹配的问题。一个没有匹配的 ) 将会以红色背景高亮。 然后你可以使用 % 来检查括号彼此匹配的情况，然后在正确位置插入 ( 或 )。\n其它常见的错误也可以通过语法高亮来发现。比如，错误地将 #include 写成 #included 。这在黑白文件中是很难被发现的，而在高亮的文本中 include 会高亮而 included 不会。\n举一个比较复杂的例子：对于英文文件可以使用一个包含全部单词的列表，没有在这个列表 中的单词被认为是错误的。但你对你编辑的文件设置了这个列表后，VIM 就可以高亮错误 的单词，同时 VIM 也支持添加你认为正确的单词到这个文件列表，这样这个单词就不会被 认为是错误的了。这就和一个单词处理器一样。VIM 使用脚本来实现的这个功能，因此你 可以修改它，让它适合你的工作场景。例如，仅检查编程文件中注释部分的单词拼写错误。\nPart 2: 编辑多个文件 4. 单独编辑一个文件的场景是很少的 我们通常很少会只编辑一个文件。大部分情况下，你会很多彼此相关的文件，一个接一个 地编辑或同时编辑多个。你应该要能够利用你编辑器来编辑多个文件来提高你的编辑效率。\n前面提到的 tag 方法同样可以在多个文件之间使用。通常是为你的这个项目创建一个 tags 文件。然后你就可以在项目的不同文件之间跳转来查看函数、结构体和定义类型(typedef) 的定义了。相比于手动搜索这将为你节省巨大的时间。创建一个 tags 文件是我在浏览一个 项目是要做的第一件事。\n另一个强大的功能是使用 :grep 命令来在一组文件中查找一个字符序列出现的全部位置。 VIM 会将所有的匹配项放到一个列表中(Quickfix)并跳转到列表中的第一项。:cn 命令 可以让你跳转到列表中的下一项。这当你想要改变调用函数的参数时非常有用。\n头文件通常包含很有用的信息。但在这些文件中找到一个你想看的定义会消耗很多时间。 VIM 能够搜索这些头文件，来查找你想找的单词。这个功能最常用的就是查找一个函数的 原型。将光标放到一个函数名字上面然后输入 [I。VIM 就会将它匹配到的结果放到一个 列表中展示出来。如果你想要查看某一项的更多内容，可以直接跳转到定义处。一个相似 的命令可以被用来检查你是否导入了正确的头文件。\nVIM 可以分割多个窗口来编辑多个文件。然后你可以对比它们之间的差异，在它们之间 复制/粘贴。在 VIM 中存在大量对窗口操作的命令，如打开/关闭窗口，在不同窗口之间 跳转，临时不可见该文件等。你可以通过上面提到的三个步骤来发现并学习你想使用的命令。\n多窗口的应用场景有很多。预览(preview-tag)功能就是一个很好的例子。这个功能可以让 你打开一个预览窗口但光标仍然停留在你正在编辑的文件中。例如，这个预览窗口可以 显示光标下函数的描述。如果你将光标移动到另一个函数上，这个预览窗口就会更新为 另一个函数的描述。光标下的名字也可以是你项目中包含的头文件中定义的函数或结构体。\n5. 让我们一起工作 编辑器就是为了编辑文本，E-mail 程序就是为了发送和接受邮件。操作系统就是为了运行 程序。每个程序都有它自己的事情要做并应该要将它做好。将这些程序结合起来一起使用 将会带来强大的力量。\n举一个简单的例子：你需要写一个不超过500个单词的摘要。选中摘要段落，然后将这个 段落写到 wc 程序中 vip:w !wc -w。这个外部程序 wc -w 可以用来计算总共有 多少个单词。是不是很简单？\n总会存在一些你想要的功能但编辑器没有提供。能够使用外部程序来过滤文本意味着你可以 通过外部程序来为编辑器添加功能。UNIX 的哲学就是让每一个程序做好自己的事，然后将 它们结合起来完成更复杂的任务。不幸的是，很多编辑器并不能很好地和其它程序协同工作。 例如，你不能使用另一个编辑器来替换网景(Netscape)公司的 E-mail 编辑器。你最终只能 使用一个残缺的编辑器。另一个趋势是在编辑器中包含所有的功能，Emacs 就是这种趋势 一个很好的例子(有些人戏称 Emacs 为能够进行编辑操作的操作系统)。\nVIM 和其它程序合作的功能还在努力开发中。但你已经可以在 MS-Developer Studio 和 Sniff 的编辑器中使用 VIM 了。一些 E-mail 程序(像 Mutt)就可以使用 VIM 作为外部 编辑器。并且 VIM 现在正在努力实现和Sun Workshop 协同工作。当然这个领域依然有待提升。直到我们可以得到一个系统，它的能力要比它的 各部分加起来还要强大。\n6. 结构化文本 你可能经常编辑一些具有特定结构的文本，但和 VIM 现在支持的不同。这个时候你就需要 去阅读这个编辑器的 “building blocks” 来创建你自己的宏或者插件来让 VIM 命令处理 这个文本。我们现在要讨论更加复杂的事情了。\n一个比较简单的事情是加快处理 “edit-compile-fix” 流程的速度。VIM 提供了一个 make 命令(可以用来编译你的程序)能够捕获它运行时产生的错误并跳转到第一个错误处，来让你 修复这个错误。如果你使用了一个不同的编译器，它产生的错误信息可能不会被 VIM 识别。 但你不需要自己去写一个插件来实现这个功能，而只需要简单地调整 errorformat 这个 选项就可以了。这个选项可以告诉 VIM 编辑器产生的错误信息是什么格式，以及如何从 这个格式中提取文件名和行号。这个选项默认支持 gcc 编译器，因此你应该修改它让它支持 你所使用的编译器。\n有时调整一个文件类型只需要设置几个选项或写几个宏。例如，为了在帮助文档之间跳转， 你可以写一个宏，它能捕捉在光标下单词，清空现在的缓冲区，然后把这个单词的帮助文档 读到现在的缓冲区。这是一个简单并且高效的方法来在帮助文档中的交叉引用之间跳转查看。\n使用上面提到的三个步骤，你能高效的在任何有结构的文件中编辑。你只需要思考你想要 在这个文件中做什么操作，然后寻找能完成这件事的编辑命令并开始使用它。这真的非常 简单，你只需要这样做就可以了。\nPart 3: 把它变的更锋利 7. 让这样的操作变成习惯 学习开车需要付出努力。但因为这样就要一直骑自行车吗？不，因为你意识到你需要花费 时间来学习这个新的技能。文本编辑也是一样的。你需要学习新的命令并让它们变成习惯。\n另一方面，你也不应该尝试去学习编辑器提供的所有命令。这样做是浪费时间的。大部分人 只需要学习 10%~20% 的编辑命令，就可以完成它们的工作了。但是每个人要学习的命令是 不同的。它需要你偶尔放松下来去想你是否有可以被自动化的任务。如果有一个任务你只做 一次，然后就不会在做了，那根本没有优化它的必要。但你可能可以想到前一个小时你一直 重复做的事情。然后你可以查阅文档来让这件事做的更快。或写一个宏来处理它。当它是 一个比较复杂的任务时，比如标记特定类型的文本，这时你可以在 newsgroups 或网络中 寻找是否有人已经解决了这个问题。\n这最基本的步骤也是也是最后的一步。假如你有一个重复任务，然后你发现了一个很棒的 解决方法，过了一段时间之后你忘了你是怎么做的了。这依然很没有效率。你必须重复这个 解决方法，直到形成肌肉记忆。只有这样你才可以变得真正高效。不要一次尝试学习太多的 事情。每次只学一点最终可以让你学到更多。对于那些不能让你形成肌肉记忆的技巧，可以 把它们写下来，用到的时候回去看一眼。总之，如果你时刻保持着这个目标，你会发现 你的编辑操作变得越来越高效。\n最后我想告诉大家，如果人们忽视上面的建议将会有什么样的情形发生：我经常可以看见 人们花费大量的时间在视频显示器前看这他们的屏幕，然后看看两根手指然后又看向屏幕， 反复这样。然后他们在想为什么他们会这么累。使用十根手指进行输入！这样做不仅快 而且厌倦感也比较少。每天用电脑程序训练一小时，只需几周的时间就可以学会盲打。\n结语 这个标题的灵感来自于 Stephen R. Covey 所写的一本畅销书 《The 7 habits of highly effective people》。 我想要把它推荐给每个想要解决个人或专业问题的人(谁不想要呢？)。 虽然一些人想说灵感应该是来源于 Scott Adams 所写的 《Seven years of highly defective people》一书(同样是值得推荐的!). 进入这个网站然后去 “recommended books and CDs” 这个标签.\n关于这篇文章的作者 Bram Moolenaar is the main author of Vim. He writes the core Vim functionality and selects what code submitted by many others is included. He graduated at the technical university of Delft as a computer technician. Now he mainly works on software, but still knows how to handle a soldering iron. He is founder and treasurer of ICCF Holland, which helps orphans in Uganda. He does freelance work as a systems architect, but actually spends most time working on Vim. His e-mail address: Bram AT Moolenaar.net.\n","wordCount":"550","inLanguage":"zh-cn","datePublished":"2024-03-22T14:48:11+08:00","dateModified":"2024-03-22T14:48:11+08:00","author":{"@type":"Person","name":"Jiao shijie"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://jiaoshijie.github.io/posts/seven_habits_of_effective_text_editing_translation/"},"publisher":{"@type":"Organization","name":"Jsj's Blog","logo":{"@type":"ImageObject","url":"https://jiaoshijie.github.io/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://jiaoshijie.github.io/ accesskey=h title="Home (Alt + H)"><img src=https://jiaoshijie.github.io/favicon.ico alt aria-label=logo height=35>Home</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://jiaoshijie.github.io/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://jiaoshijie.github.io/tags/ title=Tags><span>Tags</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://jiaoshijie.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://jiaoshijie.github.io/posts/>Posts</a></div><h1 class="post-title entry-hint-parent">七个高效的文本编辑习惯(翻译)</h1></header><div class=post-content><hr><p><strong>原作者</strong>：Bram Moolenaar</p><p><em>发表日期：November 2000</em></p><p><strong>原文章</strong>：<a href=https://moolenaar.net/habits.html>Seven habits of effective text editing</a></p><p><strong>原作者的 Talk</strong>：<a href="https://www.youtube.com/watch?v=p6K4iIMlouI">Talk</a></p><hr><p>如果你经常编辑文本文件(比如，写代码或HTML)，你可以通过高效的使用一个好的编辑器
+来节省大量的时间。这篇文章将提供一些让你可以减少错误和更快速编辑文件的方法。</p><p>本文将使用开源文本编辑器 VIM(Vi IMproved) 来展示这些高效编辑方法，当然这些方法
+同样适用于其它文本编辑器。选择一个正确的编辑器是迈向高效编辑的第一步。关于你
+适合使用什么样的编辑器这样的讨论，是非常浪费时间的本文不对这个问题进行讨论。但
+如果你想要寻找一个合适的编辑器，可以尝试一下 VIM，我相信它不会让你失望的。</p><p><strong>NOTE:</strong> VIM 命令和选项使用 <code>this (font)</code> 显示</p><h2 id=part-1-编辑单个文件>Part 1: 编辑单个文件<a hidden class=anchor aria-hidden=true href=#part-1-编辑单个文件>#</a></h2><h3 id=1-在文件中快速移动>1. 在文件中快速移动<a hidden class=anchor aria-hidden=true href=#1-在文件中快速移动>#</a></h3><p>其实，大部分情况下，当我们在编辑一个文件时，并不是真的在编辑它(输入文本/改变文本)，
+而仅仅是在阅读它(检查错误/寻找一个位置来编辑)。浏览整个文件才是我们经常做的事情，
+因此如何在文件中快速移动是我们要学习的第一件事。</p><p>在浏览文件时，我们可能经常想要搜索<strong>一段文本</strong>在文件的什么位置出现了，或找到所有
+包含一个特定单词或短语的所有行。在 VIM 中，可以简单的使用搜索命令 <code>/pattern</code>
+来查找文本，但可以使用一些更高效的方式来代替：</p><ul><li>如果你想要查找一个单词是否在该文件的其它位置出现了，可以使用 <code>*</code> 命令来快速
+搜素光标下的单词出现的下一个位置。<code>#</code> 做同样的事，但方向相反。</li><li>设置 <code>incsearch</code> 选项，这个选项会告诉 VIM 实时地匹配你输入的字符，以便你可以
+立刻发现你的输入错误。</li><li>设置 <code>hlsearch</code> 选项，这个选项会告诉 VIM 高亮全部的匹配结果，以便你可以清楚地
+知道当你按下 <code>n</code> 和 <code>N</code> 时，你的光标将会跳转到哪里。在写代码时这个功能可以让你
+在不移动光标的情况下，看到一个变量被使用的位置。</li></ul><p>对于结构化的文件 VIM 提供了一些更加快速的移动方式。对于 C-like 文件，可以使用
+使用一些特定的命令，在某些特定的结构中快速移动。</p><ul><li><code>%</code> 可以在一对括号之间进行跳转，<code>#if</code> 和 <code>#endif</code> 也是支持的。<code>%</code> 在检查 <code>()</code>
+和 <code>{}</code> 是否匹配时非常有用。</li><li><code>[{</code> 可以跳转到当前代码块开始的 <code>{</code> 处。</li><li><code>gd</code> 可以跳转到光标下变量的定义处(只支持单一文件，如定义在其它文件则无法跳转)。</li></ul><p>这样的命令在 VIM 中还有很多(有些简单，有些非常灵巧)，要使用它们的前期是你要知道
+这些命令。你可能对此非常抵触，单单要将这些命令学习一遍就可能要几周的时间，并且
+学了还会忘，根本不可能记住全部的命令。但其实，你并不需要记住全部的这些命令，你
+只需要记住那些能让你编辑效率提高的命令就好了。</p><p>要发现这样的命令，可以分为以下三个步骤：</p><ol><li>当你在编辑时，留意你经常重复的编辑操作和这个操作会花费多少时间。</li><li>尝试寻找是否有一个命令可以更快地完成这个操作。可以通过阅读文档，询问朋友或
+网络上的人来看看它们是如何完成这个操作的。</li><li>有意识地在下一次编辑中使用这个命令，训练自己，做到不用思考就使用它。</li></ol><p>下面通过一个例子来展示如何遵循这三个步骤来找到这样的一个命令。</p><ol><li>比如你发现你在写 C 代码时，经常花费大量的时间寻找一个函数定义的位置。你知道
+可以使用 <code>*</code> 来快速搜索函数的名字，但这个命令会产生大量的搜索结果(并且大部分
+都是函数被调用的匹配项，而不是你想要找的定义的匹配项)。因此你想要寻找一个方式
+来让这个操作变得更快。</li><li>通过浏览 VIM 的帮助文档 <code>:h quickref</code>，你发现了一个跳转到标签(tags)的方法。
+文档详细描述了如何使用这个方法跳转到一个函数的定义，这就是你想要的。</li><li>你尝试使用 ctags 程序(一般会作为 VIM 的依赖安装上)创建了一个 tags 文件，
+并学会了使用 <code>Ctrl-]</code> 命令，你发现它真的为你节省了大量的时间。为了简化 tags 文件
+的创建流程，你在 Makefile 中添加了几行代码来自动创建该文件。</li></ol><p>在使用上面的三个步骤时要注意以下问题：</p><ul><li>“我只想要完成我的工作，我没有时间来看文档然后发现新的命令”。如果你有这样的想法，
+你将永远停留在计算的石器时代。有些人用记事本来完成他的所有工作，然后困惑有人可以
+只用一半的时间就完成他的工作。</li><li><strong>不要过度使用这三个步骤</strong>。如果每一件小事你都要寻找一个完美的命令来解决，你
+就会没时间去思考你真正要做的事情。因此，只需要将那些重复并且消耗大量时间的操作
+替换掉，然后练习可以做到肌肉记忆就可以了。这样你就可以专注在你要处理的文本上了。</li></ul><p>在下面的讨论中将会举出一个很多人都要使用的操作，并提供一些建议。你可以将这些建议
+作为你应用<strong>三个步骤</strong>来提升你编辑能力的一个启发。</p><h3 id=2-不要重复的输入相同的东西>2. 不要重复的输入相同的东西<a hidden class=anchor aria-hidden=true href=#2-不要重复的输入相同的东西>#</a></h3><p>我们输入的单词是在一个有限的集合范围内的，我们输入的短语和句子也是有限的。这在
+编程中更为明显。显然，你不想重复输入相同的东西。</p><p>在编辑中，你可能经常想要将一个单词替换成另一个单词。但如果你是要对整个文件进行
+这个操作，可以使用 <code>:%s</code>(substitute) 命令。如果是一个比较小的范围的话，还可以
+使用 <code>*</code> 命令来这个单词的下一个位置，然后使用 <code>cw</code> 来改变这个单词。然后使用 <code>n</code>
+来查找下一个位置，使用 <code>.</code>(dot) 来重复 <code>cw</code> 命令。</p><p><code>.</code> 命令是重复上一次的修改。这个个修改可以是对文本插入、删除或替换。重复(repeat)
+是一个非常强大的机制。如果你能善用 <code>.</code>，你会发现很多的修改仅仅只需要按一下 <code>.</code>
+键。在使用 <code>.</code> 时要格外小心，不能进行其它修改，不然这将会替换现在的修改。另外，
+还可以使用 <code>m</code> 命令来标记现在的位置，以便在修改完成后回到原位置。</p><p>有一些函数或变量的名称是很难输入的。例如，你可以又快又准的输入
+<code>XpmCreatePixmapFromData</code> 吗？VIM 有一个补全机制可以让这件事变得非常容易。它会
+查看你正在编辑的文件和其中 <code>#include</code> 中的文件。当你键入 <code>XpmCr</code> 后，按下 <code>Ctrl-N</code>
+VIM 会将它展开为 <code>XpmCreatePixmapFromData</code>。这个功能不仅能减少大量的重复输入，
+也能避免输入错误，从而避免编译器告诉你让你去修正拼写错误。</p><p>当你需要重复输入一个短语或句子时，也有一个比较快速的方法。VIM 有一个宏机制。你
+可以输入 <code>qa</code> 来开始记录宏到 a 寄存器。然后你向平常那样去输入，再次按下 <code>q</code> 结束
+记录。然后可以通过 <code>@a</code> 来重复宏中的操作。26 个英文字母都可以作为宏的寄存器。</p><p>宏功能可以做很多操作，不仅仅是插入文本。当你需要做重复的事情时，可以尝试使用宏
+来试试。</p><p>在使用宏操作时要格外注意一件事，<strong>它只是单纯的重复你之前的输入</strong>。你必须要知道
+你记录这个宏时要处理的文本和你重复这个宏时要处理的文本可能是不同的。比如，你记录
+宏时要处理的文本向左移动 4 个字符就可以了，但你重复这个宏时所要处理的文本可能
+需要向左移动 5 个字符才可以。因此在记录宏时移动操作通常使用文本对象(word, sentence)
+或移动到一个特定的字符(find)。</p><p>但需要重复的命令非常复杂时，无误地输入一次都是非常困难的。这种情况你应该写一个
+脚本来取代宏操作。例如，你可以为你经常要重复输入的代码创建一个模板(一个函数头)。
+你可以做任何你想做的事情。</p><h3 id=3-立刻改正输错的文本>3. 立刻改正输错的文本<a hidden class=anchor aria-hidden=true href=#3-立刻改正输错的文本>#</a></h3><p>编辑时出现输入错误是很平常的，这是很难避免的。解决这个问题的诀窍是快速定位然后
+更正。而编辑器应该要帮助你去做这件事。但你要告诉编辑器什么文本是错的，什么文本
+是对的。</p><p>大部分时候你会重复犯相同的错误。你的手指就是不会做你脑子想的事。可以通过定义
+缩写(abbreviations)来自动更正拼写错误。下面是一些例子：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-vim data-lang=vim><span class=line><span class=cl><span class=p>:</span><span class=nx>abbr</span> <span class=nx>Lunix</span> <span class=nx>Linux</span>
+</span></span><span class=line><span class=cl><span class=p>:</span><span class=nx>abbr</span> <span class=nx>accross</span> <span class=nx>across</span>
+</span></span><span class=line><span class=cl><span class=p>:</span><span class=nx>abbr</span> <span class=nx>hte</span> <span class=nx>the</span>
+</span></span></code></pre></div><p>这些单词将会在你输入完它们后自动更正.</p><p>也可以使用这个方法来定义缩写。但要输入的单词很长时是非常有用的，而且这还可以避免
+输入错误。例如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-vim data-lang=vim><span class=line><span class=cl><span class=p>:</span><span class=nx>abbr</span> <span class=nx>pn</span> <span class=nx>penguin</span>
+</span></span><span class=line><span class=cl><span class=p>:</span><span class=nx>abbr</span> <span class=nx>MS</span> <span class=nx>mandrake</span> <span class=nx>Software</span>
+</span></span></code></pre></div><p>然而，当你真的想要输入 <code>MS</code> 时 VIM 依然会展开它，所以最好使用完全没有意义的字符
+序列来使用这个功能。</p><p>VIM 提供来一个智能的文本高亮机制来突出显示你的输入错误。这个机制本来是为编程语言
+提供语法高亮的，但它也可以找出并高亮拼写错误。</p><p>语法高亮(Syntax Highlighting)也支持对注释进行高亮。这听起来不是一个很有用的功能，
+但一旦你使用过它，你就离不开它了。通过语法高亮你能很快地发现文本中本该是注释的
+文本高亮不正确(很可能是没有输入注释前缀)，或发现代码行变成了注释(很可能是忘记
+了输入注释结束符，比如 <code>*/</code>)。这些错误在黑白文本中非常难以发现，而且要修复这些
+错误通常要浪费大量时间。</p><p>语法高亮也能够检查括号没有正确匹配的问题。一个没有匹配的 <code>)</code> 将会以红色背景高亮。
+然后你可以使用 <code>%</code> 来检查括号彼此匹配的情况，然后在正确位置插入 <code>(</code> 或 <code>)</code>。</p><p>其它常见的错误也可以通过语法高亮来发现。比如，错误地将 <code>#include &lt;stdio.h></code> 写成
+<code>#included &lt;stdio.h></code>。这在黑白文件中是很难被发现的，而在高亮的文本中 <code>include</code>
+会高亮而 <code>included</code> 不会。</p><p>举一个比较复杂的例子：对于英文文件可以使用一个包含全部单词的列表，没有在这个列表
+中的单词被认为是错误的。但你对你编辑的文件设置了这个列表后，VIM 就可以高亮错误
+的单词，同时 VIM 也支持添加你认为正确的单词到这个文件列表，这样这个单词就不会被
+认为是错误的了。这就和一个单词处理器一样。VIM 使用脚本来实现的这个功能，因此你
+可以修改它，让它适合你的工作场景。例如，仅检查编程文件中注释部分的单词拼写错误。</p><h2 id=part-2-编辑多个文件>Part 2: 编辑多个文件<a hidden class=anchor aria-hidden=true href=#part-2-编辑多个文件>#</a></h2><h3 id=4-单独编辑一个文件的场景是很少的>4. 单独编辑一个文件的场景是很少的<a hidden class=anchor aria-hidden=true href=#4-单独编辑一个文件的场景是很少的>#</a></h3><p>我们通常很少会只编辑一个文件。大部分情况下，你会很多彼此相关的文件，一个接一个
+地编辑或同时编辑多个。你应该要能够利用你编辑器来编辑多个文件来提高你的编辑效率。</p><p>前面提到的 tag 方法同样可以在多个文件之间使用。通常是为你的这个项目创建一个 tags
+文件。然后你就可以在项目的不同文件之间跳转来查看函数、结构体和定义类型(typedef)
+的定义了。相比于手动搜索这将为你节省巨大的时间。创建一个 tags 文件是我在浏览一个
+项目是要做的第一件事。</p><p>另一个强大的功能是使用 <code>:grep</code> 命令来在一组文件中查找一个字符序列出现的全部位置。
+VIM 会将所有的匹配项放到一个列表中(Quickfix)并跳转到列表中的第一项。<code>:cn</code> 命令
+可以让你跳转到列表中的下一项。这当你想要改变调用函数的参数时非常有用。</p><p>头文件通常包含很有用的信息。但在这些文件中找到一个你想看的定义会消耗很多时间。
+VIM 能够搜索这些头文件，来查找你想找的单词。这个功能最常用的就是查找一个函数的
+原型。将光标放到一个函数名字上面然后输入 <code>[I</code>。VIM 就会将它匹配到的结果放到一个
+列表中展示出来。如果你想要查看某一项的更多内容，可以直接跳转到定义处。一个相似
+的命令可以被用来检查你是否导入了正确的头文件。</p><p>VIM 可以分割多个窗口来编辑多个文件。然后你可以对比它们之间的差异，在它们之间
+复制/粘贴。在 VIM 中存在大量对窗口操作的命令，如打开/关闭窗口，在不同窗口之间
+跳转，临时不可见该文件等。你可以通过上面提到的三个步骤来发现并学习你想使用的命令。</p><p>多窗口的应用场景有很多。预览(preview-tag)功能就是一个很好的例子。这个功能可以让
+你打开一个预览窗口但光标仍然停留在你正在编辑的文件中。例如，这个预览窗口可以
+显示光标下函数的描述。如果你将光标移动到另一个函数上，这个预览窗口就会更新为
+另一个函数的描述。光标下的名字也可以是你项目中包含的头文件中定义的函数或结构体。</p><h3 id=5-让我们一起工作>5. 让我们一起工作<a hidden class=anchor aria-hidden=true href=#5-让我们一起工作>#</a></h3><p>编辑器就是为了编辑文本，E-mail 程序就是为了发送和接受邮件。操作系统就是为了运行
+程序。每个程序都有它自己的事情要做并应该要将它做好。将这些程序结合起来一起使用
+将会带来强大的力量。</p><p>举一个简单的例子：你需要写一个不超过500个单词的摘要。选中摘要段落，然后将这个
+段落写到 <code>wc</code> 程序中 <code>vip:w !wc -w</code>。这个外部程序 <code>wc -w</code> 可以用来计算总共有
+多少个单词。是不是很简单？</p><p>总会存在一些你想要的功能但编辑器没有提供。能够使用外部程序来过滤文本意味着你可以
+通过外部程序来为编辑器添加功能。UNIX 的哲学就是让每一个程序做好自己的事，然后将
+它们结合起来完成更复杂的任务。不幸的是，很多编辑器并不能很好地和其它程序协同工作。
+例如，你不能使用另一个编辑器来替换网景(Netscape)公司的 E-mail 编辑器。你最终只能
+使用一个残缺的编辑器。另一个趋势是在编辑器中包含所有的功能，Emacs 就是这种趋势
+一个很好的例子(有些人戏称 Emacs 为能够进行编辑操作的操作系统)。</p><p>VIM 和其它程序合作的功能还在努力开发中。但你已经可以在 MS-Developer Studio 和
+Sniff 的编辑器中使用 VIM 了。一些 E-mail 程序(像 Mutt)就可以使用 VIM 作为外部
+编辑器。并且 VIM 现在正在努力实现和<a href=https://docs.oracle.com/cd/E19957-01/806-3564/AboutWkS.html>Sun Workshop</a>
+协同工作。当然这个领域依然有待提升。直到我们可以得到一个系统，它的能力要比它的
+各部分加起来还要强大。</p><h3 id=6-结构化文本>6. 结构化文本<a hidden class=anchor aria-hidden=true href=#6-结构化文本>#</a></h3><p>你可能经常编辑一些具有特定结构的文本，但和 VIM 现在支持的不同。这个时候你就需要
+去阅读这个编辑器的 &ldquo;building blocks&rdquo; 来创建你自己的宏或者插件来让 VIM 命令处理
+这个文本。我们现在要讨论更加复杂的事情了。</p><p>一个比较简单的事情是加快处理 &ldquo;edit-compile-fix&rdquo; 流程的速度。VIM 提供了一个 <code>make</code>
+命令(可以用来编译你的程序)能够捕获它运行时产生的错误并跳转到第一个错误处，来让你
+修复这个错误。如果你使用了一个不同的编译器，它产生的错误信息可能不会被 VIM 识别。
+但你不需要自己去写一个插件来实现这个功能，而只需要简单地调整 <code>errorformat</code> 这个
+选项就可以了。这个选项可以告诉 VIM 编辑器产生的错误信息是什么格式，以及如何从
+这个格式中提取文件名和行号。这个选项默认支持 gcc 编译器，因此你应该修改它让它支持
+你所使用的编译器。</p><p>有时调整一个文件类型只需要设置几个选项或写几个宏。例如，为了在帮助文档之间跳转，
+你可以写一个宏，它能捕捉在光标下单词，清空现在的缓冲区，然后把这个单词的帮助文档
+读到现在的缓冲区。这是一个简单并且高效的方法来在帮助文档中的交叉引用之间跳转查看。</p><p>使用上面提到的三个步骤，你能高效的在任何有结构的文件中编辑。你只需要思考你想要
+在这个文件中做什么操作，然后寻找能完成这件事的编辑命令并开始使用它。这真的非常
+简单，你只需要这样做就可以了。</p><h2 id=part-3-把它变的更锋利>Part 3: 把它变的更锋利<a hidden class=anchor aria-hidden=true href=#part-3-把它变的更锋利>#</a></h2><h3 id=7-让这样的操作变成习惯>7. 让这样的操作变成习惯<a hidden class=anchor aria-hidden=true href=#7-让这样的操作变成习惯>#</a></h3><p>学习开车需要付出努力。但因为这样就要一直骑自行车吗？不，因为你意识到你需要花费
+时间来学习这个新的技能。文本编辑也是一样的。你需要学习新的命令并让它们变成习惯。</p><p>另一方面，你也不应该尝试去学习编辑器提供的所有命令。这样做是浪费时间的。大部分人
+只需要学习 10%~20% 的编辑命令，就可以完成它们的工作了。但是每个人要学习的命令是
+不同的。它需要你偶尔放松下来去想你是否有可以被自动化的任务。如果有一个任务你只做
+一次，然后就不会在做了，那根本没有优化它的必要。但你可能可以想到前一个小时你一直
+重复做的事情。然后你可以查阅文档来让这件事做的更快。或写一个宏来处理它。当它是
+一个比较复杂的任务时，比如标记特定类型的文本，这时你可以在 newsgroups 或网络中
+寻找是否有人已经解决了这个问题。</p><p>这最基本的步骤也是也是最后的一步。假如你有一个重复任务，然后你发现了一个很棒的
+解决方法，过了一段时间之后你忘了你是怎么做的了。这依然很没有效率。你必须重复这个
+解决方法，直到形成肌肉记忆。只有这样你才可以变得真正高效。不要一次尝试学习太多的
+事情。每次只学一点最终可以让你学到更多。对于那些不能让你形成肌肉记忆的技巧，可以
+把它们写下来，用到的时候回去看一眼。总之，如果你时刻保持着这个目标，你会发现
+你的编辑操作变得越来越高效。</p><p>最后我想告诉大家，如果人们忽视上面的建议将会有什么样的情形发生：我经常可以看见
+人们花费大量的时间在视频显示器前看这他们的屏幕，然后看看两根手指然后又看向屏幕，
+反复这样。然后他们在想为什么他们会这么累。使用十根手指进行输入！这样做不仅快
+而且厌倦感也比较少。每天用电脑程序训练一小时，只需几周的时间就可以学会盲打。</p><h2 id=结语>结语<a hidden class=anchor aria-hidden=true href=#结语>#</a></h2><p>这个标题的灵感来自于 Stephen R. Covey 所写的一本畅销书
+《The 7 habits of highly effective people》。
+我想要把它推荐给每个想要解决个人或专业问题的人(谁不想要呢？)。
+虽然一些人想说灵感应该是来源于 Scott Adams 所写的
+《Seven years of highly defective people》一书(同样是值得推荐的!).
+进入<a href=http://iccf-holland.org/click1.html>这个网站</a>然后去 &ldquo;recommended books and CDs&rdquo; 这个标签.</p><h2 id=关于这篇文章的作者>关于这篇文章的作者<a hidden class=anchor aria-hidden=true href=#关于这篇文章的作者>#</a></h2><p>Bram Moolenaar is the main author of Vim. He writes the core Vim functionality
+and selects what code submitted by many others is included. He graduated at
+the technical university of Delft as a computer technician. Now he mainly works
+on software, but still knows how to handle a soldering iron. He is founder and
+treasurer of ICCF Holland, which helps orphans in Uganda. He does freelance work
+as a systems architect, but actually spends most time working on Vim. His e-mail
+address: Bram AT Moolenaar.net.</p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/><span class=title>«</span><br><span>阅读 Linux 核心源代码 lib/list_sort.c</span>
+</a><a class=next href=https://jiaoshijie.github.io/posts/quick_clac_square_root/><span class=title>»</span><br><span>快速计算正整数的平方根</span></a></nav><ul class=share-buttons><li><a target=_blank rel="noopener noreferrer" aria-label="share 七个高效的文本编辑习惯(翻译) on x" href="https://x.com/intent/tweet/?text=%e4%b8%83%e4%b8%aa%e9%ab%98%e6%95%88%e7%9a%84%e6%96%87%e6%9c%ac%e7%bc%96%e8%be%91%e4%b9%a0%e6%83%af%28%e7%bf%bb%e8%af%91%29&amp;url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fseven_habits_of_effective_text_editing_translation%2f&amp;hashtags="><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446C483.971.0 512 28.03 512 62.554zM269.951 190.75 182.567 75.216H56L207.216 272.95 63.9 436.783h61.366L235.9 310.383l96.667 126.4H456L298.367 228.367l134-153.151H371.033zM127.633 110h36.468l219.38 290.065H349.5z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share 七个高效的文本编辑习惯(翻译) on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fseven_habits_of_effective_text_editing_translation%2f&amp;title=%e4%b8%83%e4%b8%aa%e9%ab%98%e6%95%88%e7%9a%84%e6%96%87%e6%9c%ac%e7%bc%96%e8%be%91%e4%b9%a0%e6%83%af%28%e7%bf%bb%e8%af%91%29&amp;summary=%e4%b8%83%e4%b8%aa%e9%ab%98%e6%95%88%e7%9a%84%e6%96%87%e6%9c%ac%e7%bc%96%e8%be%91%e4%b9%a0%e6%83%af%28%e7%bf%bb%e8%af%91%29&amp;source=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fseven_habits_of_effective_text_editing_translation%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share 七个高效的文本编辑习惯(翻译) on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fseven_habits_of_effective_text_editing_translation%2f&title=%e4%b8%83%e4%b8%aa%e9%ab%98%e6%95%88%e7%9a%84%e6%96%87%e6%9c%ac%e7%bc%96%e8%be%91%e4%b9%a0%e6%83%af%28%e7%bf%bb%e8%af%91%29"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share 七个高效的文本编辑习惯(翻译) on facebook" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fseven_habits_of_effective_text_editing_translation%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share 七个高效的文本编辑习惯(翻译) on whatsapp" href="https://api.whatsapp.com/send?text=%e4%b8%83%e4%b8%aa%e9%ab%98%e6%95%88%e7%9a%84%e6%96%87%e6%9c%ac%e7%bc%96%e8%be%91%e4%b9%a0%e6%83%af%28%e7%bf%bb%e8%af%91%29%20-%20https%3a%2f%2fjiaoshijie.github.io%2fposts%2fseven_habits_of_effective_text_editing_translation%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share 七个高效的文本编辑习惯(翻译) on telegram" href="https://telegram.me/share/url?text=%e4%b8%83%e4%b8%aa%e9%ab%98%e6%95%88%e7%9a%84%e6%96%87%e6%9c%ac%e7%bc%96%e8%be%91%e4%b9%a0%e6%83%af%28%e7%bf%bb%e8%af%91%29&amp;url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fseven_habits_of_effective_text_editing_translation%2f"><svg viewBox="2 2 28 28" height="30" width="30" fill="currentcolor"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share 七个高效的文本编辑习惯(翻译) on ycombinator" href="https://news.ycombinator.com/submitlink?t=%e4%b8%83%e4%b8%aa%e9%ab%98%e6%95%88%e7%9a%84%e6%96%87%e6%9c%ac%e7%bc%96%e8%be%91%e4%b9%a0%e6%83%af%28%e7%bf%bb%e8%af%91%29&u=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fseven_habits_of_effective_text_editing_translation%2f"><svg width="30" height="30" viewBox="0 0 512 512" fill="currentcolor" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"><path d="M449.446.0C483.971.0 512 28.03 512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446zM183.8767 87.9921h-62.034L230.6673 292.4508V424.0079h50.6655V292.4508L390.1575 87.9921H328.1233L256 238.2489z"/></svg></a></li></ul></footer></article></main><footer class=footer><span>&copy; 2024 <a href=https://jiaoshijie.github.io/>Jsj's Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script></body></html>

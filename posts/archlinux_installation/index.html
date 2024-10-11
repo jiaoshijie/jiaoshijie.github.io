@@ -1,0 +1,634 @@
+<!doctype html><html lang=zh-cn dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>ArchLinux_Installation | Jsj's Blog</title>
+<meta name=keywords content="linux,arch"><meta name=description content="一. Basic Install
+
+制作启动盘
+
+1. 系统启动方式
+
+输入 ls /sys/firmware/efi/efivars 查看系统的启动方式
+如果有输出，则为UEFI启动
+
+2. 网络连接
+ip link 查看网卡的名称等信息
+有线网络
+使用 dhcpcd 进行有线网络连接, 和激活无限网络dhcp功能
+无线网络
+
+使用 rfkill(Radio Frequency Kill) 检查 wifi 是否被禁用
+
+$ rfkill list
+
+0: phy0: Wireless LAN
+Soft blocked: yes  // yes 为禁用, no 为未禁用(软件禁用)
+Hard blocked: yes  // yes 为禁用, no 为未禁用(硬件禁用)
+
+如果被禁用使用 rfkill unblock wifi 取消禁用
+使用 iwctl 进行无线网络连接
+
+iwctl$ help
+iwctl$ device list
+iwctl$ station device(name) scan
+iwctl$ station device(name) get-networks
+iwctl$ station device(name) connect SSID(name)
+
+使用 ping archlinux.org 检查网络是否可用
+
+3. 设置系统时间 TODO
+
+timedatectl set-ntp true 确保时钟正确, 正确则没有输出
+
+
+To check the service status, use timedatectl status
+
+4. 磁盘分区
+磁盘规划
+
+EFI: 100M
+/: 100G 或者 一整块硬盘(如果是多硬盘的话)
+/home/{username}/Downloads: 剩下的空间 或 其他整块硬盘
+swap: 不设置 swap 分区
+
+分区和格式化
+
+lsblk 查看系统硬盘情况
+fdisk /dev/{disk} 用来进行磁盘分区
+
+fdisk$ m # 查看帮助
+fdisk$ g # 创建一个 GPT 分区，用来作为 EFI 分区
+fdisk$ # ...
+fdisk$ n # 用来创建其他分区
+fdisk$ # ...
+fdisk$ l # 查看支持的所有分区类型 ef(EFI 分区类型) 83(Linux 分区类型)
+fdisk$ t # 来更改创建分区的分区类型
+fdisk$ # NOTE: 将 GPT 分区改为 EFI 分区类型, 其余分区改为 Linux 分区类型
+fdisk$ w # 保存退出
+fdisk$ q # 取消修改退出
+
+使用 mkfs.{format} /dev/{disk} 格式化磁盘
+
+
+mkfs.vfat 格式化 EFI 分区
+mkfs.ext4 格式化其他分区
+NOTE: 不适用 SWAP 分区
+
+
+将根目录挂在到 /mnt 目录下, 将 EFI 分区挂载到 /mnt/efi 其余目录挂在到 /mnt/* 目录下
+
+5. 系统下载与安装
+
+ FIXME: vim /etc/pacman.d/mirrorlist 设置安装源, 可以先使用国内的源，后面在去掉就行。
+
+Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+
+
+ 安装系统基本包 pacstrap /mnt base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion
+
+ base
+ base-devel
+ linux
+ linux-headers
+ linux-firmware
+ man-db
+ man-pages
+ networkmanager
+ vim
+ bash-completion
+
+
+
+6. 生成系统自动挂载分区文件(fstab文件)
+
+genfstab -L /mnt >> /mnt/etc/fstab
+cat /mnt/etc/fstab 检查写入是否正确
+
+7. 将 root 目录由安装镜像系统切换到要安装的系统
+
+arch-chroot /mnt
+
+8. 时间区域设置
+
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+ 使用hwclock创建/etc/adjtime hwclock --systohc
+
+9. 系统本地化设计
+
+设置本地语言 vim /etc/locale.gen 找到文件中的 en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8
+locale-gen 加载设置的语言项
+打开文件 vim /etc/locale.conf 并在里面输入一行 LANG=en_US.UTF-8
+设置主机名称 vim /etc/hostname 然后输入自己定义的主机名称(sakura)
+设置本机地址 vim /etc/hosts 添加以下内容
+
+127.0.0.1 localhost
+::1       localhost
+10. 设置 root 密码
+
+passwd root
+
+11. 安装 ucode
+
+intel-CPU pacman -S intel-ucode
+AMD-CPU pacman -S amd-ucode
+
+12. bootloader
+
+Arch GRUB wiki
+pacman -S grub efibootmgr
+ pacman -S os-prober 用来检查 windows 系统, 单系统可以不装
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+vim /boot/grub/grub.cfg 修改GRUB_CMDLINE_LINUX_DEFAULT 变量中的参数
+
+去掉 quiet
+log level 由 3 变为 5, 方便排错
+ 加入 nowatchdog 可以加快开机启动速度
+
+
+ grub-mkconfig -o /boot/grub/grub.cfg
+基本系统安装完成 exit umount -R /mnt reboot
+
+二. GUI
+1. 创建一个普通用户
+
+pacman -S sudo
+useradd -m -g users -G wheel -s /bin/bash {username}
+
+-m 创建用户的home目录
+-g 指定初始的用户组
+-G 指定扩展的用户组
+-s 指定默认的shell
+
+
+设置密码 passwd {username}
+设置vim /etc/sudoers去掉注释%wheel ALL=(ALL) ALL
+
+2. X11
+
+pacman -S xorg xorg-xinit xorg-xrandr
+
+Xorg arch wiki
+xorg is a package group
+xinit 可以手动的启动 Xorg display server。
+xorg-xrandr
+
+
+pacman -S xf86-input-libinput
+
+xf86-input-libinput
+
+
+
+3. 声卡驱动
+
+ alsa-utils 配置复杂
+ pulseaudio 配置简单
+
+pulseaudio-bluetooth pulseaudio-alsa
+
+
+ pipewire 新框架(使用有问题)
+
+pipewire-media-session  A very simple session manager
+wireplumber pipewire-pulse pipewire-alsa pipewire-jack
+
+
+
+一些前端配置工具 pamixer pulsemixer pavucontrol"><meta name=author content="Jiao shijie"><link rel=canonical href=https://jiaoshijie.github.io/posts/archlinux_installation/><meta name=google-site-verification content="XYZabc"><meta name=yandex-verification content="XYZabc"><meta name=msvalidate.01 content="XYZabc"><link crossorigin=anonymous href=/assets/css/stylesheet.611cf8c8c671ee20d7166886b78e57ad24c8123fb1dc0fde4edee77b5f66d2e2.css integrity="sha256-YRz4yMZx7iDXFmiGt45XrSTIEj+x3A/eTt7ne19m0uI=" rel="preload stylesheet" as=style><link rel=icon href=https://jiaoshijie.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://jiaoshijie.github.io/favicon.ico><link rel=icon type=image/png sizes=32x32 href=https://jiaoshijie.github.io/favicon.ico><link rel=apple-touch-icon href=https://jiaoshijie.github.io/favicon.ico><link rel=mask-icon href=https://jiaoshijie.github.io/favicon.ico><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh-cn href=https://jiaoshijie.github.io/posts/archlinux_installation/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="ArchLinux_Installation"><meta property="og:description" content="一. Basic Install
+
+制作启动盘
+
+1. 系统启动方式
+
+输入 ls /sys/firmware/efi/efivars 查看系统的启动方式
+如果有输出，则为UEFI启动
+
+2. 网络连接
+ip link 查看网卡的名称等信息
+有线网络
+使用 dhcpcd 进行有线网络连接, 和激活无限网络dhcp功能
+无线网络
+
+使用 rfkill(Radio Frequency Kill) 检查 wifi 是否被禁用
+
+$ rfkill list
+
+0: phy0: Wireless LAN
+Soft blocked: yes  // yes 为禁用, no 为未禁用(软件禁用)
+Hard blocked: yes  // yes 为禁用, no 为未禁用(硬件禁用)
+
+如果被禁用使用 rfkill unblock wifi 取消禁用
+使用 iwctl 进行无线网络连接
+
+iwctl$ help
+iwctl$ device list
+iwctl$ station device(name) scan
+iwctl$ station device(name) get-networks
+iwctl$ station device(name) connect SSID(name)
+
+使用 ping archlinux.org 检查网络是否可用
+
+3. 设置系统时间 TODO
+
+timedatectl set-ntp true 确保时钟正确, 正确则没有输出
+
+
+To check the service status, use timedatectl status
+
+4. 磁盘分区
+磁盘规划
+
+EFI: 100M
+/: 100G 或者 一整块硬盘(如果是多硬盘的话)
+/home/{username}/Downloads: 剩下的空间 或 其他整块硬盘
+swap: 不设置 swap 分区
+
+分区和格式化
+
+lsblk 查看系统硬盘情况
+fdisk /dev/{disk} 用来进行磁盘分区
+
+fdisk$ m # 查看帮助
+fdisk$ g # 创建一个 GPT 分区，用来作为 EFI 分区
+fdisk$ # ...
+fdisk$ n # 用来创建其他分区
+fdisk$ # ...
+fdisk$ l # 查看支持的所有分区类型 ef(EFI 分区类型) 83(Linux 分区类型)
+fdisk$ t # 来更改创建分区的分区类型
+fdisk$ # NOTE: 将 GPT 分区改为 EFI 分区类型, 其余分区改为 Linux 分区类型
+fdisk$ w # 保存退出
+fdisk$ q # 取消修改退出
+
+使用 mkfs.{format} /dev/{disk} 格式化磁盘
+
+
+mkfs.vfat 格式化 EFI 分区
+mkfs.ext4 格式化其他分区
+NOTE: 不适用 SWAP 分区
+
+
+将根目录挂在到 /mnt 目录下, 将 EFI 分区挂载到 /mnt/efi 其余目录挂在到 /mnt/* 目录下
+
+5. 系统下载与安装
+
+ FIXME: vim /etc/pacman.d/mirrorlist 设置安装源, 可以先使用国内的源，后面在去掉就行。
+
+Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+
+
+ 安装系统基本包 pacstrap /mnt base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion
+
+ base
+ base-devel
+ linux
+ linux-headers
+ linux-firmware
+ man-db
+ man-pages
+ networkmanager
+ vim
+ bash-completion
+
+
+
+6. 生成系统自动挂载分区文件(fstab文件)
+
+genfstab -L /mnt >> /mnt/etc/fstab
+cat /mnt/etc/fstab 检查写入是否正确
+
+7. 将 root 目录由安装镜像系统切换到要安装的系统
+
+arch-chroot /mnt
+
+8. 时间区域设置
+
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+ 使用hwclock创建/etc/adjtime hwclock --systohc
+
+9. 系统本地化设计
+
+设置本地语言 vim /etc/locale.gen 找到文件中的 en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8
+locale-gen 加载设置的语言项
+打开文件 vim /etc/locale.conf 并在里面输入一行 LANG=en_US.UTF-8
+设置主机名称 vim /etc/hostname 然后输入自己定义的主机名称(sakura)
+设置本机地址 vim /etc/hosts 添加以下内容
+
+127.0.0.1 localhost
+::1       localhost
+10. 设置 root 密码
+
+passwd root
+
+11. 安装 ucode
+
+intel-CPU pacman -S intel-ucode
+AMD-CPU pacman -S amd-ucode
+
+12. bootloader
+
+Arch GRUB wiki
+pacman -S grub efibootmgr
+ pacman -S os-prober 用来检查 windows 系统, 单系统可以不装
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+vim /boot/grub/grub.cfg 修改GRUB_CMDLINE_LINUX_DEFAULT 变量中的参数
+
+去掉 quiet
+log level 由 3 变为 5, 方便排错
+ 加入 nowatchdog 可以加快开机启动速度
+
+
+ grub-mkconfig -o /boot/grub/grub.cfg
+基本系统安装完成 exit umount -R /mnt reboot
+
+二. GUI
+1. 创建一个普通用户
+
+pacman -S sudo
+useradd -m -g users -G wheel -s /bin/bash {username}
+
+-m 创建用户的home目录
+-g 指定初始的用户组
+-G 指定扩展的用户组
+-s 指定默认的shell
+
+
+设置密码 passwd {username}
+设置vim /etc/sudoers去掉注释%wheel ALL=(ALL) ALL
+
+2. X11
+
+pacman -S xorg xorg-xinit xorg-xrandr
+
+Xorg arch wiki
+xorg is a package group
+xinit 可以手动的启动 Xorg display server。
+xorg-xrandr
+
+
+pacman -S xf86-input-libinput
+
+xf86-input-libinput
+
+
+
+3. 声卡驱动
+
+ alsa-utils 配置复杂
+ pulseaudio 配置简单
+
+pulseaudio-bluetooth pulseaudio-alsa
+
+
+ pipewire 新框架(使用有问题)
+
+pipewire-media-session  A very simple session manager
+wireplumber pipewire-pulse pipewire-alsa pipewire-jack
+
+
+
+一些前端配置工具 pamixer pulsemixer pavucontrol"><meta property="og:type" content="article"><meta property="og:url" content="https://jiaoshijie.github.io/posts/archlinux_installation/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-05-03T19:46:54+08:00"><meta property="article:modified_time" content="2024-05-03T19:46:54+08:00"><meta property="og:site_name" content="Jsj's Blog"><meta name=twitter:card content="summary"><meta name=twitter:title content="ArchLinux_Installation"><meta name=twitter:description content="一. Basic Install
+
+制作启动盘
+
+1. 系统启动方式
+
+输入 ls /sys/firmware/efi/efivars 查看系统的启动方式
+如果有输出，则为UEFI启动
+
+2. 网络连接
+ip link 查看网卡的名称等信息
+有线网络
+使用 dhcpcd 进行有线网络连接, 和激活无限网络dhcp功能
+无线网络
+
+使用 rfkill(Radio Frequency Kill) 检查 wifi 是否被禁用
+
+$ rfkill list
+
+0: phy0: Wireless LAN
+Soft blocked: yes  // yes 为禁用, no 为未禁用(软件禁用)
+Hard blocked: yes  // yes 为禁用, no 为未禁用(硬件禁用)
+
+如果被禁用使用 rfkill unblock wifi 取消禁用
+使用 iwctl 进行无线网络连接
+
+iwctl$ help
+iwctl$ device list
+iwctl$ station device(name) scan
+iwctl$ station device(name) get-networks
+iwctl$ station device(name) connect SSID(name)
+
+使用 ping archlinux.org 检查网络是否可用
+
+3. 设置系统时间 TODO
+
+timedatectl set-ntp true 确保时钟正确, 正确则没有输出
+
+
+To check the service status, use timedatectl status
+
+4. 磁盘分区
+磁盘规划
+
+EFI: 100M
+/: 100G 或者 一整块硬盘(如果是多硬盘的话)
+/home/{username}/Downloads: 剩下的空间 或 其他整块硬盘
+swap: 不设置 swap 分区
+
+分区和格式化
+
+lsblk 查看系统硬盘情况
+fdisk /dev/{disk} 用来进行磁盘分区
+
+fdisk$ m # 查看帮助
+fdisk$ g # 创建一个 GPT 分区，用来作为 EFI 分区
+fdisk$ # ...
+fdisk$ n # 用来创建其他分区
+fdisk$ # ...
+fdisk$ l # 查看支持的所有分区类型 ef(EFI 分区类型) 83(Linux 分区类型)
+fdisk$ t # 来更改创建分区的分区类型
+fdisk$ # NOTE: 将 GPT 分区改为 EFI 分区类型, 其余分区改为 Linux 分区类型
+fdisk$ w # 保存退出
+fdisk$ q # 取消修改退出
+
+使用 mkfs.{format} /dev/{disk} 格式化磁盘
+
+
+mkfs.vfat 格式化 EFI 分区
+mkfs.ext4 格式化其他分区
+NOTE: 不适用 SWAP 分区
+
+
+将根目录挂在到 /mnt 目录下, 将 EFI 分区挂载到 /mnt/efi 其余目录挂在到 /mnt/* 目录下
+
+5. 系统下载与安装
+
+ FIXME: vim /etc/pacman.d/mirrorlist 设置安装源, 可以先使用国内的源，后面在去掉就行。
+
+Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+
+
+ 安装系统基本包 pacstrap /mnt base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion
+
+ base
+ base-devel
+ linux
+ linux-headers
+ linux-firmware
+ man-db
+ man-pages
+ networkmanager
+ vim
+ bash-completion
+
+
+
+6. 生成系统自动挂载分区文件(fstab文件)
+
+genfstab -L /mnt >> /mnt/etc/fstab
+cat /mnt/etc/fstab 检查写入是否正确
+
+7. 将 root 目录由安装镜像系统切换到要安装的系统
+
+arch-chroot /mnt
+
+8. 时间区域设置
+
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+ 使用hwclock创建/etc/adjtime hwclock --systohc
+
+9. 系统本地化设计
+
+设置本地语言 vim /etc/locale.gen 找到文件中的 en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8
+locale-gen 加载设置的语言项
+打开文件 vim /etc/locale.conf 并在里面输入一行 LANG=en_US.UTF-8
+设置主机名称 vim /etc/hostname 然后输入自己定义的主机名称(sakura)
+设置本机地址 vim /etc/hosts 添加以下内容
+
+127.0.0.1 localhost
+::1       localhost
+10. 设置 root 密码
+
+passwd root
+
+11. 安装 ucode
+
+intel-CPU pacman -S intel-ucode
+AMD-CPU pacman -S amd-ucode
+
+12. bootloader
+
+Arch GRUB wiki
+pacman -S grub efibootmgr
+ pacman -S os-prober 用来检查 windows 系统, 单系统可以不装
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+vim /boot/grub/grub.cfg 修改GRUB_CMDLINE_LINUX_DEFAULT 变量中的参数
+
+去掉 quiet
+log level 由 3 变为 5, 方便排错
+ 加入 nowatchdog 可以加快开机启动速度
+
+
+ grub-mkconfig -o /boot/grub/grub.cfg
+基本系统安装完成 exit umount -R /mnt reboot
+
+二. GUI
+1. 创建一个普通用户
+
+pacman -S sudo
+useradd -m -g users -G wheel -s /bin/bash {username}
+
+-m 创建用户的home目录
+-g 指定初始的用户组
+-G 指定扩展的用户组
+-s 指定默认的shell
+
+
+设置密码 passwd {username}
+设置vim /etc/sudoers去掉注释%wheel ALL=(ALL) ALL
+
+2. X11
+
+pacman -S xorg xorg-xinit xorg-xrandr
+
+Xorg arch wiki
+xorg is a package group
+xinit 可以手动的启动 Xorg display server。
+xorg-xrandr
+
+
+pacman -S xf86-input-libinput
+
+xf86-input-libinput
+
+
+
+3. 声卡驱动
+
+ alsa-utils 配置复杂
+ pulseaudio 配置简单
+
+pulseaudio-bluetooth pulseaudio-alsa
+
+
+ pipewire 新框架(使用有问题)
+
+pipewire-media-session  A very simple session manager
+wireplumber pipewire-pulse pipewire-alsa pipewire-jack
+
+
+
+一些前端配置工具 pamixer pulsemixer pavucontrol"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://jiaoshijie.github.io/posts/"},{"@type":"ListItem","position":2,"name":"ArchLinux_Installation","item":"https://jiaoshijie.github.io/posts/archlinux_installation/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"ArchLinux_Installation","name":"ArchLinux_Installation","description":"一. Basic Install 制作启动盘 1. 系统启动方式 输入 ls /sys/firmware/efi/efivars 查看系统的启动方式 如果有输出，则为UEFI启动 2. 网络连接 ip link 查看网卡的名称等信息\n有线网络 使用 dhcpcd 进行有线网络连接, 和激活无限网络dhcp功能\n无线网络 使用 rfkill(Radio Frequency Kill) 检查 wifi 是否被禁用 $ rfkill list 0: phy0: Wireless LAN Soft blocked: yes // yes 为禁用, no 为未禁用(软件禁用) Hard blocked: yes // yes 为禁用, no 为未禁用(硬件禁用) 如果被禁用使用 rfkill unblock wifi 取消禁用 使用 iwctl 进行无线网络连接 iwctl$ help iwctl$ device list iwctl$ station device(name) scan iwctl$ station device(name) get-networks iwctl$ station device(name) connect SSID(name) 使用 ping archlinux.org 检查网络是否可用 3. 设置系统时间 TODO timedatectl set-ntp true 确保时钟正确, 正确则没有输出 To check the service status, use timedatectl status 4. 磁盘分区 磁盘规划 EFI: 100M /: 100G 或者 一整块硬盘(如果是多硬盘的话) /home/{username}/Downloads: 剩下的空间 或 其他整块硬盘 swap: 不设置 swap 分区 分区和格式化 lsblk 查看系统硬盘情况 fdisk /dev/{disk} 用来进行磁盘分区 fdisk$ m # 查看帮助 fdisk$ g # 创建一个 GPT 分区，用来作为 EFI 分区 fdisk$ # ... fdisk$ n # 用来创建其他分区 fdisk$ # ... fdisk$ l # 查看支持的所有分区类型 ef(EFI 分区类型) 83(Linux 分区类型) fdisk$ t # 来更改创建分区的分区类型 fdisk$ # NOTE: 将 GPT 分区改为 EFI 分区类型, 其余分区改为 Linux 分区类型 fdisk$ w # 保存退出 fdisk$ q # 取消修改退出 使用 mkfs.{format} /dev/{disk} 格式化磁盘 mkfs.vfat 格式化 EFI 分区 mkfs.ext4 格式化其他分区 NOTE: 不适用 SWAP 分区 将根目录挂在到 /mnt 目录下, 将 EFI 分区挂载到 /mnt/efi 其余目录挂在到 /mnt/* 目录下 5. 系统下载与安装 FIXME: vim /etc/pacman.d/mirrorlist 设置安装源, 可以先使用国内的源，后面在去掉就行。 Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch 安装系统基本包 pacstrap /mnt base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion 6. 生成系统自动挂载分区文件(fstab文件) genfstab -L /mnt \u0026gt;\u0026gt; /mnt/etc/fstab cat /mnt/etc/fstab 检查写入是否正确 7. 将 root 目录由安装镜像系统切换到要安装的系统 arch-chroot /mnt 8. 时间区域设置 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 使用hwclock创建/etc/adjtime hwclock --systohc 9. 系统本地化设计 设置本地语言 vim /etc/locale.gen 找到文件中的 en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8 locale-gen 加载设置的语言项 打开文件 vim /etc/locale.conf 并在里面输入一行 LANG=en_US.UTF-8 设置主机名称 vim /etc/hostname 然后输入自己定义的主机名称(sakura) 设置本机地址 vim /etc/hosts 添加以下内容 127.0.0.1 localhost ::1 localhost 10. 设置 root 密码 passwd root 11. 安装 ucode intel-CPU pacman -S intel-ucode AMD-CPU pacman -S amd-ucode 12. bootloader Arch GRUB wiki pacman -S grub efibootmgr pacman -S os-prober 用来检查 windows 系统, 单系统可以不装 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB vim /boot/grub/grub.cfg 修改GRUB_CMDLINE_LINUX_DEFAULT 变量中的参数 去掉 quiet log level 由 3 变为 5, 方便排错 加入 nowatchdog 可以加快开机启动速度 grub-mkconfig -o /boot/grub/grub.cfg 基本系统安装完成 exit umount -R /mnt reboot 二. GUI 1. 创建一个普通用户 pacman -S sudo useradd -m -g users -G wheel -s /bin/bash {username} -m 创建用户的home目录 -g 指定初始的用户组 -G 指定扩展的用户组 -s 指定默认的shell 设置密码 passwd {username} 设置vim /etc/sudoers去掉注释%wheel ALL=(ALL) ALL 2. X11 pacman -S xorg xorg-xinit xorg-xrandr Xorg arch wiki xorg is a package group xinit 可以手动的启动 Xorg display server。 xorg-xrandr pacman -S xf86-input-libinput xf86-input-libinput 3. 声卡驱动 alsa-utils 配置复杂 pulseaudio 配置简单 pulseaudio-bluetooth pulseaudio-alsa pipewire 新框架(使用有问题) pipewire-media-session A very simple session manager wireplumber pipewire-pulse pipewire-alsa pipewire-jack 一些前端配置工具 pamixer pulsemixer pavucontrol\n","keywords":["linux","arch"],"articleBody":"一. Basic Install 制作启动盘 1. 系统启动方式 输入 ls /sys/firmware/efi/efivars 查看系统的启动方式 如果有输出，则为UEFI启动 2. 网络连接 ip link 查看网卡的名称等信息\n有线网络 使用 dhcpcd 进行有线网络连接, 和激活无限网络dhcp功能\n无线网络 使用 rfkill(Radio Frequency Kill) 检查 wifi 是否被禁用 $ rfkill list 0: phy0: Wireless LAN Soft blocked: yes // yes 为禁用, no 为未禁用(软件禁用) Hard blocked: yes // yes 为禁用, no 为未禁用(硬件禁用) 如果被禁用使用 rfkill unblock wifi 取消禁用 使用 iwctl 进行无线网络连接 iwctl$ help iwctl$ device list iwctl$ station device(name) scan iwctl$ station device(name) get-networks iwctl$ station device(name) connect SSID(name) 使用 ping archlinux.org 检查网络是否可用 3. 设置系统时间 TODO timedatectl set-ntp true 确保时钟正确, 正确则没有输出 To check the service status, use timedatectl status 4. 磁盘分区 磁盘规划 EFI: 100M /: 100G 或者 一整块硬盘(如果是多硬盘的话) /home/{username}/Downloads: 剩下的空间 或 其他整块硬盘 swap: 不设置 swap 分区 分区和格式化 lsblk 查看系统硬盘情况 fdisk /dev/{disk} 用来进行磁盘分区 fdisk$ m # 查看帮助 fdisk$ g # 创建一个 GPT 分区，用来作为 EFI 分区 fdisk$ # ... fdisk$ n # 用来创建其他分区 fdisk$ # ... fdisk$ l # 查看支持的所有分区类型 ef(EFI 分区类型) 83(Linux 分区类型) fdisk$ t # 来更改创建分区的分区类型 fdisk$ # NOTE: 将 GPT 分区改为 EFI 分区类型, 其余分区改为 Linux 分区类型 fdisk$ w # 保存退出 fdisk$ q # 取消修改退出 使用 mkfs.{format} /dev/{disk} 格式化磁盘 mkfs.vfat 格式化 EFI 分区 mkfs.ext4 格式化其他分区 NOTE: 不适用 SWAP 分区 将根目录挂在到 /mnt 目录下, 将 EFI 分区挂载到 /mnt/efi 其余目录挂在到 /mnt/* 目录下 5. 系统下载与安装 FIXME: vim /etc/pacman.d/mirrorlist 设置安装源, 可以先使用国内的源，后面在去掉就行。 Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch 安装系统基本包 pacstrap /mnt base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion 6. 生成系统自动挂载分区文件(fstab文件) genfstab -L /mnt \u003e\u003e /mnt/etc/fstab cat /mnt/etc/fstab 检查写入是否正确 7. 将 root 目录由安装镜像系统切换到要安装的系统 arch-chroot /mnt 8. 时间区域设置 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 使用hwclock创建/etc/adjtime hwclock --systohc 9. 系统本地化设计 设置本地语言 vim /etc/locale.gen 找到文件中的 en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8 locale-gen 加载设置的语言项 打开文件 vim /etc/locale.conf 并在里面输入一行 LANG=en_US.UTF-8 设置主机名称 vim /etc/hostname 然后输入自己定义的主机名称(sakura) 设置本机地址 vim /etc/hosts 添加以下内容 127.0.0.1 localhost ::1 localhost 10. 设置 root 密码 passwd root 11. 安装 ucode intel-CPU pacman -S intel-ucode AMD-CPU pacman -S amd-ucode 12. bootloader Arch GRUB wiki pacman -S grub efibootmgr pacman -S os-prober 用来检查 windows 系统, 单系统可以不装 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB vim /boot/grub/grub.cfg 修改GRUB_CMDLINE_LINUX_DEFAULT 变量中的参数 去掉 quiet log level 由 3 变为 5, 方便排错 加入 nowatchdog 可以加快开机启动速度 grub-mkconfig -o /boot/grub/grub.cfg 基本系统安装完成 exit umount -R /mnt reboot 二. GUI 1. 创建一个普通用户 pacman -S sudo useradd -m -g users -G wheel -s /bin/bash {username} -m 创建用户的home目录 -g 指定初始的用户组 -G 指定扩展的用户组 -s 指定默认的shell 设置密码 passwd {username} 设置vim /etc/sudoers去掉注释%wheel ALL=(ALL) ALL 2. X11 pacman -S xorg xorg-xinit xorg-xrandr Xorg arch wiki xorg is a package group xinit 可以手动的启动 Xorg display server。 xorg-xrandr pacman -S xf86-input-libinput xf86-input-libinput 3. 声卡驱动 alsa-utils 配置复杂 pulseaudio 配置简单 pulseaudio-bluetooth pulseaudio-alsa pipewire 新框架(使用有问题) pipewire-media-session A very simple session manager wireplumber pipewire-pulse pipewire-alsa pipewire-jack 一些前端配置工具 pamixer pulsemixer pavucontrol\n4. 笔记本电源管理 TODO: 目前没有使用 tlp tlp-rdw simply install it and forget it sudo systemctl enable tlp.service sudo systemctl unmask systemd-rfkill.service sudo systemctl unmask systemd-rfkill.socket 5. 下载 32 位的程序及添加 Chaotic-AUR(将AUR中的包编译成二进制下载) 修改 vim /etc/pacman.conf, 取消注释\n[multilib] Include = /etc/pacman.d/mirrorlist 添加 Chaotic-AUR 仓库 6. 设置 DNS 修改 vim /etc/resolv.conf, 删除已有内容, 添加以下内容\nnameserver 8.8.8.8 nameserver 2001:4860:4860::8888 nameserver 8.8.4.4 nameserver 2001:4860:4860::8844 chattr +i /etc/resolv.conf 防止该文件被重写 chattr 可以设置文件的属性 +i 为指定文件增加 i 属性，i 属性表示不可修改 lsattr 可以查看一个文件的属性 7. 显卡驱动 显卡驱动文档 lspci -v | grep -A1 -e VGA -e 3D 验证显卡信息 intel mesa lib32-mesa vulkan-intel lib32-vulkan-intel AMD xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau Nvidia 显卡驱动 NVIDIA nvidia nvidia-settings lib32-nvidia-utils 双显卡 NVIDIA Optimus 安装 mesa-demos 后，可使用 glxinfo | grep \"OpenGL renderer\" 来查看当前使用的显卡。 Bumblebee 该方式是在通电情况下, 使用集成显卡进行显示管理, 而独立显卡进行复杂的渲染工作, 并将要显示的内容传送到集成显卡上进行显示, 当使用电池时将关闭独立显卡.\n安装显卡驱动 安装bumblebee来管理独立显卡的使用 pacman -S bumblebee bbswitch 修改配置文件 /etc/bumblebee/bumblebee.conf 将Driver的值设置为 nvidia, 来让其使用nvidia驱动, 然后将PMMethod的值设置为 bbswitch 让它使用bbswitch来管理显卡 将要使用Bumblebee的用户添加到bumblebee组中，gpasswd -a username bumblebee. 并将bumblebeed服务设为开机启动, systemctl enable bumblebeed 重启计算机. 需要mesa-demos软件包, 使用 optirun glxgears -info 查看bumblebee是否正常工作, 如果有显示则代表正常工作. 当使用CUDA程序时可能bumblebee不会启动(如: python-pytorch)可以通过以下操作来进行使用CUDA程序:\n使用 sudo tee /proc/acpi/bbswitch \u003c\u003c\u003c ON 来启动nvidia 使用 sudo rmmod nvidia nvidia_uvm nvidia_modeset 和 sudo tee /proc/acpi/bbswitch \u003c\u003c\u003c OFF 来关闭nvidia在使用完CUDA程序之后. optimus-manager (recommended) paru -S optimus-manager sudo systemctl enable optimus-manager 设置optimus-manager在.xinitrc中使用 optimus-manager-github 8. 安装字体和输入法 英文字体 ttf-linux-libertine ttf-dejavu ttf-ubuntu-font-family noto-fonts 中文字体 Chinese fonts List wqy-microhei noto-fonts-cjk(Chinese, Japanese, Korean fonts) 等宽字体 programming fonts review adobe-source-code-pro-fonts ttf-hack ttf-monaspace-variable 图标字体 ttf-sourcecodepro-nerd emoji 字体 noto-fonts-emoji ttf-joypixels Linux 本地化设置 archlinux字体配置 en_US.UTF-8 和 zh_CN.UTF-8 的区别, 程序的默认语言不同, 但字符集都是UTF-8, 可以显示的文字相同. locale.conf 文件命名格式 \u003c语言\u003e_\u003c地区名\u003e.\u003c字符编码名称\u003e 和本地化有关的变量如下，优先级 LC_ALL \u003e LC_*\u003e LANG\nLANG=en_US.UTF-8 LC_CTYPE=\"en_US.UTF-8\" # 用于字符分类和字符串处理, 控制所有字符的处理方式, 包括字符编码, 字符是单字节还是多字节, 如何打印等 LC_NUMERIC=\"en_US.UTF-8\" # 数字显示 LC_TIME=\"en_US.UTF-8\" # 时间显示格式 LC_COLLATE=\"en_US.UTF-8\" # 比较和排序习惯 LC_MONETARY=\"en_US.UTF-8\" # 货币单位 LC_MESSAGES=\"en_US.UTF-8\" # 用于控制程序输出时所使用的语言, 主要是提示信息, 错误信息, 状态信息, 标题, 标签, 按钮和菜单等 LC_PAPER=\"en_US.UTF-8\" # 默认纸张尺寸大小 LC_NAME=\"en_US.UTF-8\" # 姓名书写方式 LC_ADDRESS=\"en_US.UTF-8\" # 地址书写方式 LC_TELEPHONE=\"en_US.UTF-8\" # 电话号码书写方式 LC_MEASUREMENT=\"en_US.UTF-8\" # 度量单位表达方式 LC_IDENTIFICATION=\"en_US.UTF-8\" # 对 locale 自身包含信息的概述 LC_ALL= 安装输入法 fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki 将以下配置放入 ~/.bashrc 中如果使用 bash。 export XMODIFIERS=@im=fcitx export GTK_IM_MODULE=fcitx export QT_IM_MODULE=fcitx export INPUT_METHOD=fcitx export SDL_IM_MODULE=fcitx export GLFW_IM_MODULE=ibus 9. dwm 安装 dwm ","wordCount":"735","inLanguage":"zh-cn","datePublished":"2024-05-03T19:46:54+08:00","dateModified":"2024-05-03T19:46:54+08:00","author":{"@type":"Person","name":"Jiao shijie"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://jiaoshijie.github.io/posts/archlinux_installation/"},"publisher":{"@type":"Organization","name":"Jsj's Blog","logo":{"@type":"ImageObject","url":"https://jiaoshijie.github.io/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://jiaoshijie.github.io/ accesskey=h title="Home (Alt + H)"><img src=https://jiaoshijie.github.io/favicon.ico alt aria-label=logo height=35>Home</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://jiaoshijie.github.io/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://jiaoshijie.github.io/tags/ title=Tags><span>Tags</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://jiaoshijie.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://jiaoshijie.github.io/posts/>Posts</a></div><h1 class="post-title entry-hint-parent">ArchLinux_Installation</h1></header><div class=post-content><h2 id=一-basic-install>一. Basic Install<a hidden class=anchor aria-hidden=true href=#一-basic-install>#</a></h2><ul><li><a href=https://wiki.archlinux.org/title/USB_flash_installation_medium>制作启动盘</a></li></ul><h3 id=1-系统启动方式>1. 系统启动方式<a hidden class=anchor aria-hidden=true href=#1-系统启动方式>#</a></h3><ol><li>输入 <code>ls /sys/firmware/efi/efivars</code> 查看系统的启动方式</li><li>如果有输出，则为UEFI启动</li></ol><h3 id=2-网络连接>2. 网络连接<a hidden class=anchor aria-hidden=true href=#2-网络连接>#</a></h3><p><code>ip link</code> 查看网卡的名称等信息</p><h4 id=有线网络>有线网络<a hidden class=anchor aria-hidden=true href=#有线网络>#</a></h4><p>使用 <code>dhcpcd</code> 进行有线网络连接, 和激活无限网络dhcp功能</p><h4 id=无线网络>无线网络<a hidden class=anchor aria-hidden=true href=#无线网络>#</a></h4><ol><li>使用 <code>rfkill</code>(Radio Frequency Kill) 检查 wifi 是否被禁用</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ rfkill list
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>0: phy0: Wireless LAN
+</span></span><span class=line><span class=cl>Soft blocked: yes  // yes 为禁用, no 为未禁用<span class=o>(</span>软件禁用<span class=o>)</span>
+</span></span><span class=line><span class=cl>Hard blocked: yes  // yes 为禁用, no 为未禁用<span class=o>(</span>硬件禁用<span class=o>)</span>
+</span></span></code></pre></div><ol start=2><li>如果被禁用使用 <code>rfkill unblock wifi</code> 取消禁用</li><li>使用 <code>iwctl</code> 进行无线网络连接</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>iwctl$ <span class=nb>help</span>
+</span></span><span class=line><span class=cl>iwctl$ device list
+</span></span><span class=line><span class=cl>iwctl$ station device<span class=o>(</span>name<span class=o>)</span> scan
+</span></span><span class=line><span class=cl>iwctl$ station device<span class=o>(</span>name<span class=o>)</span> get-networks
+</span></span><span class=line><span class=cl>iwctl$ station device<span class=o>(</span>name<span class=o>)</span> connect SSID<span class=o>(</span>name<span class=o>)</span>
+</span></span></code></pre></div><ol start=4><li>使用 <code>ping archlinux.org</code> 检查网络是否可用</li></ol><h3 id=3-设置系统时间-todo>3. 设置系统时间 TODO<a hidden class=anchor aria-hidden=true href=#3-设置系统时间-todo>#</a></h3><ol><li><code>timedatectl set-ntp true</code> 确保时钟正确, 正确则没有输出</li></ol><ul><li>To check the service status, use <code>timedatectl status</code></li></ul><h3 id=4-磁盘分区>4. 磁盘分区<a hidden class=anchor aria-hidden=true href=#4-磁盘分区>#</a></h3><h4 id=磁盘规划>磁盘规划<a hidden class=anchor aria-hidden=true href=#磁盘规划>#</a></h4><ul><li><strong>EFI</strong>: 100M</li><li><strong>/</strong>: 100G 或者 一整块硬盘(如果是多硬盘的话)</li><li><strong>/home/{username}/Downloads</strong>: 剩下的空间 或 其他整块硬盘</li><li><strong>swap</strong>: 不设置 swap 分区</li></ul><h4 id=分区和格式化>分区和格式化<a hidden class=anchor aria-hidden=true href=#分区和格式化>#</a></h4><ol><li><code>lsblk</code> 查看系统硬盘情况</li><li><code>fdisk /dev/{disk}</code> 用来进行磁盘分区</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>fdisk$ m <span class=c1># 查看帮助</span>
+</span></span><span class=line><span class=cl>fdisk$ g <span class=c1># 创建一个 GPT 分区，用来作为 EFI 分区</span>
+</span></span><span class=line><span class=cl>fdisk$ <span class=c1># ...</span>
+</span></span><span class=line><span class=cl>fdisk$ n <span class=c1># 用来创建其他分区</span>
+</span></span><span class=line><span class=cl>fdisk$ <span class=c1># ...</span>
+</span></span><span class=line><span class=cl>fdisk$ l <span class=c1># 查看支持的所有分区类型 ef(EFI 分区类型) 83(Linux 分区类型)</span>
+</span></span><span class=line><span class=cl>fdisk$ t <span class=c1># 来更改创建分区的分区类型</span>
+</span></span><span class=line><span class=cl>fdisk$ <span class=c1># NOTE: 将 GPT 分区改为 EFI 分区类型, 其余分区改为 Linux 分区类型</span>
+</span></span><span class=line><span class=cl>fdisk$ w <span class=c1># 保存退出</span>
+</span></span><span class=line><span class=cl>fdisk$ q <span class=c1># 取消修改退出</span>
+</span></span></code></pre></div><ol start=3><li>使用 <code>mkfs.{format} /dev/{disk}</code> 格式化磁盘</li></ol><ul><li><code>mkfs.vfat</code> 格式化 EFI 分区</li><li><code>mkfs.ext4</code> 格式化其他分区</li><li>NOTE: 不适用 SWAP 分区</li></ul><ol start=4><li>将根目录挂在到 <code>/mnt</code> 目录下, 将 EFI 分区挂载到 <code>/mnt/efi</code> 其余目录挂在到 <code>/mnt/*</code> 目录下</li></ol><h3 id=5-系统下载与安装>5. 系统下载与安装<a hidden class=anchor aria-hidden=true href=#5-系统下载与安装>#</a></h3><ul><li><input disabled type=checkbox> FIXME: <code>vim /etc/pacman.d/mirrorlist</code> 设置安装源, 可以先使用国内的源，后面在去掉就行。<ul><li><code>Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch</code></li><li><code>Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</code></li></ul></li><li><input disabled type=checkbox> 安装系统基本包 <code>pacstrap /mnt base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion</code><ul><li><input disabled type=checkbox> <code>base</code></li><li><input disabled type=checkbox> <code>base-devel</code></li><li><input disabled type=checkbox> <code>linux</code></li><li><input disabled type=checkbox> <code>linux-headers</code></li><li><input disabled type=checkbox> <code>linux-firmware</code></li><li><input disabled type=checkbox> <code>man-db</code></li><li><input disabled type=checkbox> <code>man-pages</code></li><li><input disabled type=checkbox> <code>networkmanager</code></li><li><input disabled type=checkbox> <code>vim</code></li><li><input disabled type=checkbox> <code>bash-completion</code></li></ul></li></ul><h3 id=6-生成系统自动挂载分区文件fstab文件>6. 生成系统自动挂载分区文件(fstab文件)<a hidden class=anchor aria-hidden=true href=#6-生成系统自动挂载分区文件fstab文件>#</a></h3><ol><li><code>genfstab -L /mnt >> /mnt/etc/fstab</code></li><li><code>cat /mnt/etc/fstab</code> 检查写入是否正确</li></ol><h3 id=7-将-root-目录由安装镜像系统切换到要安装的系统>7. 将 root 目录由安装镜像系统切换到要安装的系统<a hidden class=anchor aria-hidden=true href=#7-将-root-目录由安装镜像系统切换到要安装的系统>#</a></h3><ul><li><code>arch-chroot /mnt</code></li></ul><h3 id=8-时间区域设置>8. 时间区域设置<a hidden class=anchor aria-hidden=true href=#8-时间区域设置>#</a></h3><ol><li><code>ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</code></li><li><input disabled type=checkbox> 使用hwclock创建<code>/etc/adjtime</code> <code>hwclock --systohc</code></li></ol><h3 id=9-系统本地化设计>9. 系统本地化设计<a hidden class=anchor aria-hidden=true href=#9-系统本地化设计>#</a></h3><ol><li>设置本地语言 <code>vim /etc/locale.gen</code> 找到文件中的 <code>en_US.UTF-8 UTF-8</code> <code>zh_CN.UTF-8 UTF-8</code></li><li><code>locale-gen</code> 加载设置的语言项</li><li>打开文件 <code>vim /etc/locale.conf</code> 并在里面输入一行 <code>LANG=en_US.UTF-8</code></li><li>设置主机名称 <code>vim /etc/hostname</code> 然后输入自己定义的主机名称(<code>sakura</code>)</li><li>设置本机地址 <code>vim /etc/hosts</code> 添加以下内容</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>127.0.0.1 localhost
+</span></span><span class=line><span class=cl>::1       localhost
+</span></span></code></pre></div><h3 id=10-设置-root-密码>10. 设置 root 密码<a hidden class=anchor aria-hidden=true href=#10-设置-root-密码>#</a></h3><ul><li><code>passwd root</code></li></ul><h3 id=11-安装-ucode>11. 安装 ucode<a hidden class=anchor aria-hidden=true href=#11-安装-ucode>#</a></h3><ul><li>intel-CPU <code>pacman -S intel-ucode</code></li><li>AMD-CPU <code>pacman -S amd-ucode</code></li></ul><h3 id=12-bootloader>12. bootloader<a hidden class=anchor aria-hidden=true href=#12-bootloader>#</a></h3><ul><li><a href=https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting>Arch GRUB wiki</a></li><li><code>pacman -S grub efibootmgr</code></li><li><input disabled type=checkbox> <code>pacman -S os-prober</code> 用来检查 windows 系统, 单系统可以不装</li><li><code>grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB</code></li><li><code>vim /boot/grub/grub.cfg</code> 修改<code>GRUB_CMDLINE_LINUX_DEFAULT</code> 变量中的参数<ul><li>去掉 <code>quiet</code></li><li><code>log level</code> 由 3 变为 5, 方便排错</li><li><input disabled type=checkbox> 加入 <code>nowatchdog</code> 可以加快开机启动速度</li></ul></li><li><input disabled type=checkbox> <code>grub-mkconfig -o /boot/grub/grub.cfg</code></li><li>基本系统安装完成 <code>exit</code> <code>umount -R /mnt</code> <code>reboot</code></li></ul><h2 id=二-gui>二. GUI<a hidden class=anchor aria-hidden=true href=#二-gui>#</a></h2><h3 id=1-创建一个普通用户>1. 创建一个普通用户<a hidden class=anchor aria-hidden=true href=#1-创建一个普通用户>#</a></h3><ul><li><code>pacman -S sudo</code></li><li><code>useradd -m -g users -G wheel -s /bin/bash {username}</code><ul><li><code>-m</code> 创建用户的home目录</li><li><code>-g</code> 指定初始的用户组</li><li><code>-G</code> 指定扩展的用户组</li><li><code>-s</code> 指定默认的shell</li></ul></li><li>设置密码 <code>passwd {username}</code></li><li>设置<code>vim /etc/sudoers</code>去掉注释<code>%wheel ALL=(ALL) ALL</code></li></ul><h3 id=2-x11>2. X11<a hidden class=anchor aria-hidden=true href=#2-x11>#</a></h3><ul><li><code>pacman -S xorg xorg-xinit xorg-xrandr</code><ul><li><a href=https://wiki.archlinux.org/title/Xorg>Xorg arch wiki</a></li><li><a href=https://archlinux.org/groups/x86_64/xorg/>xorg</a> is a package group</li><li><a href=https://wiki.archlinux.org/title/Xinit>xinit</a> 可以手动的启动 Xorg display server。</li><li><a href=https://wiki.archlinux.org/title/Xrandr>xorg-xrandr</a></li></ul></li><li><code>pacman -S xf86-input-libinput</code><ul><li><a href=https://archlinux.org/packages/extra/x86_64/xf86-input-libinput/>xf86-input-libinput</a></li></ul></li></ul><h3 id=3-声卡驱动>3. 声卡驱动<a hidden class=anchor aria-hidden=true href=#3-声卡驱动>#</a></h3><ul><li><input disabled type=checkbox> <code>alsa-utils</code> 配置复杂</li><li><input checked disabled type=checkbox> <code>pulseaudio</code> 配置简单<ul><li><code>pulseaudio-bluetooth</code> pulseaudio-alsa</li></ul></li><li><input disabled type=checkbox> <code>pipewire</code> 新框架(使用有问题)<ul><li><code>pipewire-media-session</code> A very simple session manager</li><li><code>wireplumber pipewire-pulse</code> pipewire-alsa pipewire-jack</li></ul></li></ul><p>一些前端配置工具 <code>pamixer pulsemixer pavucontrol</code></p><h3 id=4-笔记本电源管理-todo-目前没有使用>4. 笔记本电源管理 TODO: 目前没有使用<a hidden class=anchor aria-hidden=true href=#4-笔记本电源管理-todo-目前没有使用>#</a></h3><ul><li><code>tlp tlp-rdw</code> simply install it and forget it<ul><li><code>sudo systemctl enable tlp.service</code></li><li><code>sudo systemctl unmask systemd-rfkill.service</code></li><li><code>sudo systemctl unmask systemd-rfkill.socket</code></li></ul></li></ul><h3 id=5-下载-32-位的程序及添加-chaotic-aur将aur中的包编译成二进制下载>5. 下载 32 位的程序及添加 Chaotic-AUR(将AUR中的包编译成二进制下载)<a hidden class=anchor aria-hidden=true href=#5-下载-32-位的程序及添加-chaotic-aur将aur中的包编译成二进制下载>#</a></h3><p>修改 <code>vim /etc/pacman.conf</code>, 取消注释</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>multilib<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>Include</span> <span class=o>=</span> /etc/pacman.d/mirrorlist
+</span></span></code></pre></div><ul><li><a href=https://aur.chaotic.cx/>添加 Chaotic-AUR 仓库</a></li></ul><h3 id=6-设置-dns>6. 设置 DNS<a hidden class=anchor aria-hidden=true href=#6-设置-dns>#</a></h3><p>修改 <code>vim /etc/resolv.conf</code>, 删除已有内容, 添加以下内容</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nameserver 8.8.8.8
+</span></span><span class=line><span class=cl>nameserver 2001:4860:4860::8888
+</span></span><span class=line><span class=cl>nameserver 8.8.4.4
+</span></span><span class=line><span class=cl>nameserver 2001:4860:4860::8844
+</span></span></code></pre></div><ul><li><code>chattr +i /etc/resolv.conf</code> 防止该文件被重写<ul><li><code>chattr</code> 可以设置文件的属性</li><li><code>+i</code> 为指定文件增加 i 属性，i 属性表示不可修改</li><li><code>lsattr</code> 可以查看一个文件的属性</li></ul></li></ul><h3 id=7-显卡驱动>7. 显卡驱动<a hidden class=anchor aria-hidden=true href=#7-显卡驱动>#</a></h3><ul><li><a href=https://wiki.archlinux.org/title/Xorg#Driver_installation>显卡驱动文档</a></li><li><code>lspci -v | grep -A1 -e VGA -e 3D</code> 验证显卡信息<ul><li><a href=https://wiki.archlinux.org/title/Intel_graphics#Installation>intel</a> <code>mesa lib32-mesa vulkan-intel lib32-vulkan-intel</code></li><li><input disabled type=checkbox> <a href=https://wiki.archlinux.org/title/AMDGPU#Installation>AMD</a> <code>xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau</code></li></ul></li></ul><h4 id=nvidia-显卡驱动>Nvidia 显卡驱动<a hidden class=anchor aria-hidden=true href=#nvidia-显卡驱动>#</a></h4><ul><li><a href=https://wiki.archlinux.org/title/NVIDIA>NVIDIA</a> <code>nvidia nvidia-settings lib32-nvidia-utils</code></li></ul><h4 id=双显卡>双显卡<a hidden class=anchor aria-hidden=true href=#双显卡>#</a></h4><ul><li><a href=https://wiki.archlinux.org/title/NVIDIA_Optimus>NVIDIA Optimus</a></li><li><input disabled type=checkbox> 安装 <code>mesa-demos</code> 后，可使用 <code>glxinfo | grep "OpenGL renderer"</code> 来查看当前使用的显卡。</li></ul><h5 id=bumblebee>Bumblebee<a hidden class=anchor aria-hidden=true href=#bumblebee>#</a></h5><p>该方式是在通电情况下, 使用集成显卡进行显示管理, 而独立显卡进行复杂的渲染工作, 并将要显示的内容传送到集成显卡上进行显示, 当使用电池时将关闭独立显卡.</p><ol><li>安装显卡驱动</li><li>安装bumblebee来管理独立显卡的使用 <code>pacman -S bumblebee bbswitch</code></li><li>修改配置文件 <code>/etc/bumblebee/bumblebee.conf</code> 将Driver的值设置为 <code>nvidia</code>, 来让其使用nvidia驱动, 然后将PMMethod的值设置为 <code>bbswitch</code> 让它使用bbswitch来管理显卡</li><li>将要使用Bumblebee的用户添加到bumblebee组中，<code>gpasswd -a username bumblebee</code>.</li><li>并将bumblebeed服务设为开机启动, <code>systemctl enable bumblebeed</code> 重启计算机.</li><li>需要mesa-demos软件包, 使用 <code>optirun glxgears -info</code> 查看bumblebee是否正常工作, 如果有显示则代表正常工作.</li></ol><p>当使用CUDA程序时可能bumblebee不会启动(如: python-pytorch)可以通过以下操作来进行使用CUDA程序:</p><ul><li>使用 <code>sudo tee /proc/acpi/bbswitch &lt;&lt;&lt; ON</code> 来启动nvidia</li><li>使用 <code>sudo rmmod nvidia nvidia_uvm nvidia_modeset</code> 和 <code>sudo tee /proc/acpi/bbswitch &lt;&lt;&lt; OFF</code> 来关闭nvidia在使用完CUDA程序之后.</li></ul><h5 id=optimus-manager-recommended>optimus-manager (recommended)<a hidden class=anchor aria-hidden=true href=#optimus-manager-recommended>#</a></h5><ul><li><code>paru -S optimus-manager</code></li><li><code>sudo systemctl enable optimus-manager</code></li><li><a href=https://dev.to/snikhill/optimus-manager-on-arch-linux-1589>设置optimus-manager在.xinitrc中使用</a></li><li><a href=https://github.com/Askannz/optimus-manager/wiki/FAQ,-common-issues,-troubleshooting>optimus-manager-github</a></li></ul><h3 id=8-安装字体和输入法>8. 安装字体和输入法<a hidden class=anchor aria-hidden=true href=#8-安装字体和输入法>#</a></h3><h4 id=英文字体>英文字体<a hidden class=anchor aria-hidden=true href=#英文字体>#</a></h4><ul><li><input checked disabled type=checkbox> <code>ttf-linux-libertine ttf-dejavu ttf-ubuntu-font-family noto-fonts</code></li></ul><h4 id=中文字体>中文字体<a hidden class=anchor aria-hidden=true href=#中文字体>#</a></h4><ul><li><a href=https://wiki.archlinux.org/index.php/Localization/Chinese>Chinese fonts List</a></li><li><input checked disabled type=checkbox> <code>wqy-microhei</code> <code>noto-fonts-cjk(Chinese, Japanese, Korean fonts)</code></li></ul><h4 id=等宽字体>等宽字体<a hidden class=anchor aria-hidden=true href=#等宽字体>#</a></h4><ul><li><a href=https://www.programmingfonts.org/>programming fonts review</a></li><li><input checked disabled type=checkbox> <code>adobe-source-code-pro-fonts</code> <code>ttf-hack</code> <code>ttf-monaspace-variable</code></li></ul><h4 id=图标字体>图标字体<a hidden class=anchor aria-hidden=true href=#图标字体>#</a></h4><ul><li><input checked disabled type=checkbox> <code>ttf-sourcecodepro-nerd</code></li></ul><h4 id=emoji-字体>emoji 字体<a hidden class=anchor aria-hidden=true href=#emoji-字体>#</a></h4><ul><li><input checked disabled type=checkbox> <code>noto-fonts-emoji</code> <code>ttf-joypixels</code></li></ul><h4 id=linux-本地化设置>Linux 本地化设置<a hidden class=anchor aria-hidden=true href=#linux-本地化设置>#</a></h4><ul><li><a href=https://wiki.archlinux.org/index.php/Localization/Simplified_Chinese>archlinux字体配置</a></li><li><code>en_US.UTF-8</code> 和 <code>zh_CN.UTF-8</code> 的区别, 程序的默认语言不同, 但字符集都是UTF-8, 可以显示的文字相同.</li><li><code>locale.conf</code> 文件命名格式 <code>&lt;语言>_&lt;地区名>.&lt;字符编码名称></code></li></ul><p>和本地化有关的变量如下，优先级 <code>LC_ALL > LC_*> LANG</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>LANG</span><span class=o>=</span>en_US.UTF-8
+</span></span><span class=line><span class=cl><span class=nv>LC_CTYPE</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 用于字符分类和字符串处理, 控制所有字符的处理方式, 包括字符编码, 字符是单字节还是多字节, 如何打印等</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_NUMERIC</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 数字显示</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_TIME</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 时间显示格式</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_COLLATE</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 比较和排序习惯</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_MONETARY</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 货币单位</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_MESSAGES</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 用于控制程序输出时所使用的语言, 主要是提示信息, 错误信息, 状态信息, 标题, 标签, 按钮和菜单等</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_PAPER</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 默认纸张尺寸大小</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_NAME</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 姓名书写方式</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_ADDRESS</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 地址书写方式</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_TELEPHONE</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 电话号码书写方式</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_MEASUREMENT</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 度量单位表达方式</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_IDENTIFICATION</span><span class=o>=</span><span class=s2>&#34;en_US.UTF-8&#34;</span>  <span class=c1># 对 locale 自身包含信息的概述</span>
+</span></span><span class=line><span class=cl><span class=nv>LC_ALL</span><span class=o>=</span>
+</span></span></code></pre></div><h4 id=安装输入法>安装输入法<a hidden class=anchor aria-hidden=true href=#安装输入法>#</a></h4><ul><li><input checked disabled type=checkbox> <code>fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki</code></li><li>将以下配置放入 <code>~/.bashrc</code> 中如果使用 <code>bash</code>。</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>export</span> <span class=nv>XMODIFIERS</span><span class=o>=</span>@im<span class=o>=</span>fcitx
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>GTK_IM_MODULE</span><span class=o>=</span>fcitx
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>QT_IM_MODULE</span><span class=o>=</span>fcitx
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>INPUT_METHOD</span><span class=o>=</span>fcitx
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>SDL_IM_MODULE</span><span class=o>=</span>fcitx
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>GLFW_IM_MODULE</span><span class=o>=</span>ibus
+</span></span></code></pre></div><h3 id=9-dwm>9. dwm<a hidden class=anchor aria-hidden=true href=#9-dwm>#</a></h3><ul><li><input checked disabled type=checkbox> 安装 dwm</li></ul></div><footer class=post-footer><ul class=post-tags><li><a href=https://jiaoshijie.github.io/tags/linux/>Linux</a></li><li><a href=https://jiaoshijie.github.io/tags/arch/>Arch</a></li></ul><nav class=paginav><a class=prev href=https://jiaoshijie.github.io/posts/linux_little_tricks/><span class=title>«</span><br><span>Linux_Little_Tricks</span>
+</a><a class=next href=https://jiaoshijie.github.io/posts/variation_of_parameters/><span class=title>»</span><br><span>常数变易法(微分方程求解)</span></a></nav><ul class=share-buttons><li><a target=_blank rel="noopener noreferrer" aria-label="share ArchLinux_Installation on x" href="https://x.com/intent/tweet/?text=ArchLinux_Installation&amp;url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2farchlinux_installation%2f&amp;hashtags=linux%2carch"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446C483.971.0 512 28.03 512 62.554zM269.951 190.75 182.567 75.216H56L207.216 272.95 63.9 436.783h61.366L235.9 310.383l96.667 126.4H456L298.367 228.367l134-153.151H371.033zM127.633 110h36.468l219.38 290.065H349.5z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share ArchLinux_Installation on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2farchlinux_installation%2f&amp;title=ArchLinux_Installation&amp;summary=ArchLinux_Installation&amp;source=https%3a%2f%2fjiaoshijie.github.io%2fposts%2farchlinux_installation%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share ArchLinux_Installation on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2farchlinux_installation%2f&title=ArchLinux_Installation"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share ArchLinux_Installation on facebook" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fjiaoshijie.github.io%2fposts%2farchlinux_installation%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share ArchLinux_Installation on whatsapp" href="https://api.whatsapp.com/send?text=ArchLinux_Installation%20-%20https%3a%2f%2fjiaoshijie.github.io%2fposts%2farchlinux_installation%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share ArchLinux_Installation on telegram" href="https://telegram.me/share/url?text=ArchLinux_Installation&amp;url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2farchlinux_installation%2f"><svg viewBox="2 2 28 28" height="30" width="30" fill="currentcolor"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share ArchLinux_Installation on ycombinator" href="https://news.ycombinator.com/submitlink?t=ArchLinux_Installation&u=https%3a%2f%2fjiaoshijie.github.io%2fposts%2farchlinux_installation%2f"><svg width="30" height="30" viewBox="0 0 512 512" fill="currentcolor" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"><path d="M449.446.0C483.971.0 512 28.03 512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446zM183.8767 87.9921h-62.034L230.6673 292.4508V424.0079h50.6655V292.4508L390.1575 87.9921H328.1233L256 238.2489z"/></svg></a></li></ul></footer></article></main><footer class=footer><span>&copy; 2024 <a href=https://jiaoshijie.github.io/>Jsj's Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script></body></html>
