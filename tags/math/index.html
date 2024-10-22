@@ -1,0 +1,51 @@
+<!doctype html><html lang=zh-cn dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Math | Jsj's Blog</title>
+<meta name=keywords content><meta name=description content="Jiao shijie's blog"><meta name=author content="Jiao shijie"><link rel=canonical href=https://jiaoshijie.github.io/tags/math/><meta name=google-site-verification content="XYZabc"><meta name=yandex-verification content="XYZabc"><meta name=msvalidate.01 content="XYZabc"><link crossorigin=anonymous href=/assets/css/stylesheet.611cf8c8c671ee20d7166886b78e57ad24c8123fb1dc0fde4edee77b5f66d2e2.css integrity="sha256-YRz4yMZx7iDXFmiGt45XrSTIEj+x3A/eTt7ne19m0uI=" rel="preload stylesheet" as=style><link rel=icon href=https://jiaoshijie.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://jiaoshijie.github.io/favicon.ico><link rel=icon type=image/png sizes=32x32 href=https://jiaoshijie.github.io/favicon.ico><link rel=apple-touch-icon href=https://jiaoshijie.github.io/favicon.ico><link rel=mask-icon href=https://jiaoshijie.github.io/favicon.ico><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate type=application/rss+xml href=https://jiaoshijie.github.io/tags/math/index.xml><link rel=alternate hreflang=zh-cn href=https://jiaoshijie.github.io/tags/math/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="Math"><meta property="og:description" content="Jiao shijie's blog"><meta property="og:type" content="website"><meta property="og:url" content="https://jiaoshijie.github.io/tags/math/"><meta property="og:site_name" content="Jsj's Blog"><meta name=twitter:card content="summary"><meta name=twitter:title content="Math"><meta name=twitter:description content="Jiao shijie's blog"></head><body class=list id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://jiaoshijie.github.io/ accesskey=h title="Home (Alt + H)"><img src=https://jiaoshijie.github.io/favicon.ico alt aria-label=logo height=35>Home</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://jiaoshijie.github.io/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://jiaoshijie.github.io/tags/ title=Tags><span>Tags</span></a></li></ul></nav></header><main class=main><header class=page-header><div class=breadcrumbs><a href=https://jiaoshijie.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://jiaoshijie.github.io/tags/>Tags</a></div><h1>Math
+<a href=/tags/math/index.xml title=RSS aria-label=RSS><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" height="23"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></h1></header><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>常数变易法(微分方程求解)</h2></header><div class=entry-content><p>1. 常数变易法求解一阶线性微分方程过程 对于一阶线性微分方程:
+$$ \frac{\mathrm{d}y}{\mathrm{d}x}+P(x)y=Q(x) \tag{1} $$
+如果$Q(x)=0$则方程为齐次, $Q(x)\ne0$则方程为非齐次.
+而常数变易法的求解就是先求出齐次方程的通解
+$$ \frac{\mathrm{d}y}{\mathrm{d}x}+P(x)y=0 \tag{2} $$
+该齐次方程的通解为$y=Ce^{-\int{P(x)\mathrm{d}x}}$ $(C=\pm e^{C_1})$
+然后使用$u(x)$(以后简写为$u$)替换该通解中的常数$C$, 即便换为:
+$$ y=ue^{-\int{P(x)\mathrm{d}x}} \tag{3} $$
+然后, 将(3)代入(1)中, 得:
+$$ u^{\prime}e^{-\int{P(x)}\mathrm{d}x}=Q(x) \tag{4} $$
+通过"分离变量"即可求出$u$:
+$$ u=\int{Q(x)e^{\int{P(x)\mathrm{d}x}}\mathrm{d}x}+C \tag{5} $$
+将(5)在带回到(3)中即可求出$y$:
+$$ y=Ce^{-\int{P(x)\mathrm{d}x}}+e^{-\int{P(x)\mathrm{d}x}}\int{Q(x)e^{\int{P(x)\mathrm{d}x}}\mathrm{d}x} $$
+于是, 便得到了(1)的通解, 观察可以发现, 前面为(1)对应的齐次方程的通解, 后面为当C=0是(1)的特解, 因此得到结论:
+一阶非齐次线性方程的通解等于对应的齐次方程的通解与非齐次方程的一个特解之和.
+但是问题就是 为什么可以使用非齐次方程对应的齐次方程的通解来进行求解?, 上面的方法一气呵成只是告诉了我们应该这样做, 但我们却不知道为什么这么做.
+但我学的很蒙, 于是进行了一番搜索找到了一些好的文章, 打算自己总结一下, 相关文章都放在了参考处.
+2. 原理探讨 通过《“常数变易法"的探讨》文章知道我们现在使用的常数变易法只是结论, 而非推导过程.
+该结论是拉格朗日十一年的研究成果.
+因此在此介绍一些该结论得出的过程.
+首先, 对于求解一阶线性微分方程最先想到的方法就是"分离常量”, 于是首先对(1)进行移项操作得:
+$$ \mathrm{d}y=[Q(x)-P(x)y]\mathrm{d}x $$
+观察怎样都无法将y单独移动到左边, 因此分离常量的方法不可以求解此方程.
+于是想到使用$u=\frac{y}{x}$的方法进行求解得到:
+$$ u\prime{}x+u(1+P(x)x)=Q(x) $$
+...</p></div><a class=entry-link aria-label="post link to 常数变易法(微分方程求解)" href=https://jiaoshijie.github.io/posts/variation_of_parameters/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>快速计算正整数的平方根</h2></header><div class=entry-content><p>如何求一个正整数的平方根，最直接的方法就是
+int i_sqrt(int N) { int res = 1; while (res * res &lt;= N) { res++; } return res - 1; } 但上面的计算方法非常的低效，而对于求正整数的平方根，已经有非常多的算法。
+下面介绍一个常用的正整数开平方根的算法。
+Digit by digit calculation Digit by digit calculation
+假设 $x = \sqrt{N}$ 则 $x^2 = N$ 以二进制表示 $x$，则 $x^2$ 为
+$$ x^2 = (000b_0b_1b_2 \cdots b_{n-1}b_n)^2 \tag{1} $$
+其中，$b_0$ 为 $x$ 的二进制表示中第一个为 1 的二进制位。但要注意 $b_1 \cdots b_n$ 并不一定全为 1。我们可以将公式 (1) 改为加法形式。$a_n$ 对应的为 $b_0$。
+$$ x^2 = (a_n + a_{n-1} + \cdots + a_1 + a_0)^2 \tag{2} $$
+其中，$a_m = 2^m$ 或 $a_m = 0$，取决于对应二进制位的值为 1 还是 0。将其展开可以得到
+...</p></div><a class=entry-link aria-label="post link to 快速计算正整数的平方根" href=https://jiaoshijie.github.io/posts/quick_clac_square_root/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>Colors of Balls Problem</h2></header><div class=entry-content><p>n balls with N different colors, number of balls with each color is same, randomly choose k balls from the n balls, the expected number of colors of the k balls can be estimated as:
+$$ N\left [ 1-\prod_{r=1}^{k} \left ( \frac{\frac{n(N-1)}{N}-r+1}{n-r+1} \right ) \right ] $$
+证明 要算取出的k个球的颜色数的期望, 根据期望的定义来算的话太复杂了.
+因此, 可以先构造一个0-1分布, 取出的球中不包含一种颜色的情况用0表示, 则包含这种颜色的情况用1表示.
+可以轻易的求出取出的球中不包含一种颜色的概率为:
+$$ P_{0}=\frac{C_{n - \frac{n}{N}}^{k}}{C_{n}^{k}}=\frac{(n-\frac{n}{N})(n-\frac{n}{N}-1)\cdots(n-\frac{n}{N}-k+1)}{n(n-1)\cdots(n-k+1)}=\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1} $$
+易得$P_1=1-P_0$, 则该事件的期望为:
+$$ E_{0-1}=0\times P_0 + 1\times P_1=1-P_0=1-\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1} $$
+而对于取出k个球中颜色数的数学期望, 可以先对N个不同的颜色编号$1\cdots N$, 利用上面的0-1分布, 设1号颜色的0-1分布为{0, 1}, 2号颜色的0-1分布为{0, 1}, …, N号颜色的0-1分布为{0, 1}(彼此为相互独立事件, 非互斥事件).
+...</p></div><a class=entry-link aria-label="post link to Colors of Balls Problem" href=https://jiaoshijie.github.io/posts/colorsofproblem/></a></article></main><footer class=footer><span>&copy; 2024 <a href=https://jiaoshijie.github.io/>Jsj's Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script></body></html>

@@ -1,0 +1,393 @@
+<!doctype html><html lang=zh-cn dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>pacman Usage | Jsj's Blog</title>
+<meta name=keywords content="linux,arch,cli"><meta name=description content="
+To use pactree and paccache install pacman-contrib
+
+To install packages
+
+pacman -S package_name1 package_name2 来安装软件
+pacman -S $(pacman -Ssq package_regex)来安装不太清楚名字的包
+pacman -Sg package_group_name 查看一个软件包组有什么软件
+pacman -S -needed package_name1
+
+pacman 默认会重新安装软件, 即使软件已经是up to date.
+--needed 会避免安装已经up to date软件
+
+
+一些软件会有选项, 例如Enter a selection (default=all):
+
+1-10 15这将安装1到10和15号软件包
+^5-8 ^2 这将安装除了5-8和2号软件包之外的其他软件包
+
+
+
+To remove packages
+
+pacman -R package_name 只移除目标软件包, 留下其依赖的软件包
+pacman -Rs package_name 移除目标软件包和没有被其他软件依赖的软件包
+
+pacman -Rsu 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令
+
+
+pacman -Rsc 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件
+pacman -Rdd 移除被其他包依赖的软件包, 而不移除依赖它的包. 这个命令可能会导致系统崩溃, 不推荐使用
+pacman -Rn package_name 移除软件的配置文件, 但不会移除软件自己创建的, 和家目录的dot配置文件
+
+To update packages
+
+pacman -Syu update full packages and system
+
+To get packages details
+
+pacman -Ss string1 string2 在datebase中搜索packages&rsquo; name and descriptions
+
+pacman -Ss '^vim-' 可以使用some ERE(Extend Regular Expressions)
+
+
+pacman -Si package_name 获取extensive information about a given package in remote
+pacman -Qs string1 string2 搜索本地已经安装的包的name和descriptions
+
+pacman -Q 只搜索主动安装的包的名字
+
+
+pacman -Qi package_name 获取本地安装包的extensive information
+pacman -Qo /path/to/file_name 获取软件属于哪个软件包
+pacman -F string1 string2 获取远程的包的文件路径名
+pacman -Qdt 列出不再被依赖的软件包
+pacman -Qet 列出不再被依赖的软件包详细信息
+
+other feature
+
+pacman -Sw package_name 下载软件包不安装它
+pacman -U /path/to/package/package_name-version.pkg.tar.zst 安装本地软件包
+pacman -U file:///path/to/package/package_name-version.pkg.tar.zst 保留一个副本在pacman&rsquo;s cahce中
+pacman -U http://www.example.com/repo/example.pkg.tar.zst 安装远程软件包
+
+yay
+
+yay -Ps 打印系统的一些安装软件包的分析
+yay -Yc 清除不使用的依赖
+yay -G aur_package_name 下载PKGBUILD文件从ABS或AUR
+yay -Y --gendb 生成开发者包数据库
+yay -Syu --devel --timeupdate 更新系统, 检查开发者包
+
+paru
+
+paru <target> 交互搜索和安装target
+paru 和 paru -Syu 相同, 更新系统
+paru -Sua 只更新AUR packages
+paru -Qua 打印可用的AUR更新
+paru -G <target> 下载PKGBUILD文件和关联的文件
+paru -Gp <target> 打印target的PKGBUILD的内容
+paru -Gc <target> 打印target的AUR的comments
+paru --gendb 创建devel database
+
+Archlinux install deb package
+1. 使用AUR中其他人提供的包
+
+using AUR(Arch Linux User Repository)
+
+2. 手动安装
+
+首先, 解压下载的 *.deb 包, ar -x *.deb --output dirname
+cd dirname 应该可以看到 control.tar.gz data.tar.xz debian-binary
+
+debian-binary 显示debian包管理的信息版本(super不重要)
+control.tar.xz 为软件介绍(包括依赖非常重要), 一些包的安全验证程序和完整性的验证程序(可以不用管)
+data.tar.xz 软件安装的位置及软件, 可能是 etc opt usr
+
+
+然后根据依赖信息安装依赖, 根据data中目录的位置将相应的软件拷贝到相应的目录.
+
+3. 自己写arch&rsquo;s makepkg file.
+
+首先, 通过cp /usr/share/pacman/PKGBUILD.proto ./PKGBUILD拷贝一个PKGBUILD模板.
+然后, 设置PKGBUILD中的变量和函数的功能.
+
+pkgname: 软件包的名称
+pkgver: 软件包的版本, 通常为数字, . _ -组成
+pkgrel: 必须存在, 并设置为1
+pkgdesc: 软件的描述
+arch: 可以运行的平台, 一般为x86_64
+url: 下载该软件的地址
+license: 发行协议
+depends: 软件的依赖
+source: 构建包所需要的文件组, 如果只有一个可以写一个, 也可以使很多包的地址
+noextract: 一个文件组在source中的没有解压缩包的名称
+md5sums: 包检验码, md5sums生成md5sums码, 如果不想使用可以复制为SKIP
+package(): 最终安装函数
+prepare(): 准备函数
+更多变量解释: archwiki-PKGBUILD
+
+
+pkgdir: makepkg生成的目录默认为根目录. srcdir: 还不清楚.
+设置完成后, 在包含该PKGBUILD的目录下, 执行makepkg即可生成archlinux下的包.
+使用pacman -U pkgname安装该软件.
+
+参考
+
+How to install Deb package in arch Linux
+How to convert DEB packages into arch linux packages
+Archlinux-Creating packages
+"><meta name=author content="Jiao shijie"><link rel=canonical href=https://jiaoshijie.github.io/posts/pacman_usage/><meta name=google-site-verification content="XYZabc"><meta name=yandex-verification content="XYZabc"><meta name=msvalidate.01 content="XYZabc"><link crossorigin=anonymous href=/assets/css/stylesheet.611cf8c8c671ee20d7166886b78e57ad24c8123fb1dc0fde4edee77b5f66d2e2.css integrity="sha256-YRz4yMZx7iDXFmiGt45XrSTIEj+x3A/eTt7ne19m0uI=" rel="preload stylesheet" as=style><link rel=icon href=https://jiaoshijie.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://jiaoshijie.github.io/favicon.ico><link rel=icon type=image/png sizes=32x32 href=https://jiaoshijie.github.io/favicon.ico><link rel=apple-touch-icon href=https://jiaoshijie.github.io/favicon.ico><link rel=mask-icon href=https://jiaoshijie.github.io/favicon.ico><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh-cn href=https://jiaoshijie.github.io/posts/pacman_usage/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="pacman Usage"><meta property="og:description" content="
+To use pactree and paccache install pacman-contrib
+
+To install packages
+
+pacman -S package_name1 package_name2 来安装软件
+pacman -S $(pacman -Ssq package_regex)来安装不太清楚名字的包
+pacman -Sg package_group_name 查看一个软件包组有什么软件
+pacman -S -needed package_name1
+
+pacman 默认会重新安装软件, 即使软件已经是up to date.
+--needed 会避免安装已经up to date软件
+
+
+一些软件会有选项, 例如Enter a selection (default=all):
+
+1-10 15这将安装1到10和15号软件包
+^5-8 ^2 这将安装除了5-8和2号软件包之外的其他软件包
+
+
+
+To remove packages
+
+pacman -R package_name 只移除目标软件包, 留下其依赖的软件包
+pacman -Rs package_name 移除目标软件包和没有被其他软件依赖的软件包
+
+pacman -Rsu 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令
+
+
+pacman -Rsc 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件
+pacman -Rdd 移除被其他包依赖的软件包, 而不移除依赖它的包. 这个命令可能会导致系统崩溃, 不推荐使用
+pacman -Rn package_name 移除软件的配置文件, 但不会移除软件自己创建的, 和家目录的dot配置文件
+
+To update packages
+
+pacman -Syu update full packages and system
+
+To get packages details
+
+pacman -Ss string1 string2 在datebase中搜索packages&rsquo; name and descriptions
+
+pacman -Ss '^vim-' 可以使用some ERE(Extend Regular Expressions)
+
+
+pacman -Si package_name 获取extensive information about a given package in remote
+pacman -Qs string1 string2 搜索本地已经安装的包的name和descriptions
+
+pacman -Q 只搜索主动安装的包的名字
+
+
+pacman -Qi package_name 获取本地安装包的extensive information
+pacman -Qo /path/to/file_name 获取软件属于哪个软件包
+pacman -F string1 string2 获取远程的包的文件路径名
+pacman -Qdt 列出不再被依赖的软件包
+pacman -Qet 列出不再被依赖的软件包详细信息
+
+other feature
+
+pacman -Sw package_name 下载软件包不安装它
+pacman -U /path/to/package/package_name-version.pkg.tar.zst 安装本地软件包
+pacman -U file:///path/to/package/package_name-version.pkg.tar.zst 保留一个副本在pacman&rsquo;s cahce中
+pacman -U http://www.example.com/repo/example.pkg.tar.zst 安装远程软件包
+
+yay
+
+yay -Ps 打印系统的一些安装软件包的分析
+yay -Yc 清除不使用的依赖
+yay -G aur_package_name 下载PKGBUILD文件从ABS或AUR
+yay -Y --gendb 生成开发者包数据库
+yay -Syu --devel --timeupdate 更新系统, 检查开发者包
+
+paru
+
+paru <target> 交互搜索和安装target
+paru 和 paru -Syu 相同, 更新系统
+paru -Sua 只更新AUR packages
+paru -Qua 打印可用的AUR更新
+paru -G <target> 下载PKGBUILD文件和关联的文件
+paru -Gp <target> 打印target的PKGBUILD的内容
+paru -Gc <target> 打印target的AUR的comments
+paru --gendb 创建devel database
+
+Archlinux install deb package
+1. 使用AUR中其他人提供的包
+
+using AUR(Arch Linux User Repository)
+
+2. 手动安装
+
+首先, 解压下载的 *.deb 包, ar -x *.deb --output dirname
+cd dirname 应该可以看到 control.tar.gz data.tar.xz debian-binary
+
+debian-binary 显示debian包管理的信息版本(super不重要)
+control.tar.xz 为软件介绍(包括依赖非常重要), 一些包的安全验证程序和完整性的验证程序(可以不用管)
+data.tar.xz 软件安装的位置及软件, 可能是 etc opt usr
+
+
+然后根据依赖信息安装依赖, 根据data中目录的位置将相应的软件拷贝到相应的目录.
+
+3. 自己写arch&rsquo;s makepkg file.
+
+首先, 通过cp /usr/share/pacman/PKGBUILD.proto ./PKGBUILD拷贝一个PKGBUILD模板.
+然后, 设置PKGBUILD中的变量和函数的功能.
+
+pkgname: 软件包的名称
+pkgver: 软件包的版本, 通常为数字, . _ -组成
+pkgrel: 必须存在, 并设置为1
+pkgdesc: 软件的描述
+arch: 可以运行的平台, 一般为x86_64
+url: 下载该软件的地址
+license: 发行协议
+depends: 软件的依赖
+source: 构建包所需要的文件组, 如果只有一个可以写一个, 也可以使很多包的地址
+noextract: 一个文件组在source中的没有解压缩包的名称
+md5sums: 包检验码, md5sums生成md5sums码, 如果不想使用可以复制为SKIP
+package(): 最终安装函数
+prepare(): 准备函数
+更多变量解释: archwiki-PKGBUILD
+
+
+pkgdir: makepkg生成的目录默认为根目录. srcdir: 还不清楚.
+设置完成后, 在包含该PKGBUILD的目录下, 执行makepkg即可生成archlinux下的包.
+使用pacman -U pkgname安装该软件.
+
+参考
+
+How to install Deb package in arch Linux
+How to convert DEB packages into arch linux packages
+Archlinux-Creating packages
+"><meta property="og:type" content="article"><meta property="og:url" content="https://jiaoshijie.github.io/posts/pacman_usage/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-08-04T00:29:55+08:00"><meta property="article:modified_time" content="2024-08-04T00:29:55+08:00"><meta property="og:site_name" content="Jsj's Blog"><meta name=twitter:card content="summary"><meta name=twitter:title content="pacman Usage"><meta name=twitter:description content="
+To use pactree and paccache install pacman-contrib
+
+To install packages
+
+pacman -S package_name1 package_name2 来安装软件
+pacman -S $(pacman -Ssq package_regex)来安装不太清楚名字的包
+pacman -Sg package_group_name 查看一个软件包组有什么软件
+pacman -S -needed package_name1
+
+pacman 默认会重新安装软件, 即使软件已经是up to date.
+--needed 会避免安装已经up to date软件
+
+
+一些软件会有选项, 例如Enter a selection (default=all):
+
+1-10 15这将安装1到10和15号软件包
+^5-8 ^2 这将安装除了5-8和2号软件包之外的其他软件包
+
+
+
+To remove packages
+
+pacman -R package_name 只移除目标软件包, 留下其依赖的软件包
+pacman -Rs package_name 移除目标软件包和没有被其他软件依赖的软件包
+
+pacman -Rsu 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令
+
+
+pacman -Rsc 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件
+pacman -Rdd 移除被其他包依赖的软件包, 而不移除依赖它的包. 这个命令可能会导致系统崩溃, 不推荐使用
+pacman -Rn package_name 移除软件的配置文件, 但不会移除软件自己创建的, 和家目录的dot配置文件
+
+To update packages
+
+pacman -Syu update full packages and system
+
+To get packages details
+
+pacman -Ss string1 string2 在datebase中搜索packages&rsquo; name and descriptions
+
+pacman -Ss '^vim-' 可以使用some ERE(Extend Regular Expressions)
+
+
+pacman -Si package_name 获取extensive information about a given package in remote
+pacman -Qs string1 string2 搜索本地已经安装的包的name和descriptions
+
+pacman -Q 只搜索主动安装的包的名字
+
+
+pacman -Qi package_name 获取本地安装包的extensive information
+pacman -Qo /path/to/file_name 获取软件属于哪个软件包
+pacman -F string1 string2 获取远程的包的文件路径名
+pacman -Qdt 列出不再被依赖的软件包
+pacman -Qet 列出不再被依赖的软件包详细信息
+
+other feature
+
+pacman -Sw package_name 下载软件包不安装它
+pacman -U /path/to/package/package_name-version.pkg.tar.zst 安装本地软件包
+pacman -U file:///path/to/package/package_name-version.pkg.tar.zst 保留一个副本在pacman&rsquo;s cahce中
+pacman -U http://www.example.com/repo/example.pkg.tar.zst 安装远程软件包
+
+yay
+
+yay -Ps 打印系统的一些安装软件包的分析
+yay -Yc 清除不使用的依赖
+yay -G aur_package_name 下载PKGBUILD文件从ABS或AUR
+yay -Y --gendb 生成开发者包数据库
+yay -Syu --devel --timeupdate 更新系统, 检查开发者包
+
+paru
+
+paru <target> 交互搜索和安装target
+paru 和 paru -Syu 相同, 更新系统
+paru -Sua 只更新AUR packages
+paru -Qua 打印可用的AUR更新
+paru -G <target> 下载PKGBUILD文件和关联的文件
+paru -Gp <target> 打印target的PKGBUILD的内容
+paru -Gc <target> 打印target的AUR的comments
+paru --gendb 创建devel database
+
+Archlinux install deb package
+1. 使用AUR中其他人提供的包
+
+using AUR(Arch Linux User Repository)
+
+2. 手动安装
+
+首先, 解压下载的 *.deb 包, ar -x *.deb --output dirname
+cd dirname 应该可以看到 control.tar.gz data.tar.xz debian-binary
+
+debian-binary 显示debian包管理的信息版本(super不重要)
+control.tar.xz 为软件介绍(包括依赖非常重要), 一些包的安全验证程序和完整性的验证程序(可以不用管)
+data.tar.xz 软件安装的位置及软件, 可能是 etc opt usr
+
+
+然后根据依赖信息安装依赖, 根据data中目录的位置将相应的软件拷贝到相应的目录.
+
+3. 自己写arch&rsquo;s makepkg file.
+
+首先, 通过cp /usr/share/pacman/PKGBUILD.proto ./PKGBUILD拷贝一个PKGBUILD模板.
+然后, 设置PKGBUILD中的变量和函数的功能.
+
+pkgname: 软件包的名称
+pkgver: 软件包的版本, 通常为数字, . _ -组成
+pkgrel: 必须存在, 并设置为1
+pkgdesc: 软件的描述
+arch: 可以运行的平台, 一般为x86_64
+url: 下载该软件的地址
+license: 发行协议
+depends: 软件的依赖
+source: 构建包所需要的文件组, 如果只有一个可以写一个, 也可以使很多包的地址
+noextract: 一个文件组在source中的没有解压缩包的名称
+md5sums: 包检验码, md5sums生成md5sums码, 如果不想使用可以复制为SKIP
+package(): 最终安装函数
+prepare(): 准备函数
+更多变量解释: archwiki-PKGBUILD
+
+
+pkgdir: makepkg生成的目录默认为根目录. srcdir: 还不清楚.
+设置完成后, 在包含该PKGBUILD的目录下, 执行makepkg即可生成archlinux下的包.
+使用pacman -U pkgname安装该软件.
+
+参考
+
+How to install Deb package in arch Linux
+How to convert DEB packages into arch linux packages
+Archlinux-Creating packages
+"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://jiaoshijie.github.io/posts/"},{"@type":"ListItem","position":2,"name":"pacman Usage","item":"https://jiaoshijie.github.io/posts/pacman_usage/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"pacman Usage","name":"pacman Usage","description":" To use pactree and paccache install pacman-contrib To install packages pacman -S package_name1 package_name2 来安装软件 pacman -S $(pacman -Ssq package_regex)来安装不太清楚名字的包 pacman -Sg package_group_name 查看一个软件包组有什么软件 pacman -S -needed package_name1 pacman 默认会重新安装软件, 即使软件已经是up to date. --needed 会避免安装已经up to date软件 一些软件会有选项, 例如Enter a selection (default=all): 1-10 15这将安装1到10和15号软件包 ^5-8 ^2 这将安装除了5-8和2号软件包之外的其他软件包 To remove packages pacman -R package_name 只移除目标软件包, 留下其依赖的软件包 pacman -Rs package_name 移除目标软件包和没有被其他软件依赖的软件包 pacman -Rsu 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令 pacman -Rsc 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件 pacman -Rdd 移除被其他包依赖的软件包, 而不移除依赖它的包. 这个命令可能会导致系统崩溃, 不推荐使用 pacman -Rn package_name 移除软件的配置文件, 但不会移除软件自己创建的, 和家目录的dot配置文件 To update packages pacman -Syu update full packages and system To get packages details pacman -Ss string1 string2 在datebase中搜索packages\u0026rsquo; name and descriptions pacman -Ss '^vim-' 可以使用some ERE(Extend Regular Expressions) pacman -Si package_name 获取extensive information about a given package in remote pacman -Qs string1 string2 搜索本地已经安装的包的name和descriptions pacman -Q 只搜索主动安装的包的名字 pacman -Qi package_name 获取本地安装包的extensive information pacman -Qo /path/to/file_name 获取软件属于哪个软件包 pacman -F string1 string2 获取远程的包的文件路径名 pacman -Qdt 列出不再被依赖的软件包 pacman -Qet 列出不再被依赖的软件包详细信息 other feature pacman -Sw package_name 下载软件包不安装它 pacman -U /path/to/package/package_name-version.pkg.tar.zst 安装本地软件包 pacman -U file:///path/to/package/package_name-version.pkg.tar.zst 保留一个副本在pacman\u0026rsquo;s cahce中 pacman -U http://www.example.com/repo/example.pkg.tar.zst 安装远程软件包 yay yay -Ps 打印系统的一些安装软件包的分析 yay -Yc 清除不使用的依赖 yay -G aur_package_name 下载PKGBUILD文件从ABS或AUR yay -Y --gendb 生成开发者包数据库 yay -Syu --devel --timeupdate 更新系统, 检查开发者包 paru paru \u0026lt;target\u0026gt; 交互搜索和安装target paru 和 paru -Syu 相同, 更新系统 paru -Sua 只更新AUR packages paru -Qua 打印可用的AUR更新 paru -G \u0026lt;target\u0026gt; 下载PKGBUILD文件和关联的文件 paru -Gp \u0026lt;target\u0026gt; 打印target的PKGBUILD的内容 paru -Gc \u0026lt;target\u0026gt; 打印target的AUR的comments paru --gendb 创建devel database Archlinux install deb package 1. 使用AUR中其他人提供的包 using AUR(Arch Linux User Repository) 2. 手动安装 首先, 解压下载的 *.deb 包, ar -x *.deb --output dirname cd dirname 应该可以看到 control.tar.gz data.tar.xz debian-binary debian-binary 显示debian包管理的信息版本(super不重要) control.tar.xz 为软件介绍(包括依赖非常重要), 一些包的安全验证程序和完整性的验证程序(可以不用管) data.tar.xz 软件安装的位置及软件, 可能是 etc opt usr 然后根据依赖信息安装依赖, 根据data中目录的位置将相应的软件拷贝到相应的目录. 3. 自己写arch\u0026rsquo;s makepkg file. 首先, 通过cp /usr/share/pacman/PKGBUILD.proto ./PKGBUILD拷贝一个PKGBUILD模板. 然后, 设置PKGBUILD中的变量和函数的功能. pkgname: 软件包的名称 pkgver: 软件包的版本, 通常为数字, . _ -组成 pkgrel: 必须存在, 并设置为1 pkgdesc: 软件的描述 arch: 可以运行的平台, 一般为x86_64 url: 下载该软件的地址 license: 发行协议 depends: 软件的依赖 source: 构建包所需要的文件组, 如果只有一个可以写一个, 也可以使很多包的地址 noextract: 一个文件组在source中的没有解压缩包的名称 md5sums: 包检验码, md5sums生成md5sums码, 如果不想使用可以复制为SKIP package(): 最终安装函数 prepare(): 准备函数 更多变量解释: archwiki-PKGBUILD pkgdir: makepkg生成的目录默认为根目录. srcdir: 还不清楚. 设置完成后, 在包含该PKGBUILD的目录下, 执行makepkg即可生成archlinux下的包. 使用pacman -U pkgname安装该软件. 参考 How to install Deb package in arch Linux How to convert DEB packages into arch linux packages Archlinux-Creating packages ","keywords":["linux","arch","cli"],"articleBody":" To use pactree and paccache install pacman-contrib To install packages pacman -S package_name1 package_name2 来安装软件 pacman -S $(pacman -Ssq package_regex)来安装不太清楚名字的包 pacman -Sg package_group_name 查看一个软件包组有什么软件 pacman -S -needed package_name1 pacman 默认会重新安装软件, 即使软件已经是up to date. --needed 会避免安装已经up to date软件 一些软件会有选项, 例如Enter a selection (default=all): 1-10 15这将安装1到10和15号软件包 ^5-8 ^2 这将安装除了5-8和2号软件包之外的其他软件包 To remove packages pacman -R package_name 只移除目标软件包, 留下其依赖的软件包 pacman -Rs package_name 移除目标软件包和没有被其他软件依赖的软件包 pacman -Rsu 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令 pacman -Rsc 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件 pacman -Rdd 移除被其他包依赖的软件包, 而不移除依赖它的包. 这个命令可能会导致系统崩溃, 不推荐使用 pacman -Rn package_name 移除软件的配置文件, 但不会移除软件自己创建的, 和家目录的dot配置文件 To update packages pacman -Syu update full packages and system To get packages details pacman -Ss string1 string2 在datebase中搜索packages’ name and descriptions pacman -Ss '^vim-' 可以使用some ERE(Extend Regular Expressions) pacman -Si package_name 获取extensive information about a given package in remote pacman -Qs string1 string2 搜索本地已经安装的包的name和descriptions pacman -Q 只搜索主动安装的包的名字 pacman -Qi package_name 获取本地安装包的extensive information pacman -Qo /path/to/file_name 获取软件属于哪个软件包 pacman -F string1 string2 获取远程的包的文件路径名 pacman -Qdt 列出不再被依赖的软件包 pacman -Qet 列出不再被依赖的软件包详细信息 other feature pacman -Sw package_name 下载软件包不安装它 pacman -U /path/to/package/package_name-version.pkg.tar.zst 安装本地软件包 pacman -U file:///path/to/package/package_name-version.pkg.tar.zst 保留一个副本在pacman’s cahce中 pacman -U http://www.example.com/repo/example.pkg.tar.zst 安装远程软件包 yay yay -Ps 打印系统的一些安装软件包的分析 yay -Yc 清除不使用的依赖 yay -G aur_package_name 下载PKGBUILD文件从ABS或AUR yay -Y --gendb 生成开发者包数据库 yay -Syu --devel --timeupdate 更新系统, 检查开发者包 paru paru 交互搜索和安装target paru 和 paru -Syu 相同, 更新系统 paru -Sua 只更新AUR packages paru -Qua 打印可用的AUR更新 paru -G 下载PKGBUILD文件和关联的文件 paru -Gp 打印target的PKGBUILD的内容 paru -Gc 打印target的AUR的comments paru --gendb 创建devel database Archlinux install deb package 1. 使用AUR中其他人提供的包 using AUR(Arch Linux User Repository) 2. 手动安装 首先, 解压下载的 *.deb 包, ar -x *.deb --output dirname cd dirname 应该可以看到 control.tar.gz data.tar.xz debian-binary debian-binary 显示debian包管理的信息版本(super不重要) control.tar.xz 为软件介绍(包括依赖非常重要), 一些包的安全验证程序和完整性的验证程序(可以不用管) data.tar.xz 软件安装的位置及软件, 可能是 etc opt usr 然后根据依赖信息安装依赖, 根据data中目录的位置将相应的软件拷贝到相应的目录. 3. 自己写arch’s makepkg file. 首先, 通过cp /usr/share/pacman/PKGBUILD.proto ./PKGBUILD拷贝一个PKGBUILD模板. 然后, 设置PKGBUILD中的变量和函数的功能. pkgname: 软件包的名称 pkgver: 软件包的版本, 通常为数字, . _ -组成 pkgrel: 必须存在, 并设置为1 pkgdesc: 软件的描述 arch: 可以运行的平台, 一般为x86_64 url: 下载该软件的地址 license: 发行协议 depends: 软件的依赖 source: 构建包所需要的文件组, 如果只有一个可以写一个, 也可以使很多包的地址 noextract: 一个文件组在source中的没有解压缩包的名称 md5sums: 包检验码, md5sums生成md5sums码, 如果不想使用可以复制为SKIP package(): 最终安装函数 prepare(): 准备函数 更多变量解释: archwiki-PKGBUILD pkgdir: makepkg生成的目录默认为根目录. srcdir: 还不清楚. 设置完成后, 在包含该PKGBUILD的目录下, 执行makepkg即可生成archlinux下的包. 使用pacman -U pkgname安装该软件. 参考 How to install Deb package in arch Linux How to convert DEB packages into arch linux packages Archlinux-Creating packages ","wordCount":"338","inLanguage":"zh-cn","datePublished":"2024-08-04T00:29:55+08:00","dateModified":"2024-08-04T00:29:55+08:00","author":{"@type":"Person","name":"Jiao shijie"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://jiaoshijie.github.io/posts/pacman_usage/"},"publisher":{"@type":"Organization","name":"Jsj's Blog","logo":{"@type":"ImageObject","url":"https://jiaoshijie.github.io/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://jiaoshijie.github.io/ accesskey=h title="Home (Alt + H)"><img src=https://jiaoshijie.github.io/favicon.ico alt aria-label=logo height=35>Home</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://jiaoshijie.github.io/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://jiaoshijie.github.io/tags/ title=Tags><span>Tags</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://jiaoshijie.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://jiaoshijie.github.io/posts/>Posts</a></div><h1 class="post-title entry-hint-parent">pacman Usage</h1></header><div class=post-content><ul><li>To use <code>pactree</code> and <code>paccache</code> install <code>pacman-contrib</code></li></ul><h2 id=to-install-packages>To install packages<a hidden class=anchor aria-hidden=true href=#to-install-packages>#</a></h2><ul><li><code>pacman -S package_name1 package_name2</code> 来安装软件</li><li><code>pacman -S $(pacman -Ssq package_regex)</code>来安装不太清楚名字的包</li><li><code>pacman -Sg package_group_name</code> 查看一个软件包组有什么软件</li><li><code>pacman -S -needed package_name1</code><ul><li>pacman 默认会重新安装软件, 即使软件已经是up to date.</li><li><code>--needed</code> 会避免安装已经up to date软件</li></ul></li><li>一些软件会有选项, 例如<code>Enter a selection (default=all):</code><ul><li><code>1-10 15</code>这将安装1到10和15号软件包</li><li><code>^5-8 ^2</code> 这将安装除了5-8和2号软件包之外的其他软件包</li></ul></li></ul><h2 id=to-remove-packages>To remove packages<a hidden class=anchor aria-hidden=true href=#to-remove-packages>#</a></h2><ul><li><code>pacman -R package_name</code> 只移除目标软件包, 留下其依赖的软件包</li><li><code>pacman -Rs package_name</code> 移除目标软件包和没有被其他软件依赖的软件包<ul><li><code>pacman -Rsu</code> 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令</li></ul></li><li><code>pacman -Rsc</code> 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件</li><li><code>pacman -Rdd</code> 移除被其他包依赖的软件包, 而不移除依赖它的包. <strong>这个命令可能会导致系统崩溃, 不推荐使用</strong></li><li><code>pacman -Rn package_name</code> 移除软件的配置文件, <strong>但不会移除软件自己创建的, 和家目录的dot配置文件</strong></li></ul><h2 id=to-update-packages>To update packages<a hidden class=anchor aria-hidden=true href=#to-update-packages>#</a></h2><ul><li><code>pacman -Syu</code> update full packages and system</li></ul><h2 id=to-get-packages-details>To get packages details<a hidden class=anchor aria-hidden=true href=#to-get-packages-details>#</a></h2><ul><li><code>pacman -Ss string1 string2</code> 在datebase中搜索packages&rsquo; name and descriptions<ul><li><code>pacman -Ss '^vim-'</code> 可以使用some ERE(Extend Regular Expressions)</li></ul></li><li><code>pacman -Si package_name</code> 获取extensive information about a given package in remote</li><li><code>pacman -Qs string1 string2</code> 搜索本地已经安装的包的name和descriptions<ul><li><code>pacman -Q</code> 只搜索主动安装的包的名字</li></ul></li><li><code>pacman -Qi package_name</code> 获取本地安装包的extensive information</li><li><code>pacman -Qo /path/to/file_name</code> 获取软件属于哪个软件包</li><li><code>pacman -F string1 string2</code> 获取远程的包的文件路径名</li><li><code>pacman -Qdt</code> 列出不再被依赖的软件包</li><li><code>pacman -Qet</code> 列出不再被依赖的软件包详细信息</li></ul><h2 id=other-feature>other feature<a hidden class=anchor aria-hidden=true href=#other-feature>#</a></h2><ul><li><code>pacman -Sw package_name</code> 下载软件包不安装它</li><li><code>pacman -U /path/to/package/package_name-version.pkg.tar.zst</code> 安装本地软件包</li><li><code>pacman -U file:///path/to/package/package_name-version.pkg.tar.zst</code> 保留一个副本在pacman&rsquo;s cahce中</li><li><code>pacman -U http://www.example.com/repo/example.pkg.tar.zst</code> 安装远程软件包</li></ul><h2 id=yay>yay<a hidden class=anchor aria-hidden=true href=#yay>#</a></h2><ul><li><code>yay -Ps</code> 打印系统的一些安装软件包的分析</li><li><code>yay -Yc</code> 清除不使用的依赖</li><li><code>yay -G aur_package_name</code> 下载PKGBUILD文件从ABS或AUR</li><li><code>yay -Y --gendb</code> 生成开发者包数据库</li><li><code>yay -Syu --devel --timeupdate</code> 更新系统, 检查开发者包</li></ul><h2 id=paru>paru<a hidden class=anchor aria-hidden=true href=#paru>#</a></h2><ul><li><code>paru &lt;target></code> 交互搜索和安装target</li><li><code>paru</code> 和 <code>paru -Syu</code> 相同, 更新系统</li><li><code>paru -Sua</code> 只更新AUR packages</li><li><code>paru -Qua</code> 打印可用的AUR更新</li><li><code>paru -G &lt;target></code> 下载PKGBUILD文件和关联的文件</li><li><code>paru -Gp &lt;target></code> 打印target的PKGBUILD的内容</li><li><code>paru -Gc &lt;target></code> 打印target的AUR的comments</li><li><code>paru --gendb</code> 创建devel database</li></ul><h2 id=archlinux-install-deb-package>Archlinux install deb package<a hidden class=anchor aria-hidden=true href=#archlinux-install-deb-package>#</a></h2><h3 id=1-使用aur中其他人提供的包>1. 使用AUR中其他人提供的包<a hidden class=anchor aria-hidden=true href=#1-使用aur中其他人提供的包>#</a></h3><ul><li>using AUR(Arch Linux User Repository)</li></ul><h3 id=2-手动安装>2. 手动安装<a hidden class=anchor aria-hidden=true href=#2-手动安装>#</a></h3><ul><li>首先, 解压下载的 <code>*.deb</code> 包, <code>ar -x *.deb --output dirname</code></li><li><code>cd dirname</code> 应该可以看到 <code>control.tar.gz</code> <code>data.tar.xz</code> <code>debian-binary</code><ul><li><code>debian-binary</code> 显示debian包管理的信息版本(super不重要)</li><li><code>control.tar.xz</code> 为软件介绍(包括依赖<strong>非常重要</strong>), 一些包的安全验证程序和完整性的验证程序(可以不用管)</li><li><code>data.tar.xz</code> 软件安装的位置及<strong>软件</strong>, 可能是 <code>etc</code> <code>opt</code> <code>usr</code></li></ul></li><li>然后根据依赖信息安装依赖, 根据data中目录的位置将相应的软件拷贝到相应的目录.</li></ul><h3 id=3-自己写archs-makepkg-file>3. 自己写arch&rsquo;s makepkg file.<a hidden class=anchor aria-hidden=true href=#3-自己写archs-makepkg-file>#</a></h3><ul><li>首先, 通过<code>cp /usr/share/pacman/PKGBUILD.proto ./PKGBUILD</code>拷贝一个PKGBUILD模板.</li><li>然后, 设置PKGBUILD中的变量和函数的功能.<ul><li><code>pkgname</code>: 软件包的名称</li><li><code>pkgver</code>: 软件包的版本, 通常为<code>数字</code>, <code>. _ -</code>组成</li><li><code>pkgrel</code>: 必须存在, 并设置为1</li><li><code>pkgdesc</code>: 软件的描述</li><li><code>arch</code>: 可以运行的平台, 一般为<code>x86_64</code></li><li><code>url</code>: 下载该软件的地址</li><li><code>license</code>: 发行协议</li><li><code>depends</code>: 软件的依赖</li><li><code>source</code>: 构建包所需要的文件组, 如果只有一个可以写一个, 也可以使很多包的地址</li><li><code>noextract</code>: 一个文件组在<code>source</code>中的没有解压缩包的名称</li><li><code>md5sums</code>: 包检验码, <code>md5sums</code>生成md5sums码, 如果不想使用可以复制为<code>SKIP</code></li><li><code>package()</code>: 最终安装函数</li><li><code>prepare()</code>: 准备函数</li><li>更多变量解释: <a href=https://wiki.archlinux.org/index.php/PKGBUILD>archwiki-PKGBUILD</a></li></ul></li><li><code>pkgdir</code>: makepkg生成的目录默认为根目录. <code>srcdir</code>: <strong>还不清楚</strong>.</li><li>设置完成后, 在包含该PKGBUILD的目录下, 执行<code>makepkg</code>即可生成archlinux下的包.</li><li>使用<code>pacman -U pkgname</code>安装该软件.</li></ul><h3 id=参考>参考<a hidden class=anchor aria-hidden=true href=#参考>#</a></h3><ul><li><a href=https://www.maketecheasier.com/install-deb-package-in-arch-linux/>How to install Deb package in arch Linux</a></li><li><a href=https://www.ostechnix.com/convert-deb-packages-arch-linux-packages/>How to convert DEB packages into arch linux packages</a></li><li><a href=https://wiki.archlinux.org/index.php/Creating_packages>Archlinux-Creating packages</a></li></ul></div><footer class=post-footer><ul class=post-tags><li><a href=https://jiaoshijie.github.io/tags/linux/>Linux</a></li><li><a href=https://jiaoshijie.github.io/tags/arch/>Arch</a></li><li><a href=https://jiaoshijie.github.io/tags/cli/>Cli</a></li></ul><nav class=paginav><a class=next href=https://jiaoshijie.github.io/posts/mpv_usage/><span class=title>»</span><br><span>mpv Usage</span></a></nav><ul class=share-buttons><li><a target=_blank rel="noopener noreferrer" aria-label="share pacman Usage on x" href="https://x.com/intent/tweet/?text=pacman%20Usage&amp;url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fpacman_usage%2f&amp;hashtags=linux%2carch%2ccli"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446C483.971.0 512 28.03 512 62.554zM269.951 190.75 182.567 75.216H56L207.216 272.95 63.9 436.783h61.366L235.9 310.383l96.667 126.4H456L298.367 228.367l134-153.151H371.033zM127.633 110h36.468l219.38 290.065H349.5z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share pacman Usage on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fpacman_usage%2f&amp;title=pacman%20Usage&amp;summary=pacman%20Usage&amp;source=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fpacman_usage%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share pacman Usage on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fpacman_usage%2f&title=pacman%20Usage"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share pacman Usage on facebook" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fpacman_usage%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share pacman Usage on whatsapp" href="https://api.whatsapp.com/send?text=pacman%20Usage%20-%20https%3a%2f%2fjiaoshijie.github.io%2fposts%2fpacman_usage%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share pacman Usage on telegram" href="https://telegram.me/share/url?text=pacman%20Usage&amp;url=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fpacman_usage%2f"><svg viewBox="2 2 28 28" height="30" width="30" fill="currentcolor"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share pacman Usage on ycombinator" href="https://news.ycombinator.com/submitlink?t=pacman%20Usage&u=https%3a%2f%2fjiaoshijie.github.io%2fposts%2fpacman_usage%2f"><svg width="30" height="30" viewBox="0 0 512 512" fill="currentcolor" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"><path d="M449.446.0C483.971.0 512 28.03 512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446zM183.8767 87.9921h-62.034L230.6673 292.4508V424.0079h50.6655V292.4508L390.1575 87.9921H328.1233L256 238.2489z"/></svg></a></li></ul></footer></article></main><footer class=footer><span>&copy; 2024 <a href=https://jiaoshijie.github.io/>Jsj's Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script></body></html>

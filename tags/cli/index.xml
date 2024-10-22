@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Cli on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/cli/</link>
+    <description>Recent content in Cli on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.136.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Aug 2024 00:29:55 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/cli/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pacman Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pacman_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pacman_usage/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;To use &lt;code&gt;pactree&lt;/code&gt; and &lt;code&gt;paccache&lt;/code&gt; install &lt;code&gt;pacman-contrib&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-install-packages&#34;&gt;To install packages&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -S package_name1 package_name2&lt;/code&gt; 来安装软件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S $(pacman -Ssq package_regex)&lt;/code&gt;来安装不太清楚名字的包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Sg package_group_name&lt;/code&gt; 查看一个软件包组有什么软件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S -needed package_name1&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;pacman 默认会重新安装软件, 即使软件已经是up to date.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--needed&lt;/code&gt; 会避免安装已经up to date软件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;一些软件会有选项, 例如&lt;code&gt;Enter a selection (default=all):&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;1-10 15&lt;/code&gt;这将安装1到10和15号软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;^5-8 ^2&lt;/code&gt; 这将安装除了5-8和2号软件包之外的其他软件包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-remove-packages&#34;&gt;To remove packages&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -R package_name&lt;/code&gt; 只移除目标软件包, 留下其依赖的软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rs package_name&lt;/code&gt; 移除目标软件包和没有被其他软件依赖的软件包
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rsu&lt;/code&gt; 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rsc&lt;/code&gt; 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rdd&lt;/code&gt; 移除被其他包依赖的软件包, 而不移除依赖它的包. &lt;strong&gt;这个命令可能会导致系统崩溃, 不推荐使用&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rn package_name&lt;/code&gt; 移除软件的配置文件, &lt;strong&gt;但不会移除软件自己创建的, 和家目录的dot配置文件&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-update-packages&#34;&gt;To update packages&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Syu&lt;/code&gt; update full packages and system&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-get-packages-details&#34;&gt;To get packages details&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Ss string1 string2&lt;/code&gt; 在datebase中搜索packages&amp;rsquo; name and descriptions
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Ss &#39;^vim-&#39;&lt;/code&gt; 可以使用some ERE(Extend Regular Expressions)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Si package_name&lt;/code&gt; 获取extensive information about a given package in remote&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qs string1 string2&lt;/code&gt; 搜索本地已经安装的包的name和descriptions
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Q&lt;/code&gt; 只搜索主动安装的包的名字&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qi package_name&lt;/code&gt; 获取本地安装包的extensive information&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qo /path/to/file_name&lt;/code&gt; 获取软件属于哪个软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -F string1 string2&lt;/code&gt; 获取远程的包的文件路径名&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qdt&lt;/code&gt; 列出不再被依赖的软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qet&lt;/code&gt; 列出不再被依赖的软件包详细信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;other-feature&#34;&gt;other feature&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Sw package_name&lt;/code&gt; 下载软件包不安装它&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -U /path/to/package/package_name-version.pkg.tar.zst&lt;/code&gt; 安装本地软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -U file:///path/to/package/package_name-version.pkg.tar.zst&lt;/code&gt; 保留一个副本在pacman&amp;rsquo;s cahce中&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -U http://www.example.com/repo/example.pkg.tar.zst&lt;/code&gt; 安装远程软件包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;yay&#34;&gt;yay&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;yay -Ps&lt;/code&gt; 打印系统的一些安装软件包的分析&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -Yc&lt;/code&gt; 清除不使用的依赖&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -G aur_package_name&lt;/code&gt; 下载PKGBUILD文件从ABS或AUR&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -Y --gendb&lt;/code&gt; 生成开发者包数据库&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -Syu --devel --timeupdate&lt;/code&gt; 更新系统, 检查开发者包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;paru&#34;&gt;paru&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;paru &amp;lt;target&amp;gt;&lt;/code&gt; 交互搜索和安装target&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru&lt;/code&gt; 和 &lt;code&gt;paru -Syu&lt;/code&gt; 相同, 更新系统&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Sua&lt;/code&gt; 只更新AUR packages&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Qua&lt;/code&gt; 打印可用的AUR更新&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -G &amp;lt;target&amp;gt;&lt;/code&gt; 下载PKGBUILD文件和关联的文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Gp &amp;lt;target&amp;gt;&lt;/code&gt; 打印target的PKGBUILD的内容&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Gc &amp;lt;target&amp;gt;&lt;/code&gt; 打印target的AUR的comments&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru --gendb&lt;/code&gt; 创建devel database&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;archlinux-install-deb-package&#34;&gt;Archlinux install deb package&lt;/h2&gt;
+&lt;h3 id=&#34;1-使用aur中其他人提供的包&#34;&gt;1. 使用AUR中其他人提供的包&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;using AUR(Arch Linux User Repository)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-手动安装&#34;&gt;2. 手动安装&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;首先, 解压下载的 &lt;code&gt;*.deb&lt;/code&gt; 包, &lt;code&gt;ar -x *.deb --output dirname&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cd dirname&lt;/code&gt; 应该可以看到 &lt;code&gt;control.tar.gz&lt;/code&gt; &lt;code&gt;data.tar.xz&lt;/code&gt; &lt;code&gt;debian-binary&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;debian-binary&lt;/code&gt; 显示debian包管理的信息版本(super不重要)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;control.tar.xz&lt;/code&gt; 为软件介绍(包括依赖&lt;strong&gt;非常重要&lt;/strong&gt;), 一些包的安全验证程序和完整性的验证程序(可以不用管)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data.tar.xz&lt;/code&gt; 软件安装的位置及&lt;strong&gt;软件&lt;/strong&gt;, 可能是 &lt;code&gt;etc&lt;/code&gt; &lt;code&gt;opt&lt;/code&gt; &lt;code&gt;usr&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;然后根据依赖信息安装依赖, 根据data中目录的位置将相应的软件拷贝到相应的目录.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-自己写archs-makepkg-file&#34;&gt;3. 自己写arch&amp;rsquo;s makepkg file.&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;首先, 通过&lt;code&gt;cp /usr/share/pacman/PKGBUILD.proto ./PKGBUILD&lt;/code&gt;拷贝一个PKGBUILD模板.&lt;/li&gt;
+&lt;li&gt;然后, 设置PKGBUILD中的变量和函数的功能.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pkgname&lt;/code&gt;: 软件包的名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgver&lt;/code&gt;: 软件包的版本, 通常为&lt;code&gt;数字&lt;/code&gt;, &lt;code&gt;. _ -&lt;/code&gt;组成&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgrel&lt;/code&gt;: 必须存在, 并设置为1&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgdesc&lt;/code&gt;: 软件的描述&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;arch&lt;/code&gt;: 可以运行的平台, 一般为&lt;code&gt;x86_64&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;url&lt;/code&gt;: 下载该软件的地址&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;license&lt;/code&gt;: 发行协议&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;depends&lt;/code&gt;: 软件的依赖&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;source&lt;/code&gt;: 构建包所需要的文件组, 如果只有一个可以写一个, 也可以使很多包的地址&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;noextract&lt;/code&gt;: 一个文件组在&lt;code&gt;source&lt;/code&gt;中的没有解压缩包的名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;md5sums&lt;/code&gt;: 包检验码, &lt;code&gt;md5sums&lt;/code&gt;生成md5sums码, 如果不想使用可以复制为&lt;code&gt;SKIP&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;package()&lt;/code&gt;: 最终安装函数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;prepare()&lt;/code&gt;: 准备函数&lt;/li&gt;
+&lt;li&gt;更多变量解释: &lt;a href=&#34;https://wiki.archlinux.org/index.php/PKGBUILD&#34;&gt;archwiki-PKGBUILD&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgdir&lt;/code&gt;: makepkg生成的目录默认为根目录. &lt;code&gt;srcdir&lt;/code&gt;: &lt;strong&gt;还不清楚&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;设置完成后, 在包含该PKGBUILD的目录下, 执行&lt;code&gt;makepkg&lt;/code&gt;即可生成archlinux下的包.&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;pacman -U pkgname&lt;/code&gt;安装该软件.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;参考&#34;&gt;参考&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.maketecheasier.com/install-deb-package-in-arch-linux/&#34;&gt;How to install Deb package in arch Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ostechnix.com/convert-deb-packages-arch-linux-packages/&#34;&gt;How to convert DEB packages into arch linux packages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/index.php/Creating_packages&#34;&gt;Archlinux-Creating packages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Pass Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pass_usage/</link>
+      <pubDate>Sat, 03 Aug 2024 23:06:40 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pass_usage/</guid>
+      <description>&lt;h2 id=&#34;install-pass&#34;&gt;install pass&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -S pass&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设置gnupg&#34;&gt;设置GnuPG&lt;/h2&gt;
+&lt;p&gt;pass使用PGP(Pretty Good Privacy)密钥, 最常用的PGP实现是GnuPG(GPG), 它随linux系统一起安装.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gpg --generate-key&lt;/code&gt; 来产生PGP密钥
+&lt;ul&gt;
+&lt;li&gt;在这个过程中会提示你输入你的名字和电子邮箱&lt;/li&gt;
+&lt;li&gt;并为密钥创建一个密码&lt;/li&gt;
+&lt;li&gt;密钥加密, 密码解密(但只有密码没有密钥也无法解密)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gpg --list-keys&lt;/code&gt; 可以查看你创建的PGP密钥&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ gpg --list-keys
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/home/seth/.gnupg/pubring.kbx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-----------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pub  ed25519 2022-01-06 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;SC&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;expires: 2024-01-06&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    2BFF94286461216C907CBA52F067996F13EF10D8
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uid  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;ultimate&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Seth Kenlon &amp;lt;seth@example.com&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sub  cv25519 2022-01-06 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;E&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;expires: 2024-01-06&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;export-and-import-gpg-key&#34;&gt;export and import gpg key&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;export a gpg public key &lt;code&gt;gpg --export [-a] {key-id} &amp;gt; public-key.asc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;export a gpg private key &lt;code&gt;gpg --export-secret-keys [-a] {key-id} &amp;gt; private-key.asc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;import a gpg key &lt;code&gt;gpg --import [public|private key]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;backup a gpg public key &lt;code&gt;gpg --export --export-options backup --output public.gpg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;backup a gpg private key &lt;code&gt;gpg --export-secret-keys --export-options backup --output private.gpg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://itslinuxfoss.com/export-gpg-private-key-and-public-key-file/&#34;&gt;export gpg private key and public key file&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;change-expiration-data-of-a-gpg-key&#34;&gt;change expiration data of a gpg key&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gpg --edit-key [key-id]&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt; expire&lt;/code&gt; subcommand&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.g-loaded.eu/2010/11/01/change-expiration-date-gpg-key/&#34;&gt;change expiration date gpg key&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设置pass&#34;&gt;设置pass&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass init 2BFF94286461216C907CBA52F067996F13EF10D8&lt;/code&gt; 初始pass仓库&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;存储密码&#34;&gt;存储密码&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass add {www.example.com}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pass generate {www.example.com} 20 -c&lt;/code&gt; 自动为www.example.com网站创建一个20位随机密码并传送到系统剪切板&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;编辑密码&#34;&gt;编辑密码&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass edit {www.example.com}&lt;/code&gt; 可以添加一些信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;bd%dc$3a49af49498bb6f31bc964718C
+user: seth123
+url: example.com
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;获取密码&#34;&gt;获取密码&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass show {www.example.com}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;passmenu&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;查找密码&#34;&gt;查找密码&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass grep example&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ pass grep example
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;www.example.com:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;url: www.example.org
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;ref&#34;&gt;ref&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://opensource.com/article/22/1/manage-passwords-linux-terminal&#34;&gt;Manage your passwords in the Linux terminal&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>

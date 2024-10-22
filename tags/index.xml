@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tags on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/</link>
+    <description>Recent content in Tags on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.136.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Aug 2024 00:29:55 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Arch</title>
+      <link>https://jiaoshijie.github.io/tags/arch/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/arch/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cli</title>
+      <link>https://jiaoshijie.github.io/tags/cli/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/cli/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>https://jiaoshijie.github.io/tags/linux/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Audio</title>
+      <link>https://jiaoshijie.github.io/tags/audio/</link>
+      <pubDate>Sun, 04 Aug 2024 00:26:44 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/audio/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Video</title>
+      <link>https://jiaoshijie.github.io/tags/video/</link>
+      <pubDate>Sun, 04 Aug 2024 00:26:44 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/video/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Programming</title>
+      <link>https://jiaoshijie.github.io/tags/programming/</link>
+      <pubDate>Sun, 04 Aug 2024 00:18:07 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vim</title>
+      <link>https://jiaoshijie.github.io/tags/vim/</link>
+      <pubDate>Sun, 04 Aug 2024 00:18:07 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/vim/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Regexp</title>
+      <link>https://jiaoshijie.github.io/tags/regexp/</link>
+      <pubDate>Fri, 03 May 2024 19:51:21 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/regexp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Regular Expressions</title>
+      <link>https://jiaoshijie.github.io/tags/regular-expressions/</link>
+      <pubDate>Fri, 03 May 2024 19:51:21 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/regular-expressions/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Math</title>
+      <link>https://jiaoshijie.github.io/tags/math/</link>
+      <pubDate>Fri, 03 May 2024 19:06:23 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/math/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>C</title>
+      <link>https://jiaoshijie.github.io/tags/c/</link>
+      <pubDate>Wed, 17 Apr 2024 11:36:45 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/c/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>https://jiaoshijie.github.io/tags/c&#43;&#43;/</link>
+      <pubDate>Tue, 11 Jul 2023 21:35:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vtable</title>
+      <link>https://jiaoshijie.github.io/tags/vtable/</link>
+      <pubDate>Tue, 11 Jul 2023 21:35:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/vtable/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Compiler</title>
+      <link>https://jiaoshijie.github.io/tags/compiler/</link>
+      <pubDate>Sun, 17 Jul 2022 14:57:04 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/compiler/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Http</title>
+      <link>https://jiaoshijie.github.io/tags/http/</link>
+      <pubDate>Sun, 13 Oct 2019 22:46:48 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/http/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hugo</title>
+      <link>https://jiaoshijie.github.io/tags/hugo/</link>
+      <pubDate>Tue, 01 Oct 2019 01:31:00 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

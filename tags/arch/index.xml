@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Arch on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/arch/</link>
+    <description>Recent content in Arch on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.136.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Aug 2024 00:29:55 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/arch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pacman Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pacman_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pacman_usage/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;To use &lt;code&gt;pactree&lt;/code&gt; and &lt;code&gt;paccache&lt;/code&gt; install &lt;code&gt;pacman-contrib&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-install-packages&#34;&gt;To install packages&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -S package_name1 package_name2&lt;/code&gt; 来安装软件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S $(pacman -Ssq package_regex)&lt;/code&gt;来安装不太清楚名字的包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Sg package_group_name&lt;/code&gt; 查看一个软件包组有什么软件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S -needed package_name1&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;pacman 默认会重新安装软件, 即使软件已经是up to date.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--needed&lt;/code&gt; 会避免安装已经up to date软件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;一些软件会有选项, 例如&lt;code&gt;Enter a selection (default=all):&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;1-10 15&lt;/code&gt;这将安装1到10和15号软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;^5-8 ^2&lt;/code&gt; 这将安装除了5-8和2号软件包之外的其他软件包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-remove-packages&#34;&gt;To remove packages&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -R package_name&lt;/code&gt; 只移除目标软件包, 留下其依赖的软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rs package_name&lt;/code&gt; 移除目标软件包和没有被其他软件依赖的软件包
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rsu&lt;/code&gt; 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rsc&lt;/code&gt; 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rdd&lt;/code&gt; 移除被其他包依赖的软件包, 而不移除依赖它的包. &lt;strong&gt;这个命令可能会导致系统崩溃, 不推荐使用&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rn package_name&lt;/code&gt; 移除软件的配置文件, &lt;strong&gt;但不会移除软件自己创建的, 和家目录的dot配置文件&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-update-packages&#34;&gt;To update packages&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Syu&lt;/code&gt; update full packages and system&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-get-packages-details&#34;&gt;To get packages details&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Ss string1 string2&lt;/code&gt; 在datebase中搜索packages&amp;rsquo; name and descriptions
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Ss &#39;^vim-&#39;&lt;/code&gt; 可以使用some ERE(Extend Regular Expressions)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Si package_name&lt;/code&gt; 获取extensive information about a given package in remote&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qs string1 string2&lt;/code&gt; 搜索本地已经安装的包的name和descriptions
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Q&lt;/code&gt; 只搜索主动安装的包的名字&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qi package_name&lt;/code&gt; 获取本地安装包的extensive information&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qo /path/to/file_name&lt;/code&gt; 获取软件属于哪个软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -F string1 string2&lt;/code&gt; 获取远程的包的文件路径名&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qdt&lt;/code&gt; 列出不再被依赖的软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qet&lt;/code&gt; 列出不再被依赖的软件包详细信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;other-feature&#34;&gt;other feature&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Sw package_name&lt;/code&gt; 下载软件包不安装它&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -U /path/to/package/package_name-version.pkg.tar.zst&lt;/code&gt; 安装本地软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -U file:///path/to/package/package_name-version.pkg.tar.zst&lt;/code&gt; 保留一个副本在pacman&amp;rsquo;s cahce中&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -U http://www.example.com/repo/example.pkg.tar.zst&lt;/code&gt; 安装远程软件包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;yay&#34;&gt;yay&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;yay -Ps&lt;/code&gt; 打印系统的一些安装软件包的分析&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -Yc&lt;/code&gt; 清除不使用的依赖&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -G aur_package_name&lt;/code&gt; 下载PKGBUILD文件从ABS或AUR&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -Y --gendb&lt;/code&gt; 生成开发者包数据库&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -Syu --devel --timeupdate&lt;/code&gt; 更新系统, 检查开发者包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;paru&#34;&gt;paru&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;paru &amp;lt;target&amp;gt;&lt;/code&gt; 交互搜索和安装target&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru&lt;/code&gt; 和 &lt;code&gt;paru -Syu&lt;/code&gt; 相同, 更新系统&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Sua&lt;/code&gt; 只更新AUR packages&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Qua&lt;/code&gt; 打印可用的AUR更新&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -G &amp;lt;target&amp;gt;&lt;/code&gt; 下载PKGBUILD文件和关联的文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Gp &amp;lt;target&amp;gt;&lt;/code&gt; 打印target的PKGBUILD的内容&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Gc &amp;lt;target&amp;gt;&lt;/code&gt; 打印target的AUR的comments&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru --gendb&lt;/code&gt; 创建devel database&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;archlinux-install-deb-package&#34;&gt;Archlinux install deb package&lt;/h2&gt;
+&lt;h3 id=&#34;1-使用aur中其他人提供的包&#34;&gt;1. 使用AUR中其他人提供的包&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;using AUR(Arch Linux User Repository)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-手动安装&#34;&gt;2. 手动安装&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;首先, 解压下载的 &lt;code&gt;*.deb&lt;/code&gt; 包, &lt;code&gt;ar -x *.deb --output dirname&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cd dirname&lt;/code&gt; 应该可以看到 &lt;code&gt;control.tar.gz&lt;/code&gt; &lt;code&gt;data.tar.xz&lt;/code&gt; &lt;code&gt;debian-binary&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;debian-binary&lt;/code&gt; 显示debian包管理的信息版本(super不重要)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;control.tar.xz&lt;/code&gt; 为软件介绍(包括依赖&lt;strong&gt;非常重要&lt;/strong&gt;), 一些包的安全验证程序和完整性的验证程序(可以不用管)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data.tar.xz&lt;/code&gt; 软件安装的位置及&lt;strong&gt;软件&lt;/strong&gt;, 可能是 &lt;code&gt;etc&lt;/code&gt; &lt;code&gt;opt&lt;/code&gt; &lt;code&gt;usr&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;然后根据依赖信息安装依赖, 根据data中目录的位置将相应的软件拷贝到相应的目录.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-自己写archs-makepkg-file&#34;&gt;3. 自己写arch&amp;rsquo;s makepkg file.&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;首先, 通过&lt;code&gt;cp /usr/share/pacman/PKGBUILD.proto ./PKGBUILD&lt;/code&gt;拷贝一个PKGBUILD模板.&lt;/li&gt;
+&lt;li&gt;然后, 设置PKGBUILD中的变量和函数的功能.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pkgname&lt;/code&gt;: 软件包的名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgver&lt;/code&gt;: 软件包的版本, 通常为&lt;code&gt;数字&lt;/code&gt;, &lt;code&gt;. _ -&lt;/code&gt;组成&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgrel&lt;/code&gt;: 必须存在, 并设置为1&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgdesc&lt;/code&gt;: 软件的描述&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;arch&lt;/code&gt;: 可以运行的平台, 一般为&lt;code&gt;x86_64&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;url&lt;/code&gt;: 下载该软件的地址&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;license&lt;/code&gt;: 发行协议&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;depends&lt;/code&gt;: 软件的依赖&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;source&lt;/code&gt;: 构建包所需要的文件组, 如果只有一个可以写一个, 也可以使很多包的地址&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;noextract&lt;/code&gt;: 一个文件组在&lt;code&gt;source&lt;/code&gt;中的没有解压缩包的名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;md5sums&lt;/code&gt;: 包检验码, &lt;code&gt;md5sums&lt;/code&gt;生成md5sums码, 如果不想使用可以复制为&lt;code&gt;SKIP&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;package()&lt;/code&gt;: 最终安装函数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;prepare()&lt;/code&gt;: 准备函数&lt;/li&gt;
+&lt;li&gt;更多变量解释: &lt;a href=&#34;https://wiki.archlinux.org/index.php/PKGBUILD&#34;&gt;archwiki-PKGBUILD&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgdir&lt;/code&gt;: makepkg生成的目录默认为根目录. &lt;code&gt;srcdir&lt;/code&gt;: &lt;strong&gt;还不清楚&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;设置完成后, 在包含该PKGBUILD的目录下, 执行&lt;code&gt;makepkg&lt;/code&gt;即可生成archlinux下的包.&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;pacman -U pkgname&lt;/code&gt;安装该软件.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;参考&#34;&gt;参考&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.maketecheasier.com/install-deb-package-in-arch-linux/&#34;&gt;How to install Deb package in arch Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ostechnix.com/convert-deb-packages-arch-linux-packages/&#34;&gt;How to convert DEB packages into arch linux packages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/index.php/Creating_packages&#34;&gt;Archlinux-Creating packages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>ArchLinux_Installation</title>
+      <link>https://jiaoshijie.github.io/posts/archlinux_installation/</link>
+      <pubDate>Fri, 03 May 2024 19:46:54 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/archlinux_installation/</guid>
+      <description>&lt;h2 id=&#34;一-basic-install&#34;&gt;一. Basic Install&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/USB_flash_installation_medium&#34;&gt;制作启动盘&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;1-系统启动方式&#34;&gt;1. 系统启动方式&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;输入 &lt;code&gt;ls /sys/firmware/efi/efivars&lt;/code&gt; 查看系统的启动方式&lt;/li&gt;
+&lt;li&gt;如果有输出，则为UEFI启动&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;2-网络连接&#34;&gt;2. 网络连接&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ip link&lt;/code&gt; 查看网卡的名称等信息&lt;/p&gt;
+&lt;h4 id=&#34;有线网络&#34;&gt;有线网络&lt;/h4&gt;
+&lt;p&gt;使用 &lt;code&gt;dhcpcd&lt;/code&gt; 进行有线网络连接, 和激活无限网络dhcp功能&lt;/p&gt;
+&lt;h4 id=&#34;无线网络&#34;&gt;无线网络&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;使用 &lt;code&gt;rfkill&lt;/code&gt;(Radio Frequency Kill) 检查 wifi 是否被禁用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ rfkill list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;0: phy0: Wireless LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Soft blocked: yes  // yes 为禁用, no 为未禁用&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;软件禁用&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Hard blocked: yes  // yes 为禁用, no 为未禁用&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;硬件禁用&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;如果被禁用使用 &lt;code&gt;rfkill unblock wifi&lt;/code&gt; 取消禁用&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;iwctl&lt;/code&gt; 进行无线网络连接&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ &lt;span class=&#34;nb&#34;&gt;help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ device list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ station device&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;name&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; scan
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ station device&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;name&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; get-networks
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ station device&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;name&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; connect SSID&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;name&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;使用 &lt;code&gt;ping archlinux.org&lt;/code&gt; 检查网络是否可用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;3-设置系统时间-todo&#34;&gt;3. 设置系统时间 TODO&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;timedatectl set-ntp true&lt;/code&gt; 确保时钟正确, 正确则没有输出&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;To check the service status, use &lt;code&gt;timedatectl status&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;4-磁盘分区&#34;&gt;4. 磁盘分区&lt;/h3&gt;
+&lt;h4 id=&#34;磁盘规划&#34;&gt;磁盘规划&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;EFI&lt;/strong&gt;: 100M&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;/&lt;/strong&gt;: 100G 或者 一整块硬盘(如果是多硬盘的话)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;/home/{username}/Downloads&lt;/strong&gt;: 剩下的空间 或 其他整块硬盘&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;swap&lt;/strong&gt;: 不设置 swap 分区&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;分区和格式化&#34;&gt;分区和格式化&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;lsblk&lt;/code&gt; 查看系统硬盘情况&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fdisk /dev/{disk}&lt;/code&gt; 用来进行磁盘分区&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ m &lt;span class=&#34;c1&#34;&gt;# 查看帮助&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ g &lt;span class=&#34;c1&#34;&gt;# 创建一个 GPT 分区，用来作为 EFI 分区&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ &lt;span class=&#34;c1&#34;&gt;# ...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ n &lt;span class=&#34;c1&#34;&gt;# 用来创建其他分区&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ &lt;span class=&#34;c1&#34;&gt;# ...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ l &lt;span class=&#34;c1&#34;&gt;# 查看支持的所有分区类型 ef(EFI 分区类型) 83(Linux 分区类型)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ t &lt;span class=&#34;c1&#34;&gt;# 来更改创建分区的分区类型&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ &lt;span class=&#34;c1&#34;&gt;# NOTE: 将 GPT 分区改为 EFI 分区类型, 其余分区改为 Linux 分区类型&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ w &lt;span class=&#34;c1&#34;&gt;# 保存退出&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ q &lt;span class=&#34;c1&#34;&gt;# 取消修改退出&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;使用 &lt;code&gt;mkfs.{format} /dev/{disk}&lt;/code&gt; 格式化磁盘&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mkfs.vfat&lt;/code&gt; 格式化 EFI 分区&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mkfs.ext4&lt;/code&gt; 格式化其他分区&lt;/li&gt;
+&lt;li&gt;NOTE: 不适用 SWAP 分区&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;将根目录挂在到 &lt;code&gt;/mnt&lt;/code&gt; 目录下, 将 EFI 分区挂载到 &lt;code&gt;/mnt/efi&lt;/code&gt; 其余目录挂在到 &lt;code&gt;/mnt/*&lt;/code&gt; 目录下&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;5-系统下载与安装&#34;&gt;5. 系统下载与安装&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; FIXME: &lt;code&gt;vim /etc/pacman.d/mirrorlist&lt;/code&gt; 设置安装源, 可以先使用国内的源，后面在去掉就行。
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 安装系统基本包 &lt;code&gt;pacstrap /mnt base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;base&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;base-devel&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;linux&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;linux-headers&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;linux-firmware&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;man-db&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;man-pages&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;networkmanager&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;vim&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;bash-completion&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;6-生成系统自动挂载分区文件fstab文件&#34;&gt;6. 生成系统自动挂载分区文件(fstab文件)&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;genfstab -L /mnt &amp;gt;&amp;gt; /mnt/etc/fstab&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cat /mnt/etc/fstab&lt;/code&gt; 检查写入是否正确&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;7-将-root-目录由安装镜像系统切换到要安装的系统&#34;&gt;7. 将 root 目录由安装镜像系统切换到要安装的系统&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;arch-chroot /mnt&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;8-时间区域设置&#34;&gt;8. 时间区域设置&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 使用hwclock创建&lt;code&gt;/etc/adjtime&lt;/code&gt; &lt;code&gt;hwclock --systohc&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;9-系统本地化设计&#34;&gt;9. 系统本地化设计&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;设置本地语言 &lt;code&gt;vim /etc/locale.gen&lt;/code&gt; 找到文件中的 &lt;code&gt;en_US.UTF-8 UTF-8&lt;/code&gt; &lt;code&gt;zh_CN.UTF-8 UTF-8&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;locale-gen&lt;/code&gt; 加载设置的语言项&lt;/li&gt;
+&lt;li&gt;打开文件 &lt;code&gt;vim /etc/locale.conf&lt;/code&gt; 并在里面输入一行 &lt;code&gt;LANG=en_US.UTF-8&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;设置主机名称 &lt;code&gt;vim /etc/hostname&lt;/code&gt; 然后输入自己定义的主机名称(&lt;code&gt;sakura&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;设置本机地址 &lt;code&gt;vim /etc/hosts&lt;/code&gt; 添加以下内容&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;127.0.0.1 localhost
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;::1       localhost
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;10-设置-root-密码&#34;&gt;10. 设置 root 密码&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;passwd root&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;11-安装-ucode&#34;&gt;11. 安装 ucode&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;intel-CPU &lt;code&gt;pacman -S intel-ucode&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;AMD-CPU &lt;code&gt;pacman -S amd-ucode&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;12-bootloader&#34;&gt;12. bootloader&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting&#34;&gt;Arch GRUB wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S grub efibootmgr&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;pacman -S os-prober&lt;/code&gt; 用来检查 windows 系统, 单系统可以不装&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vim /boot/grub/grub.cfg&lt;/code&gt; 修改&lt;code&gt;GRUB_CMDLINE_LINUX_DEFAULT&lt;/code&gt; 变量中的参数
+&lt;ul&gt;
+&lt;li&gt;去掉 &lt;code&gt;quiet&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;log level&lt;/code&gt; 由 3 变为 5, 方便排错&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 加入 &lt;code&gt;nowatchdog&lt;/code&gt; 可以加快开机启动速度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;grub-mkconfig -o /boot/grub/grub.cfg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;基本系统安装完成 &lt;code&gt;exit&lt;/code&gt; &lt;code&gt;umount -R /mnt&lt;/code&gt; &lt;code&gt;reboot&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;二-gui&#34;&gt;二. GUI&lt;/h2&gt;
+&lt;h3 id=&#34;1-创建一个普通用户&#34;&gt;1. 创建一个普通用户&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -S sudo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;useradd -m -g users -G wheel -s /bin/bash {username}&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-m&lt;/code&gt; 创建用户的home目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-g&lt;/code&gt; 指定初始的用户组&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-G&lt;/code&gt; 指定扩展的用户组&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-s&lt;/code&gt; 指定默认的shell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;设置密码 &lt;code&gt;passwd {username}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;设置&lt;code&gt;vim /etc/sudoers&lt;/code&gt;去掉注释&lt;code&gt;%wheel ALL=(ALL) ALL&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-x11&#34;&gt;2. X11&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -S xorg xorg-xinit xorg-xrandr&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/Xorg&#34;&gt;Xorg arch wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://archlinux.org/groups/x86_64/xorg/&#34;&gt;xorg&lt;/a&gt; is a package group&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/Xinit&#34;&gt;xinit&lt;/a&gt; 可以手动的启动 Xorg display server。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/Xrandr&#34;&gt;xorg-xrandr&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S xf86-input-libinput&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://archlinux.org/packages/extra/x86_64/xf86-input-libinput/&#34;&gt;xf86-input-libinput&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-声卡驱动&#34;&gt;3. 声卡驱动&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;alsa-utils&lt;/code&gt; 配置复杂&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;pulseaudio&lt;/code&gt; 配置简单
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pulseaudio-bluetooth&lt;/code&gt; pulseaudio-alsa&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;pipewire&lt;/code&gt; 新框架(使用有问题)
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pipewire-media-session&lt;/code&gt;  A very simple session manager&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wireplumber pipewire-pulse&lt;/code&gt; pipewire-alsa pipewire-jack&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一些前端配置工具 &lt;code&gt;pamixer pulsemixer pavucontrol&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

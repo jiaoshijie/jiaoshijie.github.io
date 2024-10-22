@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Compiler on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/compiler/</link>
+    <description>Recent content in Compiler on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.136.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 17 Jul 2022 14:57:04 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/compiler/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>00 编译器简介</title>
+      <link>https://jiaoshijie.github.io/posts/compiler/00_compiler_introduction/</link>
+      <pubDate>Sun, 17 Jul 2022 14:57:04 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/compiler/00_compiler_introduction/</guid>
+      <description>&lt;h2 id=&#34;1-语言处理器language-processor&#34;&gt;1 语言处理器(language processor)&lt;/h2&gt;
+&lt;p&gt;language processor可以分为两种, 一种是编译器(compiler), 一种是解释器(interpreter).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;编译器(compiler)&lt;/strong&gt; 是将一种语言转换为另一种语言, 通常是高级语言向low-level语言转换. 在转化过程中如果有错误要向用户报告这个错误. 如果这个low-level语言是可执行的机器语言那它还可以被用户执行.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://jiaoshijie.github.io/images/compiler/00_aCompilerAndRuningTargetProgram.png#center&#34; alt=&#34;Figure: A compiler and running the target program&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解释器(interpreter)&lt;/strong&gt; 是另一类的language processor, 它不会将高级语言编译成low-level语言来执行, 而是直接执行该高级语言.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://jiaoshijie.github.io/images/compiler/00_aInterpreter.png#center&#34; alt=&#34;Figure: A interpreter&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;通常来说, 编译型语言要比解释型语言运行快, 但解释型语言可以更好的检查错误, 因为很多runtime error在编译期很难检测出来.&lt;/p&gt;
+&lt;p&gt;接下来主要以编译器为主进行介绍, 首先看一下编译器在编译一个文件时的流程图.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://jiaoshijie.github.io/images/compiler/00_aLanguageProcessingSystem.png#center&#34; alt=&#34;Figure: A Language-processing system&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;根据上图可以看出编译器在将源程序编译目标程序时是分步骤完成的:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;预处理(preprocess)&lt;/li&gt;
+&lt;li&gt;编译(compile)&lt;/li&gt;
+&lt;li&gt;汇编(assemble)&lt;/li&gt;
+&lt;li&gt;链接(link)&lt;/li&gt;
+&lt;li&gt;加载(load)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;预处理器(preprocessor)&lt;/strong&gt; 的作用就是将这些分散的文件聚集起来和将替换文件中的宏(macros), 将结果传递至下一个阶段(编译).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;编译器(compiler)&lt;/strong&gt; 的作用就是将预处理器的结果转化成汇编语言(assembly language), 但是也可以直接转化为机器码, 这样也就可以跳过第3步的汇编阶段了, 但是因为汇编语言也是有语义的语言因此转化起来效率高, 且汇编器的效率也很高, 因此比较典型的编译型语言(C, C++)都是先转成汇编再编译为机器码. 且汇编语言debug也比较简单.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;汇编器(assembler)&lt;/strong&gt; 的作用是将上一步产生的汇编程序转换为可重定位机器码(relocatable machine code).
+&lt;blockquote&gt;
+&lt;p&gt;Relocatable code is software whose execution address can be changed.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

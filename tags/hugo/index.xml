@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Hugo on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/tags/hugo/</link>
+    <description>Recent content in Hugo on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.136.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 01 Oct 2019 01:31:00 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 hugo 搭建 Blog 记录</title>
+      <link>https://jiaoshijie.github.io/posts/using_hugo_blog/</link>
+      <pubDate>Tue, 01 Oct 2019 01:31:00 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/using_hugo_blog/</guid>
+      <description>&lt;h2 id=&#34;1-安装-hugohttpsgohugoio&#34;&gt;1. 安装 &lt;a href=&#34;https://gohugo.io/&#34;&gt;hugo&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;对于Arch系Linux系统使用 &lt;code&gt;pacman -S hugo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;其他安装方式去&lt;a href=&#34;https://gohugo.io/getting-started/installing/&#34;&gt;官网&lt;/a&gt;查看&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-使用-hugo-创建-blog&#34;&gt;2. 使用 hugo 创建 Blog&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;hugo new site &amp;lt;MyBlog&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;MyBlog&amp;gt;&lt;/code&gt; 为自己想创建的文件夹名称&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-下载-hugo-主题httpsthemesgohugoio&#34;&gt;3. 下载 &lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;hugo 主题&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;到项目的根目录下, 即 &lt;code&gt;MyBlog&lt;/code&gt; 文件夹下&lt;/li&gt;
+&lt;li&gt;我个人比较喜欢使用的主题为&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod&#34;&gt;PaperMod&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;有两种使用 git 管理主题的方式
+&lt;ol&gt;
+&lt;li&gt;第一种是直接将主题 clone 到指定目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git clone --depth 1 &amp;lt;github url&amp;gt; themes/&amp;lt;theme name&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;第二种是使用 git submodule 来管理主题(以PaperMod主题为例)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git submodule add --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;然后 &lt;code&gt;cd themes/PaperMod&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git ls-remote --tags&lt;/code&gt; 用来查看该仓库的tag名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git fetch --tags&lt;/code&gt; 将 tag 从远程仓库拉取下来&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git tag&lt;/code&gt; 可以查看 tag 的名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git checkout &amp;lt;tag_name&amp;gt;&lt;/code&gt; 切换到指定tag&lt;/li&gt;
+&lt;li&gt;切换到指定 tag 后，可以主git目录使用 &lt;code&gt;git commit -a&lt;/code&gt; 来更改 submodule 的 tag 进行提交&lt;/li&gt;
+&lt;li&gt;日后重新 clone 该仓库到本地，不会自动 clone submodule 可以使用 &lt;code&gt;git submodule update --init --depth 1 --recursive&lt;/code&gt; 来手动 clone&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一般主题下面都有一个 &lt;em&gt;exampleSite/config.toml&lt;/em&gt; 文件是这个主题的默认配置可以copy到该项目的根目录, 然后在修改一下.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

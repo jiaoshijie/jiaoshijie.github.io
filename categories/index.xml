@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Categories on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/categories/</link>
+    <description>Recent content in Categories on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.136.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 17 Jul 2022 14:57:04 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Compiler</title>
+      <link>https://jiaoshijie.github.io/categories/compiler/</link>
+      <pubDate>Sun, 17 Jul 2022 14:57:04 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/categories/compiler/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

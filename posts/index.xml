@@ -1,0 +1,1543 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on Jsj&#39;s Blog</title>
+    <link>https://jiaoshijie.github.io/posts/</link>
+    <description>Recent content in Posts on Jsj&#39;s Blog</description>
+    <generator>Hugo -- 0.136.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Aug 2024 00:29:55 +0800</lastBuildDate>
+    <atom:link href="https://jiaoshijie.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pacman Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pacman_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:29:55 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pacman_usage/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;To use &lt;code&gt;pactree&lt;/code&gt; and &lt;code&gt;paccache&lt;/code&gt; install &lt;code&gt;pacman-contrib&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-install-packages&#34;&gt;To install packages&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -S package_name1 package_name2&lt;/code&gt; 来安装软件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S $(pacman -Ssq package_regex)&lt;/code&gt;来安装不太清楚名字的包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Sg package_group_name&lt;/code&gt; 查看一个软件包组有什么软件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S -needed package_name1&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;pacman 默认会重新安装软件, 即使软件已经是up to date.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--needed&lt;/code&gt; 会避免安装已经up to date软件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;一些软件会有选项, 例如&lt;code&gt;Enter a selection (default=all):&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;1-10 15&lt;/code&gt;这将安装1到10和15号软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;^5-8 ^2&lt;/code&gt; 这将安装除了5-8和2号软件包之外的其他软件包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-remove-packages&#34;&gt;To remove packages&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -R package_name&lt;/code&gt; 只移除目标软件包, 留下其依赖的软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rs package_name&lt;/code&gt; 移除目标软件包和没有被其他软件依赖的软件包
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rsu&lt;/code&gt; 当移除一个group时上面的那一条命令可能拒绝执行, 尝试这一条命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rsc&lt;/code&gt; 递归移除目标软件包和它依赖的全部软件及依赖它的全部软件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rdd&lt;/code&gt; 移除被其他包依赖的软件包, 而不移除依赖它的包. &lt;strong&gt;这个命令可能会导致系统崩溃, 不推荐使用&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Rn package_name&lt;/code&gt; 移除软件的配置文件, &lt;strong&gt;但不会移除软件自己创建的, 和家目录的dot配置文件&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-update-packages&#34;&gt;To update packages&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Syu&lt;/code&gt; update full packages and system&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;to-get-packages-details&#34;&gt;To get packages details&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Ss string1 string2&lt;/code&gt; 在datebase中搜索packages&amp;rsquo; name and descriptions
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Ss &#39;^vim-&#39;&lt;/code&gt; 可以使用some ERE(Extend Regular Expressions)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Si package_name&lt;/code&gt; 获取extensive information about a given package in remote&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qs string1 string2&lt;/code&gt; 搜索本地已经安装的包的name和descriptions
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Q&lt;/code&gt; 只搜索主动安装的包的名字&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qi package_name&lt;/code&gt; 获取本地安装包的extensive information&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qo /path/to/file_name&lt;/code&gt; 获取软件属于哪个软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -F string1 string2&lt;/code&gt; 获取远程的包的文件路径名&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qdt&lt;/code&gt; 列出不再被依赖的软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -Qet&lt;/code&gt; 列出不再被依赖的软件包详细信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;other-feature&#34;&gt;other feature&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -Sw package_name&lt;/code&gt; 下载软件包不安装它&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -U /path/to/package/package_name-version.pkg.tar.zst&lt;/code&gt; 安装本地软件包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -U file:///path/to/package/package_name-version.pkg.tar.zst&lt;/code&gt; 保留一个副本在pacman&amp;rsquo;s cahce中&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -U http://www.example.com/repo/example.pkg.tar.zst&lt;/code&gt; 安装远程软件包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;yay&#34;&gt;yay&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;yay -Ps&lt;/code&gt; 打印系统的一些安装软件包的分析&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -Yc&lt;/code&gt; 清除不使用的依赖&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -G aur_package_name&lt;/code&gt; 下载PKGBUILD文件从ABS或AUR&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -Y --gendb&lt;/code&gt; 生成开发者包数据库&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yay -Syu --devel --timeupdate&lt;/code&gt; 更新系统, 检查开发者包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;paru&#34;&gt;paru&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;paru &amp;lt;target&amp;gt;&lt;/code&gt; 交互搜索和安装target&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru&lt;/code&gt; 和 &lt;code&gt;paru -Syu&lt;/code&gt; 相同, 更新系统&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Sua&lt;/code&gt; 只更新AUR packages&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Qua&lt;/code&gt; 打印可用的AUR更新&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -G &amp;lt;target&amp;gt;&lt;/code&gt; 下载PKGBUILD文件和关联的文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Gp &amp;lt;target&amp;gt;&lt;/code&gt; 打印target的PKGBUILD的内容&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru -Gc &amp;lt;target&amp;gt;&lt;/code&gt; 打印target的AUR的comments&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paru --gendb&lt;/code&gt; 创建devel database&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;archlinux-install-deb-package&#34;&gt;Archlinux install deb package&lt;/h2&gt;
+&lt;h3 id=&#34;1-使用aur中其他人提供的包&#34;&gt;1. 使用AUR中其他人提供的包&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;using AUR(Arch Linux User Repository)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-手动安装&#34;&gt;2. 手动安装&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;首先, 解压下载的 &lt;code&gt;*.deb&lt;/code&gt; 包, &lt;code&gt;ar -x *.deb --output dirname&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cd dirname&lt;/code&gt; 应该可以看到 &lt;code&gt;control.tar.gz&lt;/code&gt; &lt;code&gt;data.tar.xz&lt;/code&gt; &lt;code&gt;debian-binary&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;debian-binary&lt;/code&gt; 显示debian包管理的信息版本(super不重要)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;control.tar.xz&lt;/code&gt; 为软件介绍(包括依赖&lt;strong&gt;非常重要&lt;/strong&gt;), 一些包的安全验证程序和完整性的验证程序(可以不用管)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data.tar.xz&lt;/code&gt; 软件安装的位置及&lt;strong&gt;软件&lt;/strong&gt;, 可能是 &lt;code&gt;etc&lt;/code&gt; &lt;code&gt;opt&lt;/code&gt; &lt;code&gt;usr&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;然后根据依赖信息安装依赖, 根据data中目录的位置将相应的软件拷贝到相应的目录.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-自己写archs-makepkg-file&#34;&gt;3. 自己写arch&amp;rsquo;s makepkg file.&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;首先, 通过&lt;code&gt;cp /usr/share/pacman/PKGBUILD.proto ./PKGBUILD&lt;/code&gt;拷贝一个PKGBUILD模板.&lt;/li&gt;
+&lt;li&gt;然后, 设置PKGBUILD中的变量和函数的功能.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pkgname&lt;/code&gt;: 软件包的名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgver&lt;/code&gt;: 软件包的版本, 通常为&lt;code&gt;数字&lt;/code&gt;, &lt;code&gt;. _ -&lt;/code&gt;组成&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgrel&lt;/code&gt;: 必须存在, 并设置为1&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgdesc&lt;/code&gt;: 软件的描述&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;arch&lt;/code&gt;: 可以运行的平台, 一般为&lt;code&gt;x86_64&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;url&lt;/code&gt;: 下载该软件的地址&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;license&lt;/code&gt;: 发行协议&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;depends&lt;/code&gt;: 软件的依赖&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;source&lt;/code&gt;: 构建包所需要的文件组, 如果只有一个可以写一个, 也可以使很多包的地址&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;noextract&lt;/code&gt;: 一个文件组在&lt;code&gt;source&lt;/code&gt;中的没有解压缩包的名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;md5sums&lt;/code&gt;: 包检验码, &lt;code&gt;md5sums&lt;/code&gt;生成md5sums码, 如果不想使用可以复制为&lt;code&gt;SKIP&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;package()&lt;/code&gt;: 最终安装函数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;prepare()&lt;/code&gt;: 准备函数&lt;/li&gt;
+&lt;li&gt;更多变量解释: &lt;a href=&#34;https://wiki.archlinux.org/index.php/PKGBUILD&#34;&gt;archwiki-PKGBUILD&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pkgdir&lt;/code&gt;: makepkg生成的目录默认为根目录. &lt;code&gt;srcdir&lt;/code&gt;: &lt;strong&gt;还不清楚&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;设置完成后, 在包含该PKGBUILD的目录下, 执行&lt;code&gt;makepkg&lt;/code&gt;即可生成archlinux下的包.&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;pacman -U pkgname&lt;/code&gt;安装该软件.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;参考&#34;&gt;参考&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.maketecheasier.com/install-deb-package-in-arch-linux/&#34;&gt;How to install Deb package in arch Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ostechnix.com/convert-deb-packages-arch-linux-packages/&#34;&gt;How to convert DEB packages into arch linux packages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/index.php/Creating_packages&#34;&gt;Archlinux-Creating packages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>mpv Usage</title>
+      <link>https://jiaoshijie.github.io/posts/mpv_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:26:44 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/mpv_usage/</guid>
+      <description>&lt;h2 id=&#34;基础快捷键&#34;&gt;基础快捷键&lt;/h2&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;keys&lt;/th&gt;
+          &lt;th&gt;description&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;q&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;退出mpv不记录进度&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;Q&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;退出mpv记录进度&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;o&lt;/code&gt; &lt;code&gt;P&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;查看播放进度并显示进度条&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;f&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;全屏&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;O&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;在左上角持久显示播放进度, 但不显示进度条&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;p&lt;/code&gt; &lt;code&gt;space&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;pause&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;9&lt;/code&gt; &lt;code&gt;/&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调小音量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;0&lt;/code&gt; &lt;code&gt;*&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调大音量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;m&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;静音&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;s&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;截图&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;T&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;设置mpv窗口置顶&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;i&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;查看文件详细信息&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;A&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调整视频高宽比&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;{&lt;/code&gt; &lt;code&gt;}&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;成倍调节播放速度&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;[&lt;/code&gt; &lt;code&gt;]&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;缓慢调节播放速度&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;backspace&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;恢复速度为1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;F8&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;列出播放列表&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;&amp;lt;&lt;/code&gt; &lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;切换播放列表中的视频&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;hjkl&lt;/code&gt; &lt;code&gt;上下左右&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;快进后退&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;循环播放&#34;&gt;循环播放&lt;/h2&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;keys&lt;/th&gt;
+          &lt;th&gt;description&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;l&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;第一下标记开始, 第二下标记结束, 第三下清除&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;L&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;设置是否循环标记段&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;高级快捷键&#34;&gt;高级快捷键&lt;/h2&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;keys&lt;/th&gt;
+          &lt;th&gt;description&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;C-h&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;开关硬件解码&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;,&lt;/code&gt; &lt;code&gt;.&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;逐帧播放&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;1&lt;/code&gt; &lt;code&gt;2&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调节对比度&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;3&lt;/code&gt; &lt;code&gt;4&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;亮度&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;5&lt;/code&gt; &lt;code&gt;6&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调节Gamma&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;7&lt;/code&gt; &lt;code&gt;8&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调节色彩饱和度Saturation&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;d&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;开关Deinterlace&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;音视频流&#34;&gt;音视频流&lt;/h2&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;keys&lt;/th&gt;
+          &lt;th&gt;description&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;#&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;选择音频流&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;_&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;选择视频流&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;Ctrl+-&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调大audio-video延迟&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;F9&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;列出所有的音频流和字幕流&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;字幕&#34;&gt;字幕&lt;/h2&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;keys&lt;/th&gt;
+          &lt;th&gt;description&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;j&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;选择字幕流&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;v&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;设置字幕可见&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;u&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;开关ass字幕特效&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;z&lt;/code&gt; &lt;code&gt;x&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调节播放字幕时间&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;r&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调低字幕在屏幕中的位置&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;R&lt;/code&gt; &lt;code&gt;t&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;调高字幕在屏幕中的位置&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mpv-player/mpv/blob/master/etc/input.conf&#34;&gt;mpv config&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Ctags Usage</title>
+      <link>https://jiaoshijie.github.io/posts/ctags_usage/</link>
+      <pubDate>Sun, 04 Aug 2024 00:18:07 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/ctags_usage/</guid>
+      <description>&lt;p&gt;&lt;code&gt;ctags gun/global&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;c-and-c&#34;&gt;C and C++&lt;/h2&gt;
+&lt;h3 id=&#34;1-通常使用-ctags&#34;&gt;1. 通常使用 ctags&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctags -R . -f .tags&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-R&lt;/code&gt; 从当前目录递归开始生成 ctags 索引&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.&lt;/code&gt; 当前目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-f&lt;/code&gt; &lt;code&gt;-o&lt;/code&gt; 指定生成的文件名&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctags -R --c-kinds=+p --fields=+iaS --extra=+q . -f .tags&lt;/code&gt; 获取更多的信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-一些-ctags-基础参数&#34;&gt;2. 一些 ctags 基础参数&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;ctags 支持多种语言的索引
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctags --list-maps&lt;/code&gt; 查看支持的语言种类&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ctags 支持很多语义但并不是默认都开启的
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctags --list-kinds&lt;/code&gt; 查看所有语言支持的语义及默认开启状态(后面有 &lt;code&gt;off&lt;/code&gt; 表示默认没有开启)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctags --list-kinds={lang}&lt;/code&gt; 查看{lang}语言支持的语义及开启状态&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;ctags --{lang}-kinds=+px&lt;/code&gt; 来开启默认不支持的语义&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctags --langmap={lang}:+.inl&lt;/code&gt; 可以指定某种扩展名也为该 lang 的源文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctags -h +.inc&lt;/code&gt; 指定 &lt;code&gt;.inc&lt;/code&gt; 文件也为头文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctags --fields=+aiKSz&lt;/code&gt; 如何描述语法元素
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;a&lt;/code&gt; 表示如果是类的成员, 要标明其 access 属性(即是 public 的还是 private 的)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;i&lt;/code&gt; 表示如果有继承, 要标明父类&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;S&lt;/code&gt; 表示如果是函数, 要标明函数的 signature&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;K&lt;/code&gt; 表示要显示语法元素类型的全称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;z&lt;/code&gt; 表示在显示语法元素的类型时, 使用格式 kind:type&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctags --extras=+q&lt;/code&gt; 要求 ctags 记录全名(类和函数名), 可以更精确的定位&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctags --exclude=lex.yy.cc&lt;/code&gt; 不要扫描某些目录或文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;3-ctags-使用&#34;&gt;3. ctags 使用&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;使用&lt;code&gt;ctags -R --c-kinds=+p --fields=+iaS --extras=+q /usr/include&lt;/code&gt; 将可以创建外部的跳转, 但会使用很长的时间, 得到的文件一般也很大&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Bluetooth Setup On Arch Linux</title>
+      <link>https://jiaoshijie.github.io/posts/bluetooth_setup_on_arch_linux/</link>
+      <pubDate>Sun, 04 Aug 2024 00:02:32 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/bluetooth_setup_on_arch_linux/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.reddit.com/r/linux_gaming/comments/lenhbc/xbox_series_x_controller_with_linux/&#34;&gt;Xbox series x controller&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;首先安装蓝牙服务&#34;&gt;首先安装蓝牙服务&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;pacman -S bluez bluez-utils pulseaudio-bluetooth&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;bluez&lt;/code&gt; 提供bluetooth服务&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bluez-utils&lt;/code&gt; 提供bluetoothctl工具 &lt;code&gt;bluez-utils-compat&lt;/code&gt;(开机后无法NOT Default controller available)使用这个包据说可以修复这个问题.&lt;/li&gt;
+&lt;li&gt;(optional)&lt;code&gt;blueman&lt;/code&gt;显示systray&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pulseaudio-bluetooth&lt;/code&gt; 可以连接蓝牙耳机&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;启动连接设备&#34;&gt;启动连接设备&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sudo systemctl start bluetooth.service&lt;/code&gt;开启bluetooth服务. &lt;code&gt;sudo systemctl enable bluetooth.service&lt;/code&gt;设置为开机启动.&lt;/li&gt;
+&lt;li&gt;然后使用&lt;code&gt;bluetoothctl&lt;/code&gt;进行蓝牙的连接.&lt;/li&gt;
+&lt;li&gt;将用户添加到&lt;code&gt;lp&lt;/code&gt;用户组中, 添加方法&lt;code&gt;usermod -G Groupname Username&lt;/code&gt;, 或直接修改&lt;code&gt;/etc/group&lt;/code&gt;文件.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;首次启动蓝牙&#34;&gt;首次启动蓝牙&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;使用&lt;code&gt;help&lt;/code&gt;查看帮助.&lt;/li&gt;
+&lt;li&gt;首先选择设备&lt;code&gt;select MAC_address&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;然后使用&lt;code&gt;power on&lt;/code&gt;开启蓝牙设备
+&lt;ul&gt;
+&lt;li&gt;如果开启失败检查是否是蓝牙设备被block了. 使用&lt;code&gt;rfkill list&lt;/code&gt;观察.&lt;/li&gt;
+&lt;li&gt;如果是可以&lt;code&gt;rfkill unblock all&lt;/code&gt; or &lt;code&gt;connmanctl enable bluetooth&lt;/code&gt;来取消所有的被block的设备. 详细使用&lt;code&gt;man rfkill&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;然后使用&lt;code&gt;devices&lt;/code&gt;查看可以使用的设备.&lt;/li&gt;
+&lt;li&gt;(optional)如果devices没有可用的设备. 使用&lt;code&gt;scan on&lt;/code&gt;来扫描附近可连接的蓝牙设备.&lt;/li&gt;
+&lt;li&gt;(optional)&lt;code&gt;agent on&lt;/code&gt;或选择其他的模式(DisplayOnly KeyboardDisplay NoInputNoOutput DisplayYesNO KeyboardOnly off on)如果你清楚的话.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pair MAC_address&lt;/code&gt;开始配对设备.&lt;/li&gt;
+&lt;li&gt;如果设备没有PIN, 可能还需要手动&lt;code&gt;trust MAC_address&lt;/code&gt;在重新连接之前.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;connect MAC_address&lt;/code&gt;来连接蓝牙设备.
+&lt;ul&gt;
+&lt;li&gt;如果连接失败, 可能是&lt;code&gt;pulseaudio-bluetooth&lt;/code&gt;没有安装. 具体使用&lt;code&gt;systemctl status bluetooth.service&lt;/code&gt;查看错误信息.&lt;/li&gt;
+&lt;li&gt;然后在&lt;code&gt;/etc/pulse/system.pa&lt;/code&gt;中加入以下内容:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-config&#34; data-lang=&#34;config&#34;&gt;### Enable bluetooth daemon
+load-module module-bluetooth-policy
+load-module module-bluetooth-discover
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;之后每次启动bluetoothctl&#34;&gt;之后每次启动bluetoothctl&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;sudo systemctl start bluetooth.service&lt;/code&gt; 如果不想每次reboot输入可以&lt;code&gt;sudo systemctl enable bluetooth.service&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Pass Usage</title>
+      <link>https://jiaoshijie.github.io/posts/pass_usage/</link>
+      <pubDate>Sat, 03 Aug 2024 23:06:40 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/pass_usage/</guid>
+      <description>&lt;h2 id=&#34;install-pass&#34;&gt;install pass&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -S pass&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设置gnupg&#34;&gt;设置GnuPG&lt;/h2&gt;
+&lt;p&gt;pass使用PGP(Pretty Good Privacy)密钥, 最常用的PGP实现是GnuPG(GPG), 它随linux系统一起安装.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gpg --generate-key&lt;/code&gt; 来产生PGP密钥
+&lt;ul&gt;
+&lt;li&gt;在这个过程中会提示你输入你的名字和电子邮箱&lt;/li&gt;
+&lt;li&gt;并为密钥创建一个密码&lt;/li&gt;
+&lt;li&gt;密钥加密, 密码解密(但只有密码没有密钥也无法解密)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gpg --list-keys&lt;/code&gt; 可以查看你创建的PGP密钥&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ gpg --list-keys
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/home/seth/.gnupg/pubring.kbx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-----------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pub  ed25519 2022-01-06 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;SC&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;expires: 2024-01-06&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    2BFF94286461216C907CBA52F067996F13EF10D8
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uid  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;ultimate&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Seth Kenlon &amp;lt;seth@example.com&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sub  cv25519 2022-01-06 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;E&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;expires: 2024-01-06&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;export-and-import-gpg-key&#34;&gt;export and import gpg key&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;export a gpg public key &lt;code&gt;gpg --export [-a] {key-id} &amp;gt; public-key.asc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;export a gpg private key &lt;code&gt;gpg --export-secret-keys [-a] {key-id} &amp;gt; private-key.asc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;import a gpg key &lt;code&gt;gpg --import [public|private key]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;backup a gpg public key &lt;code&gt;gpg --export --export-options backup --output public.gpg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;backup a gpg private key &lt;code&gt;gpg --export-secret-keys --export-options backup --output private.gpg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://itslinuxfoss.com/export-gpg-private-key-and-public-key-file/&#34;&gt;export gpg private key and public key file&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;change-expiration-data-of-a-gpg-key&#34;&gt;change expiration data of a gpg key&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gpg --edit-key [key-id]&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt; expire&lt;/code&gt; subcommand&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.g-loaded.eu/2010/11/01/change-expiration-date-gpg-key/&#34;&gt;change expiration date gpg key&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设置pass&#34;&gt;设置pass&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass init 2BFF94286461216C907CBA52F067996F13EF10D8&lt;/code&gt; 初始pass仓库&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;存储密码&#34;&gt;存储密码&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass add {www.example.com}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pass generate {www.example.com} 20 -c&lt;/code&gt; 自动为www.example.com网站创建一个20位随机密码并传送到系统剪切板&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;编辑密码&#34;&gt;编辑密码&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass edit {www.example.com}&lt;/code&gt; 可以添加一些信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;bd%dc$3a49af49498bb6f31bc964718C
+user: seth123
+url: example.com
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;获取密码&#34;&gt;获取密码&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass show {www.example.com}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;passmenu&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;查找密码&#34;&gt;查找密码&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pass grep example&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ pass grep example
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;www.example.com:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;url: www.example.org
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;ref&#34;&gt;ref&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://opensource.com/article/22/1/manage-passwords-linux-terminal&#34;&gt;Manage your passwords in the Linux terminal&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>regular expressions cheatsheet</title>
+      <link>https://jiaoshijie.github.io/posts/regexp/</link>
+      <pubDate>Fri, 03 May 2024 19:51:21 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/regexp/</guid>
+      <description>&lt;h1 id=&#34;regular-expressions&#34;&gt;Regular Expressions&lt;/h1&gt;
+&lt;h2 id=&#34;matching-table&#34;&gt;Matching Table&lt;/h2&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;metacharacter&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;matching things&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\d&lt;/code&gt; &lt;code&gt;\D&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;matching all the digits(0 to 9), matching any non-digit character&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;.(dot)&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;matching any single character(letter, digit, whitespace, everything)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;[]&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;matching a single letter inside &lt;code&gt;[]&lt;/code&gt;(square brackets)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;[^]&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;matching any single character except for the letters inside &lt;code&gt;[]&lt;/code&gt;(square brackets) with the &lt;code&gt;^&lt;/code&gt;(hat)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;[-]&lt;/code&gt; &lt;code&gt;[^-]&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;indicating a character range to match a single character&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\w&lt;/code&gt; &lt;code&gt;\W&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;this is equivalent to the character range &lt;code&gt;[A-Za-z0-9_]&lt;/code&gt;, matching any non-alphanumeric character&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;{}&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;to match repetition of character&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;*&lt;/code&gt; &lt;code&gt;+&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;to match either &lt;code&gt;0 or more&lt;/code&gt; or &lt;code&gt;1 or more&lt;/code&gt; of the character that it follows(it always follows a character or group)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;?&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;this metacharacter allows to match either 0 or 1 of the preceding character or group&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\s&lt;/code&gt; &lt;code&gt;\S&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;to match all whitespaces, matching any non-whitespace character&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;␣&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;to match space&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\t&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;to match tab&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\n&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;to match new line&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\r&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;to match carriage return(useful in Windows environments)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;^&lt;/code&gt; &lt;code&gt;$&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;the start and the end of the line, &lt;strong&gt;it&amp;rsquo;s only used at the beginning or end of a line&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;()&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;match groups&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;(())&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;nested groups&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;(|)&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;to denote different possible sets of characters&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\b&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;to match the boundary between a word and a non-word character&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;details&#34;&gt;Details&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;\d&lt;/code&gt; the 123s&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Linux_Little_Tricks</title>
+      <link>https://jiaoshijie.github.io/posts/linux_little_tricks/</link>
+      <pubDate>Fri, 03 May 2024 19:48:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/linux_little_tricks/</guid>
+      <description>&lt;h1 id=&#34;linux-little-tricks&#34;&gt;Linux Little Tricks&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/64-bit_computing#64-bit_data_models&#34;&gt;data model LLP64 and LP64&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;搜索引擎小技巧&#34;&gt;搜索引擎小技巧&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cats and dogs&lt;/code&gt; Result about cats or dogs&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;cats and dogs&amp;quot;&lt;/code&gt; Result about exact term &amp;ldquo;cats and dogs&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cats -dogs&lt;/code&gt; Fewer dogs in result&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cats +dogs&lt;/code&gt; More dogs in result&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cats filetype:pdf&lt;/code&gt; PDFs about cats
+&lt;ul&gt;
+&lt;li&gt;Supported types: pdf, doc(x), xls(x), ppt(x), html&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;*&lt;/code&gt; 模糊&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;....&lt;/code&gt; 范围&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;intitle:标题&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inurl:网址&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;related:相关类型&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;define:word&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;etymology:&amp;quot;word,&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;joker site:drive.google.com&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;proxy&#34;&gt;Proxy&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Browser: &lt;code&gt;SwitchyOmega&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;gfwlist: &lt;code&gt;https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://about.gitlab.com/blog/2021/01/27/we-need-to-talk-no-proxy/&#34;&gt;Terminal Proxy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;capslock---ctrl&#34;&gt;CapsLock -&amp;gt; Ctrl&lt;/h2&gt;
+&lt;h3 id=&#34;x11&#34;&gt;X11&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;xev&lt;/code&gt; 展示按下按键的信息&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S xorg-xmodmap&lt;/code&gt;: &lt;code&gt;xmodmap&lt;/code&gt; &lt;code&gt;xmodmap -pke&lt;/code&gt; &lt;code&gt;xmodmap -pke &amp;gt; ~/.Xmodmap&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;使用 &lt;a href=&#34;https://github.com/jiaoshijie/dots/blob/main/scripts/bin/remaps&#34;&gt;&lt;code&gt;remaps&lt;/code&gt;&lt;/a&gt; 脚本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;wayland&#34;&gt;Wayland&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dconf write /org/gnome/desktop/input-sources/xkb-options &amp;quot;[&#39;caps:ctrl_modifier&#39;]&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;触控板设置&#34;&gt;触控板设置&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/Libinput&#34;&gt;xorg 使用 libinput 配置触控板&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dwm.suckless.org/&#34;&gt;dwm&lt;/a&gt; 默认触控板无法使用单击, 双击等&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;xorg.conf.d&lt;/code&gt; 目录下添加 &lt;code&gt;30-touchpad.conf&lt;/code&gt; 配置文件, 并添加以下配置
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;30&lt;/code&gt; 表示执行顺序 (10 比 30 先执行)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.conf&lt;/code&gt; 后缀 arch wiki 说必须加上不可以省略&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Section &lt;span class=&#34;s2&#34;&gt;&amp;#34;InputClass&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Identifier &lt;span class=&#34;s2&#34;&gt;&amp;#34;touchpad&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Driver &lt;span class=&#34;s2&#34;&gt;&amp;#34;libinput&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    MatchIsTouchpad &lt;span class=&#34;s2&#34;&gt;&amp;#34;on&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Option &lt;span class=&#34;s2&#34;&gt;&amp;#34;Tapping&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;on&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Option &lt;span class=&#34;s2&#34;&gt;&amp;#34;TappingButtonMap&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;lmr&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Option &lt;span class=&#34;s2&#34;&gt;&amp;#34;NaturalScrolling&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;true&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;EndSection
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;多显示器设置&#34;&gt;多显示器设置&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.gentoo.org/wiki/Xorg/Guide#Multiple_monitors&#34;&gt;Xorg Multiple Monitors&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;X11 默认多显示器是相同输出, &lt;code&gt;xrandr&lt;/code&gt; 可以用来查看显示器输出端口的信息, 可以通过两种方式设置&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ArchLinux_Installation</title>
+      <link>https://jiaoshijie.github.io/posts/archlinux_installation/</link>
+      <pubDate>Fri, 03 May 2024 19:46:54 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/archlinux_installation/</guid>
+      <description>&lt;h2 id=&#34;一-basic-install&#34;&gt;一. Basic Install&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/USB_flash_installation_medium&#34;&gt;制作启动盘&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;1-系统启动方式&#34;&gt;1. 系统启动方式&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;输入 &lt;code&gt;ls /sys/firmware/efi/efivars&lt;/code&gt; 查看系统的启动方式&lt;/li&gt;
+&lt;li&gt;如果有输出，则为UEFI启动&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;2-网络连接&#34;&gt;2. 网络连接&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ip link&lt;/code&gt; 查看网卡的名称等信息&lt;/p&gt;
+&lt;h4 id=&#34;有线网络&#34;&gt;有线网络&lt;/h4&gt;
+&lt;p&gt;使用 &lt;code&gt;dhcpcd&lt;/code&gt; 进行有线网络连接, 和激活无限网络dhcp功能&lt;/p&gt;
+&lt;h4 id=&#34;无线网络&#34;&gt;无线网络&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;使用 &lt;code&gt;rfkill&lt;/code&gt;(Radio Frequency Kill) 检查 wifi 是否被禁用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ rfkill list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;0: phy0: Wireless LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Soft blocked: yes  // yes 为禁用, no 为未禁用&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;软件禁用&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Hard blocked: yes  // yes 为禁用, no 为未禁用&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;硬件禁用&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;如果被禁用使用 &lt;code&gt;rfkill unblock wifi&lt;/code&gt; 取消禁用&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;iwctl&lt;/code&gt; 进行无线网络连接&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ &lt;span class=&#34;nb&#34;&gt;help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ device list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ station device&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;name&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; scan
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ station device&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;name&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; get-networks
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl$ station device&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;name&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; connect SSID&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;name&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;使用 &lt;code&gt;ping archlinux.org&lt;/code&gt; 检查网络是否可用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;3-设置系统时间-todo&#34;&gt;3. 设置系统时间 TODO&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;timedatectl set-ntp true&lt;/code&gt; 确保时钟正确, 正确则没有输出&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;To check the service status, use &lt;code&gt;timedatectl status&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;4-磁盘分区&#34;&gt;4. 磁盘分区&lt;/h3&gt;
+&lt;h4 id=&#34;磁盘规划&#34;&gt;磁盘规划&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;EFI&lt;/strong&gt;: 100M&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;/&lt;/strong&gt;: 100G 或者 一整块硬盘(如果是多硬盘的话)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;/home/{username}/Downloads&lt;/strong&gt;: 剩下的空间 或 其他整块硬盘&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;swap&lt;/strong&gt;: 不设置 swap 分区&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;分区和格式化&#34;&gt;分区和格式化&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;lsblk&lt;/code&gt; 查看系统硬盘情况&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fdisk /dev/{disk}&lt;/code&gt; 用来进行磁盘分区&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ m &lt;span class=&#34;c1&#34;&gt;# 查看帮助&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ g &lt;span class=&#34;c1&#34;&gt;# 创建一个 GPT 分区，用来作为 EFI 分区&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ &lt;span class=&#34;c1&#34;&gt;# ...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ n &lt;span class=&#34;c1&#34;&gt;# 用来创建其他分区&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ &lt;span class=&#34;c1&#34;&gt;# ...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ l &lt;span class=&#34;c1&#34;&gt;# 查看支持的所有分区类型 ef(EFI 分区类型) 83(Linux 分区类型)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ t &lt;span class=&#34;c1&#34;&gt;# 来更改创建分区的分区类型&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ &lt;span class=&#34;c1&#34;&gt;# NOTE: 将 GPT 分区改为 EFI 分区类型, 其余分区改为 Linux 分区类型&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ w &lt;span class=&#34;c1&#34;&gt;# 保存退出&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fdisk$ q &lt;span class=&#34;c1&#34;&gt;# 取消修改退出&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;使用 &lt;code&gt;mkfs.{format} /dev/{disk}&lt;/code&gt; 格式化磁盘&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mkfs.vfat&lt;/code&gt; 格式化 EFI 分区&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mkfs.ext4&lt;/code&gt; 格式化其他分区&lt;/li&gt;
+&lt;li&gt;NOTE: 不适用 SWAP 分区&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;将根目录挂在到 &lt;code&gt;/mnt&lt;/code&gt; 目录下, 将 EFI 分区挂载到 &lt;code&gt;/mnt/efi&lt;/code&gt; 其余目录挂在到 &lt;code&gt;/mnt/*&lt;/code&gt; 目录下&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;5-系统下载与安装&#34;&gt;5. 系统下载与安装&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; FIXME: &lt;code&gt;vim /etc/pacman.d/mirrorlist&lt;/code&gt; 设置安装源, 可以先使用国内的源，后面在去掉就行。
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 安装系统基本包 &lt;code&gt;pacstrap /mnt base base-devel linux linux-headers linux-firmware man-db man-pages networkmanager vim bash-completion&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;base&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;base-devel&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;linux&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;linux-headers&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;linux-firmware&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;man-db&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;man-pages&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;networkmanager&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;vim&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;bash-completion&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;6-生成系统自动挂载分区文件fstab文件&#34;&gt;6. 生成系统自动挂载分区文件(fstab文件)&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;genfstab -L /mnt &amp;gt;&amp;gt; /mnt/etc/fstab&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cat /mnt/etc/fstab&lt;/code&gt; 检查写入是否正确&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;7-将-root-目录由安装镜像系统切换到要安装的系统&#34;&gt;7. 将 root 目录由安装镜像系统切换到要安装的系统&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;arch-chroot /mnt&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;8-时间区域设置&#34;&gt;8. 时间区域设置&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 使用hwclock创建&lt;code&gt;/etc/adjtime&lt;/code&gt; &lt;code&gt;hwclock --systohc&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;9-系统本地化设计&#34;&gt;9. 系统本地化设计&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;设置本地语言 &lt;code&gt;vim /etc/locale.gen&lt;/code&gt; 找到文件中的 &lt;code&gt;en_US.UTF-8 UTF-8&lt;/code&gt; &lt;code&gt;zh_CN.UTF-8 UTF-8&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;locale-gen&lt;/code&gt; 加载设置的语言项&lt;/li&gt;
+&lt;li&gt;打开文件 &lt;code&gt;vim /etc/locale.conf&lt;/code&gt; 并在里面输入一行 &lt;code&gt;LANG=en_US.UTF-8&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;设置主机名称 &lt;code&gt;vim /etc/hostname&lt;/code&gt; 然后输入自己定义的主机名称(&lt;code&gt;sakura&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;设置本机地址 &lt;code&gt;vim /etc/hosts&lt;/code&gt; 添加以下内容&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;127.0.0.1 localhost
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;::1       localhost
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;10-设置-root-密码&#34;&gt;10. 设置 root 密码&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;passwd root&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;11-安装-ucode&#34;&gt;11. 安装 ucode&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;intel-CPU &lt;code&gt;pacman -S intel-ucode&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;AMD-CPU &lt;code&gt;pacman -S amd-ucode&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;12-bootloader&#34;&gt;12. bootloader&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting&#34;&gt;Arch GRUB wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S grub efibootmgr&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;pacman -S os-prober&lt;/code&gt; 用来检查 windows 系统, 单系统可以不装&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vim /boot/grub/grub.cfg&lt;/code&gt; 修改&lt;code&gt;GRUB_CMDLINE_LINUX_DEFAULT&lt;/code&gt; 变量中的参数
+&lt;ul&gt;
+&lt;li&gt;去掉 &lt;code&gt;quiet&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;log level&lt;/code&gt; 由 3 变为 5, 方便排错&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 加入 &lt;code&gt;nowatchdog&lt;/code&gt; 可以加快开机启动速度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;grub-mkconfig -o /boot/grub/grub.cfg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;基本系统安装完成 &lt;code&gt;exit&lt;/code&gt; &lt;code&gt;umount -R /mnt&lt;/code&gt; &lt;code&gt;reboot&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;二-gui&#34;&gt;二. GUI&lt;/h2&gt;
+&lt;h3 id=&#34;1-创建一个普通用户&#34;&gt;1. 创建一个普通用户&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -S sudo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;useradd -m -g users -G wheel -s /bin/bash {username}&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-m&lt;/code&gt; 创建用户的home目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-g&lt;/code&gt; 指定初始的用户组&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-G&lt;/code&gt; 指定扩展的用户组&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-s&lt;/code&gt; 指定默认的shell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;设置密码 &lt;code&gt;passwd {username}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;设置&lt;code&gt;vim /etc/sudoers&lt;/code&gt;去掉注释&lt;code&gt;%wheel ALL=(ALL) ALL&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-x11&#34;&gt;2. X11&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pacman -S xorg xorg-xinit xorg-xrandr&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/Xorg&#34;&gt;Xorg arch wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://archlinux.org/groups/x86_64/xorg/&#34;&gt;xorg&lt;/a&gt; is a package group&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/Xinit&#34;&gt;xinit&lt;/a&gt; 可以手动的启动 Xorg display server。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/Xrandr&#34;&gt;xorg-xrandr&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pacman -S xf86-input-libinput&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://archlinux.org/packages/extra/x86_64/xf86-input-libinput/&#34;&gt;xf86-input-libinput&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-声卡驱动&#34;&gt;3. 声卡驱动&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;alsa-utils&lt;/code&gt; 配置复杂&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;pulseaudio&lt;/code&gt; 配置简单
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pulseaudio-bluetooth&lt;/code&gt; pulseaudio-alsa&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;pipewire&lt;/code&gt; 新框架(使用有问题)
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pipewire-media-session&lt;/code&gt;  A very simple session manager&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wireplumber pipewire-pulse&lt;/code&gt; pipewire-alsa pipewire-jack&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一些前端配置工具 &lt;code&gt;pamixer pulsemixer pavucontrol&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>常数变易法(微分方程求解)</title>
+      <link>https://jiaoshijie.github.io/posts/variation_of_parameters/</link>
+      <pubDate>Fri, 03 May 2024 19:06:23 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/variation_of_parameters/</guid>
+      <description>&lt;h2 id=&#34;1-常数变易法求解一阶线性微分方程过程&#34;&gt;1. 常数变易法求解一阶线性微分方程过程&lt;/h2&gt;
+&lt;p&gt;对于一阶线性微分方程:&lt;/p&gt;
+&lt;p&gt;$$
+\frac{\mathrm{d}y}{\mathrm{d}x}+P(x)y=Q(x) \tag{1}
+$$&lt;/p&gt;
+&lt;p&gt;如果$Q(x)=0$则方程为齐次, $Q(x)\ne0$则方程为非齐次.&lt;/p&gt;
+&lt;p&gt;而常数变易法的求解就是先求出齐次方程的通解&lt;/p&gt;
+&lt;p&gt;$$
+\frac{\mathrm{d}y}{\mathrm{d}x}+P(x)y=0 \tag{2}
+$$&lt;/p&gt;
+&lt;p&gt;该齐次方程的通解为$y=Ce^{-\int{P(x)\mathrm{d}x}}$ $(C=\pm e^{C_1})$&lt;/p&gt;
+&lt;p&gt;然后使用$u(x)$(以后简写为$u$)替换该通解中的常数$C$, 即便换为:&lt;/p&gt;
+&lt;p&gt;$$
+y=ue^{-\int{P(x)\mathrm{d}x}} \tag{3}
+$$&lt;/p&gt;
+&lt;p&gt;然后, 将(3)代入(1)中, 得:&lt;/p&gt;
+&lt;p&gt;$$
+u^{\prime}e^{-\int{P(x)}\mathrm{d}x}=Q(x) \tag{4}
+$$&lt;/p&gt;
+&lt;p&gt;通过&amp;quot;分离变量&amp;quot;即可求出$u$:&lt;/p&gt;
+&lt;p&gt;$$
+u=\int{Q(x)e^{\int{P(x)\mathrm{d}x}}\mathrm{d}x}+C \tag{5}
+$$&lt;/p&gt;
+&lt;p&gt;将(5)在带回到(3)中即可求出$y$:&lt;/p&gt;
+&lt;p&gt;$$
+y=Ce^{-\int{P(x)\mathrm{d}x}}+e^{-\int{P(x)\mathrm{d}x}}\int{Q(x)e^{\int{P(x)\mathrm{d}x}}\mathrm{d}x}
+$$&lt;/p&gt;
+&lt;p&gt;于是, 便得到了(1)的通解, 观察可以发现, 前面为(1)对应的齐次方程的通解, 后面为当C=0是(1)的特解, 因此得到结论:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一阶非齐次线性方程的通解等于对应的齐次方程的通解与非齐次方程的一个特解之和.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;但是问题就是 &lt;strong&gt;为什么可以使用非齐次方程对应的齐次方程的通解来进行求解?&lt;/strong&gt;, 上面的方法一气呵成只是告诉了我们应该这样做, 但我们却不知道为什么这么做.&lt;/p&gt;
+&lt;p&gt;但我学的很蒙, 于是进行了一番搜索找到了一些好的文章, 打算自己总结一下, 相关文章都放在了&lt;em&gt;参考&lt;/em&gt;处.&lt;/p&gt;
+&lt;h2 id=&#34;2-原理探讨&#34;&gt;2. 原理探讨&lt;/h2&gt;
+&lt;p&gt;通过《&amp;ldquo;常数变易法&amp;quot;的探讨》文章知道我们现在使用的常数变易法只是结论, 而非推导过程.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;该结论是拉格朗日十一年的研究成果.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;因此在此介绍一些该结论得出的过程.&lt;/p&gt;
+&lt;p&gt;首先, 对于求解一阶线性微分方程最先想到的方法就是&amp;quot;分离常量&amp;rdquo;, 于是首先对(1)进行移项操作得:&lt;/p&gt;
+&lt;p&gt;$$
+\mathrm{d}y=[Q(x)-P(x)y]\mathrm{d}x
+$$&lt;/p&gt;
+&lt;p&gt;观察怎样都无法将y单独移动到左边, 因此分离常量的方法不可以求解此方程.&lt;/p&gt;
+&lt;p&gt;于是想到使用$u=\frac{y}{x}$的方法进行求解得到:&lt;/p&gt;
+&lt;p&gt;$$
+u\prime{}x+u(1+P(x)x)=Q(x)
+$$&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>C 语言函数调用和VLA和alloca栈的变化探讨</title>
+      <link>https://jiaoshijie.github.io/posts/function_call_and_vla_and_alloca/</link>
+      <pubDate>Wed, 17 Apr 2024 11:36:45 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/function_call_and_vla_and_alloca/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: 以下讨论使用的平台为 x86-64，使用的编译器为 gcc，以下提供的伪汇编码
+采用 intel 格式。&lt;/p&gt;
+&lt;p&gt;文章中提到的代码，可以在 &lt;a href=&#34;https://github.com/jiaoshijie/code_misc/tree/main/c-like/function_call_VLA_alloca&#34;&gt;Code&lt;/a&gt; 找到。&lt;/p&gt;
+&lt;h2 id=&#34;一些重要的寄存器和指令&#34;&gt;一些重要的寄存器和指令&lt;/h2&gt;
+&lt;p&gt;函数调用过程中，比较重要的寄存器主要有三个 &lt;code&gt;rip&lt;/code&gt; &lt;code&gt;rbp&lt;/code&gt; &lt;code&gt;rsp&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rip&lt;/code&gt; 寄存器存放的为下一条要执行指令的地址，Instruction Pointer。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rbp&lt;/code&gt; 为基寄存器，存放的为前一个 &lt;code&gt;rbp&lt;/code&gt; 的值，Base Pointer。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rsp&lt;/code&gt; 为栈寄存器，一直指向函数调用栈的底部，Stack Pointer。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;比较重要的指令有 &lt;code&gt;call&lt;/code&gt; &lt;code&gt;push&lt;/code&gt; &lt;code&gt;pop&lt;/code&gt; &lt;code&gt;leave&lt;/code&gt; &lt;code&gt;ret&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;call addr&lt;/code&gt; 指令会首先将 call 返回之后要执行的地址压入栈中(返回地址)，设置 &lt;code&gt;rip&lt;/code&gt;
+的值为 addr，然后跳转的这个位置去执行，大致可以等效于一下指令。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-asm&#34; data-lang=&#34;asm&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 假设当执行到 call 指令时 CPU 就会自动设置 rip 寄存器为下一条要执行的指令
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;push&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;rip&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;rip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;addr&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 按理设置了 rip 寄存器，CPU 就会去执行 rip 地址的指令，这里写 jmp 只是想要更清晰的表示 call 的流程
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;jmp&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;addr&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;push rbp&lt;/code&gt; 指令会将 rsp 寄存器下移一个 word 的长度，rbp 中的内容移动到 rsp
+寄存器所指向的地址中。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>阅读 Linux 核心源代码 lib/list_sort.c</title>
+      <link>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</link>
+      <pubDate>Sat, 23 Mar 2024 14:33:19 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/reading_linux_source_code_about_lib_list_sort_c/</guid>
+      <description>&lt;p&gt;Linux 核心代码中，对链表的排序算法是一种归并排序的变种。采用的排序方式为自下而上
+的排序，这种方式可以避免 &lt;a href=&#34;https://en.wikipedia.org/wiki/Thrashing_(computer_science)#Cache_thrashing&#34;&gt;cache thrashing&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;合并时机&#34;&gt;合并时机&lt;/h2&gt;
+&lt;p&gt;Linux 中的对归并排序的改进主要是改变了两个链表的合并时机。该算法会有一个 &lt;code&gt;pending&lt;/code&gt;
+链表用来记录排序好的子链表，且保证每个子链表的长度都为 $2^k$。当 &lt;code&gt;pending&lt;/code&gt; 中
+即将出现第三个 $2^k$ 长度的链表时，就会合并已存在的两个 $2^k$ 长度的链表使其
+变为一个 $2^{k+1}$ 长度的链表，所以在 &lt;code&gt;pending&lt;/code&gt; 链表中永远不会存在超过 2 个
+长度为 $2^k$ 的链表。&lt;/p&gt;
+&lt;p&gt;使用一个变量 &lt;code&gt;count&lt;/code&gt; 来追踪 &lt;code&gt;pending&lt;/code&gt; 中 $2^k$ 长度链表的个数，可以通过 &lt;code&gt;count&lt;/code&gt;
+中 &lt;code&gt;k+1&lt;/code&gt; &lt;code&gt;k&lt;/code&gt; &lt;code&gt;k-1&lt;/code&gt; 这 3 个 bits 来确定 &lt;code&gt;pending&lt;/code&gt; 中 $2^k$ 长度链表的个数。下表
+中的 3 个 bits 分别表示 &lt;code&gt;k+1&lt;/code&gt; &lt;code&gt;k&lt;/code&gt; &lt;code&gt;k-1&lt;/code&gt;，当 &lt;code&gt;k&lt;/code&gt; 为 0 时，认为 &lt;code&gt;-1&lt;/code&gt; bit 为 1。&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;count&lt;/th&gt;
+          &lt;th&gt;$2^k$ 长度链表个数&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&amp;hellip;000&amp;hellip;&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&amp;hellip;001&amp;hellip;&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&amp;hellip;010&amp;hellip;&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&amp;hellip;011&amp;hellip;&lt;/td&gt;
+          &lt;td&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&amp;hellip;100&amp;hellip;&lt;/td&gt;
+          &lt;td&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&amp;hellip;101&amp;hellip;&lt;/td&gt;
+          &lt;td&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;源码分析&#34;&gt;源码分析&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;__attribute__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;nonnull&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;list_sort&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;priv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;list_head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;list_cmp_func_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cmp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;list_head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pending&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;kt&#34;&gt;size_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;count&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;  &lt;span class=&#34;cm&#34;&gt;/* Count of pending */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;prev&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  &lt;span class=&#34;cm&#34;&gt;/* Zero or one elements */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;cm&#34;&gt;/* Convert to a null-terminated singly-linked list. */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;prev&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;next&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;// ....
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;函数的参数：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>七个高效的文本编辑习惯(翻译)</title>
+      <link>https://jiaoshijie.github.io/posts/seven_habits_of_effective_text_editing_translation/</link>
+      <pubDate>Fri, 22 Mar 2024 14:48:11 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/seven_habits_of_effective_text_editing_translation/</guid>
+      <description>&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;原作者&lt;/strong&gt;：Bram Moolenaar&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;发表日期：November 2000&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;原文章&lt;/strong&gt;：&lt;a href=&#34;https://moolenaar.net/habits.html&#34;&gt;Seven habits of effective text editing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;原作者的 Talk&lt;/strong&gt;：&lt;a href=&#34;https://www.youtube.com/watch?v=p6K4iIMlouI&#34;&gt;Talk&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;如果你经常编辑文本文件(比如，写代码或HTML)，你可以通过高效的使用一个好的编辑器
+来节省大量的时间。这篇文章将提供一些让你可以减少错误和更快速编辑文件的方法。&lt;/p&gt;
+&lt;p&gt;本文将使用开源文本编辑器 VIM(Vi IMproved) 来展示这些高效编辑方法，当然这些方法
+同样适用于其它文本编辑器。选择一个正确的编辑器是迈向高效编辑的第一步。关于你
+适合使用什么样的编辑器这样的讨论，是非常浪费时间的本文不对这个问题进行讨论。但
+如果你想要寻找一个合适的编辑器，可以尝试一下 VIM，我相信它不会让你失望的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; VIM 命令和选项使用 &lt;code&gt;this (font)&lt;/code&gt; 显示&lt;/p&gt;
+&lt;h2 id=&#34;part-1-编辑单个文件&#34;&gt;Part 1: 编辑单个文件&lt;/h2&gt;
+&lt;h3 id=&#34;1-在文件中快速移动&#34;&gt;1. 在文件中快速移动&lt;/h3&gt;
+&lt;p&gt;其实，大部分情况下，当我们在编辑一个文件时，并不是真的在编辑它(输入文本/改变文本)，
+而仅仅是在阅读它(检查错误/寻找一个位置来编辑)。浏览整个文件才是我们经常做的事情，
+因此如何在文件中快速移动是我们要学习的第一件事。&lt;/p&gt;
+&lt;p&gt;在浏览文件时，我们可能经常想要搜索&lt;strong&gt;一段文本&lt;/strong&gt;在文件的什么位置出现了，或找到所有
+包含一个特定单词或短语的所有行。在 VIM 中，可以简单的使用搜索命令 &lt;code&gt;/pattern&lt;/code&gt;
+来查找文本，但可以使用一些更高效的方式来代替：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果你想要查找一个单词是否在该文件的其它位置出现了，可以使用 &lt;code&gt;*&lt;/code&gt; 命令来快速
+搜素光标下的单词出现的下一个位置。&lt;code&gt;#&lt;/code&gt; 做同样的事，但方向相反。&lt;/li&gt;
+&lt;li&gt;设置 &lt;code&gt;incsearch&lt;/code&gt; 选项，这个选项会告诉 VIM 实时地匹配你输入的字符，以便你可以
+立刻发现你的输入错误。&lt;/li&gt;
+&lt;li&gt;设置 &lt;code&gt;hlsearch&lt;/code&gt; 选项，这个选项会告诉 VIM 高亮全部的匹配结果，以便你可以清楚地
+知道当你按下 &lt;code&gt;n&lt;/code&gt; 和 &lt;code&gt;N&lt;/code&gt; 时，你的光标将会跳转到哪里。在写代码时这个功能可以让你
+在不移动光标的情况下，看到一个变量被使用的位置。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于结构化的文件 VIM 提供了一些更加快速的移动方式。对于 C-like 文件，可以使用
+使用一些特定的命令，在某些特定的结构中快速移动。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>快速计算正整数的平方根</title>
+      <link>https://jiaoshijie.github.io/posts/quick_clac_square_root/</link>
+      <pubDate>Mon, 11 Mar 2024 20:09:17 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/quick_clac_square_root/</guid>
+      <description>&lt;p&gt;如何求一个正整数的平方根，最直接的方法就是&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;i_sqrt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;res&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;res&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;res&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;res&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但上面的计算方法非常的低效，而对于求正整数的平方根，已经有非常多的算法。&lt;/p&gt;
+&lt;p&gt;下面介绍一个常用的正整数开平方根的算法。&lt;/p&gt;
+&lt;h2 id=&#34;digit-by-digit-calculation&#34;&gt;Digit by digit calculation&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Digit-by-digit_calculation&#34;&gt;Digit by digit calculation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;假设 $x = \sqrt{N}$ 则 $x^2 = N$ 以二进制表示 $x$，则 $x^2$ 为&lt;/p&gt;
+&lt;p&gt;$$
+x^2 = (000b_0b_1b_2 \cdots b_{n-1}b_n)^2 \tag{1}
+$$&lt;/p&gt;
+&lt;p&gt;其中，$b_0$ 为 $x$ 的二进制表示中第一个为 1 的二进制位。但要注意 $b_1 \cdots b_n$
+并不一定全为 1。我们可以将公式 (1) 改为加法形式。$a_n$ 对应的为 $b_0$。&lt;/p&gt;
+&lt;p&gt;$$
+x^2 = (a_n + a_{n-1} + \cdots + a_1 + a_0)^2 \tag{2}
+$$&lt;/p&gt;
+&lt;p&gt;其中，$a_m = 2^m$ 或 $a_m = 0$，取决于对应二进制位的值为 1 还是 0。将其展开可以得到&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>c&#43;&#43; 使用函数指针结构体改变类的虚函数表</title>
+      <link>https://jiaoshijie.github.io/posts/cpp_change_vtable_using_otable/</link>
+      <pubDate>Tue, 11 Jul 2023 21:35:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/cpp_change_vtable_using_otable/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/jiaoshijie/code_misc/blob/main/c-like/vtables/change_vtable.cpp&#34;&gt;文中代码&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果c++的类有虚函数那么这个类的实例对象就会有一个虚表. 我们可以通过一下代码来
+改变虚表.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;cstring&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;A&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vfoo_1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;a_vfoo_1&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;vfoo_2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;a_vfoo_2: &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;vfoo_3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;typedef&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;void_pfunc_void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;typedef&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;void_pfunc_int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;typedef&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int_pfunc_int_int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;other_vtable&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;void_pfunc_void&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pf1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;void_pfunc_int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pf2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;int_pfunc_int_int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pf3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;g_f1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;g_f1&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;g_f2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;A&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vfoo_1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;// std::cout &amp;lt;&amp;lt; &amp;#34;g_f2: &amp;#34; &amp;lt;&amp;lt; a &amp;lt;&amp;lt; std::endl;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;g_f3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;A&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;other_vtable&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ovt&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;other_vtable&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;ovt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pf1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;g_f1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;ovt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pf2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;g_f2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;ovt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pf3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;g_f3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vfoo_1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vfoo_2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;a-&amp;gt;vfoo_3: %d&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vfoo_3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;puts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;-------------------------------&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;memcpy&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ovt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vfoo_1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vfoo_2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;a-&amp;gt;vfoo_3: %d&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vfoo_3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;breakpoint&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;内存布局大致如下图所示:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>使用 gdb 查看 c&#43;&#43; 中的虚函数表</title>
+      <link>https://jiaoshijie.github.io/posts/inspect_vtables_using_gdb_in_cpp/</link>
+      <pubDate>Sun, 09 Jul 2023 21:18:46 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/inspect_vtables_using_gdb_in_cpp/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/jiaoshijie/code_misc/tree/main/c-like/vtables&#34;&gt;文中代码&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;1-使用info-vtbl-obj查看vtable&#34;&gt;1. 使用&lt;code&gt;info vtbl obj&lt;/code&gt;查看vtable&lt;/h2&gt;
+&lt;h3 id=&#34;vtable-function&#34;&gt;vtable function&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;A&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;default&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;default&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;vfoo_1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;vfoo_2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;A&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;breakpoint&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当一个class有virtual function时, 这个类会有一个vtable(virtual table)来记录这些函数的入口.&lt;/p&gt;
+&lt;p&gt;编译上面的代码, 使用gdb来debug这个程序, 使用&lt;code&gt;info vtbl a&lt;/code&gt;可以可视化该实例对象a的vtable. 如下图所示:&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../images/cpp_vtables_01.png&#34; alt=&#34;vtable_01&#34;  /&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;vtable-class&#34;&gt;vtable class&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//    A
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//   / \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//  /   \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// B     C
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// \    /
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//  \  /
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//   D
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;A&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;default&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;a_foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;B&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;A&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b_foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;C&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;A&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;c_foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;D&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;C&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;D&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;breakpoint&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同样使用&lt;code&gt;info vtbl d&lt;/code&gt;可以查看实例对象d的vtable. 如下图所示:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>00 编译器简介</title>
+      <link>https://jiaoshijie.github.io/posts/compiler/00_compiler_introduction/</link>
+      <pubDate>Sun, 17 Jul 2022 14:57:04 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/compiler/00_compiler_introduction/</guid>
+      <description>&lt;h2 id=&#34;1-语言处理器language-processor&#34;&gt;1 语言处理器(language processor)&lt;/h2&gt;
+&lt;p&gt;language processor可以分为两种, 一种是编译器(compiler), 一种是解释器(interpreter).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;编译器(compiler)&lt;/strong&gt; 是将一种语言转换为另一种语言, 通常是高级语言向low-level语言转换. 在转化过程中如果有错误要向用户报告这个错误. 如果这个low-level语言是可执行的机器语言那它还可以被用户执行.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://jiaoshijie.github.io/images/compiler/00_aCompilerAndRuningTargetProgram.png#center&#34; alt=&#34;Figure: A compiler and running the target program&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解释器(interpreter)&lt;/strong&gt; 是另一类的language processor, 它不会将高级语言编译成low-level语言来执行, 而是直接执行该高级语言.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://jiaoshijie.github.io/images/compiler/00_aInterpreter.png#center&#34; alt=&#34;Figure: A interpreter&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;通常来说, 编译型语言要比解释型语言运行快, 但解释型语言可以更好的检查错误, 因为很多runtime error在编译期很难检测出来.&lt;/p&gt;
+&lt;p&gt;接下来主要以编译器为主进行介绍, 首先看一下编译器在编译一个文件时的流程图.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://jiaoshijie.github.io/images/compiler/00_aLanguageProcessingSystem.png#center&#34; alt=&#34;Figure: A Language-processing system&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;根据上图可以看出编译器在将源程序编译目标程序时是分步骤完成的:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;预处理(preprocess)&lt;/li&gt;
+&lt;li&gt;编译(compile)&lt;/li&gt;
+&lt;li&gt;汇编(assemble)&lt;/li&gt;
+&lt;li&gt;链接(link)&lt;/li&gt;
+&lt;li&gt;加载(load)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;预处理器(preprocessor)&lt;/strong&gt; 的作用就是将这些分散的文件聚集起来和将替换文件中的宏(macros), 将结果传递至下一个阶段(编译).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;编译器(compiler)&lt;/strong&gt; 的作用就是将预处理器的结果转化成汇编语言(assembly language), 但是也可以直接转化为机器码, 这样也就可以跳过第3步的汇编阶段了, 但是因为汇编语言也是有语义的语言因此转化起来效率高, 且汇编器的效率也很高, 因此比较典型的编译型语言(C, C++)都是先转成汇编再编译为机器码. 且汇编语言debug也比较简单.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;汇编器(assembler)&lt;/strong&gt; 的作用是将上一步产生的汇编程序转换为可重定位机器码(relocatable machine code).
+&lt;blockquote&gt;
+&lt;p&gt;Relocatable code is software whose execution address can be changed.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Colors of Balls Problem</title>
+      <link>https://jiaoshijie.github.io/posts/colorsofproblem/</link>
+      <pubDate>Wed, 20 Apr 2022 13:37:58 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/colorsofproblem/</guid>
+      <description>&lt;p&gt;n balls with N different colors, number of balls with each color is same, randomly choose k balls from the n balls, the expected number of colors of the k balls can be estimated as:&lt;/p&gt;
+&lt;p&gt;$$
+N\left [ 1-\prod_{r=1}^{k} \left ( \frac{\frac{n(N-1)}{N}-r+1}{n-r+1} \right )  \right ]
+$$&lt;/p&gt;
+&lt;h2 id=&#34;证明&#34;&gt;证明&lt;/h2&gt;
+&lt;p&gt;要算取出的k个球的颜色数的期望, 根据期望的定义来算的话太复杂了.&lt;/p&gt;
+&lt;p&gt;因此, 可以先构造一个0-1分布, 取出的球中不包含一种颜色的情况用0表示, 则包含这种颜色的情况用1表示.&lt;/p&gt;
+&lt;p&gt;可以轻易的求出取出的球中不包含一种颜色的概率为:&lt;/p&gt;
+&lt;p&gt;$$
+P_{0}=\frac{C_{n - \frac{n}{N}}^{k}}{C_{n}^{k}}=\frac{(n-\frac{n}{N})(n-\frac{n}{N}-1)\cdots(n-\frac{n}{N}-k+1)}{n(n-1)\cdots(n-k+1)}=\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1}
+$$&lt;/p&gt;
+&lt;p&gt;易得$P_1=1-P_0$, 则该事件的期望为:&lt;/p&gt;
+&lt;p&gt;$$
+E_{0-1}=0\times P_0 + 1\times P_1=1-P_0=1-\prod_{r=1}^{k}\frac{\frac{n(N-1)}{N}-r+1}{n-r+1}
+$$&lt;/p&gt;
+&lt;p&gt;而对于取出k个球中颜色数的数学期望, 可以先对N个不同的颜色编号$1\cdots N$, 利用上面的0-1分布, 设1号颜色的0-1分布为{0, 1}, 2号颜色的0-1分布为{0, 1}, &amp;hellip;, N号颜色的0-1分布为{0, 1}(彼此为相互独立事件, 非互斥事件).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>关于数组array和&amp;array地址相同问题</title>
+      <link>https://jiaoshijie.github.io/posts/about_array_addree_question/</link>
+      <pubDate>Sun, 17 May 2020 16:28:28 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/about_array_addree_question/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/jiaoshijie/code_misc/tree/main/c-like/c_array_analysis&#34;&gt;文中代码&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;对于如下代码:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到输出的地址是相同的.&lt;/p&gt;
+&lt;p&gt;而对于如下代码:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到输出的地址是不同的. 其实对于这一段代码是没有任何疑问的, 可以很轻松的
+明白为什么输出的地址不同.&lt;/p&gt;
+&lt;p&gt;那么编译器是如何处理第一部分代码，使输出的地址相同的。&lt;/p&gt;
+&lt;p&gt;可以通过gdb调试可以很清晰的看到编译器是如何处理这种情况的。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到void这一行的汇编代码为:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-as&#34; data-lang=&#34;as&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mh&#34;&gt;0x565561e4&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;71&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;:&lt;/span&gt;        &lt;span class=&#34;nx&#34;&gt;lea&lt;/span&gt;    &lt;span class=&#34;mh&#34;&gt;0x8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;esp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,%&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eax&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mh&#34;&gt;0x565561e8&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;75&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;:&lt;/span&gt;        &lt;span class=&#34;nx&#34;&gt;mov&lt;/span&gt;    &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;esp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mh&#34;&gt;0x565561eb&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;78&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;:&lt;/span&gt;        &lt;span class=&#34;nx&#34;&gt;lea&lt;/span&gt;    &lt;span class=&#34;mh&#34;&gt;0x8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;esp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,%&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eax&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mh&#34;&gt;0x565561ef&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;82&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;:&lt;/span&gt;        &lt;span class=&#34;nx&#34;&gt;mov&lt;/span&gt;    &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mh&#34;&gt;0x4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;esp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mh&#34;&gt;0x565561f3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;86&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;:&lt;/span&gt;        &lt;span class=&#34;nx&#34;&gt;mov&lt;/span&gt;    &lt;span class=&#34;nx&#34;&gt;$0x0&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,%&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eax&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到不管是 &lt;code&gt;array&lt;/code&gt; 还是 &lt;code&gt;&amp;amp;array&lt;/code&gt; 的操作都是使用的 &lt;code&gt;lea&lt;/code&gt; 操作将 &lt;code&gt;0x8(%esp)&lt;/code&gt;
+移动到 &lt;code&gt;%eax&lt;/code&gt; 中然后在 &lt;code&gt;mov&lt;/code&gt; 操作赋值到相关变量中.&lt;/p&gt;
+&lt;p&gt;而对于另一段代码:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;0x56556214 &amp;lt;main+103&amp;gt;:       lea    -0x2c(%ebp),%eax
+0x56556217 &amp;lt;main+106&amp;gt;:       mov    %eax,-0x24(%ebp)
+0x5655621a &amp;lt;main+109&amp;gt;:       mov    -0x2c(%ebp),%eax
+0x5655621d &amp;lt;main+112&amp;gt;:       mov    %eax,-0x20(%ebp)
+0x56556220 &amp;lt;main+115&amp;gt;:       mov    $0x0,%eax
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以看到在为 &lt;code&gt;a2&lt;/code&gt; 赋值是使用的是 &lt;code&gt;mov&lt;/code&gt; 指令而不是 &lt;code&gt;lea&lt;/code&gt; 指令.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>&#39;二维数组&#39;, &#39;指针数组&#39;和&#39;指针的指针&#39;的内存布局</title>
+      <link>https://jiaoshijie.github.io/posts/doublearray_and_pointer2pointer_in_c/</link>
+      <pubDate>Wed, 13 May 2020 23:00:33 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/doublearray_and_pointer2pointer_in_c/</guid>
+      <description>&lt;h2 id=&#34;开始&#34;&gt;开始&lt;/h2&gt;
+&lt;p&gt;下面提到的变量均是在 main 函数中申请的变量。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/jiaoshijie/code_misc/tree/main/c-like/doubleArray_pointer2pointer&#34;&gt;文中代码&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;1-二维数组&#34;&gt;1. 二维数组&lt;/h3&gt;
+&lt;p&gt;首先讨论二维数组, 他在内存中的布局是最简单的, 考虑如下变量&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[][&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;s&#34;&gt;&amp;#34;jiao&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;s&#34;&gt;&amp;#34;_shi&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;s&#34;&gt;&amp;#34;_jie&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以通过如下代码打印各个部分的地址&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;str addr: %p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;str[%d] addr: %p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\t&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;str[%d][%d] addr: %p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;][&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到地址从&lt;code&gt;str[0][0]&lt;/code&gt;开始到结束是从低到高连续的。因为是在main函数中申请的
+这个二维数组，因此它被存储在栈空间中(栈空间地址是高地址到低地址走的)，存储布局
+大致如下：&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../images/da_p2p_pa_01.png#center&#34; alt=&#34;da_p2p_pa_01&#34;  /&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;2-指针的指针&#34;&gt;2. 指针的指针&lt;/h3&gt;
+&lt;p&gt;使用如下代码申请指针的指针的空间:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d_ptr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;d_ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;memcpy&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d_ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;jiao&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;memcpy&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d_ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;_shi&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;memcpy&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d_ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;_jie&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用如下代码输出各个部分的地址:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;d_ptr addr: %p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d_ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;d_ptr[%d] addr: %p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d_ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;d_ptr[%d][%d] addr: %p&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d_ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;][&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到只有d_ptr的地址是在栈空间中的, 其余部分均是在堆空间中.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Tinyhttpd学习</title>
+      <link>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</link>
+      <pubDate>Sun, 13 Oct 2019 22:46:48 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/tinyhttpd_learn/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;第一次的源代码阅读, 可能解释的不是很好, tinyhttpd网上都说是一个不错的学习源代码的例子， 所以就用这个上手了。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://sourceforge.net/projects/tiny-httpd/&#34;&gt;tinyhttpd官方源码在这里下载&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/jiaoshijie/misc_code/tree/main/c-like/tinyhttpd&#34;&gt;我的代码在这里&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;一些改动:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将cgi程序由perl语言改为python3&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;函数说明&#34;&gt;函数说明&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;startup() 初始化服务端套接字, 如果端口号没有指定，则使用随机的端口号&lt;/li&gt;
+&lt;li&gt;error_die() 打印服务端启动过程中的错误信息, 并退出程序&lt;/li&gt;
+&lt;li&gt;accept_request() 处理客户端请求
+&lt;ul&gt;
+&lt;li&gt;获取请求类型(&lt;code&gt;GET&lt;/code&gt; or &lt;code&gt;POST&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;获取客户端要的网页文件的路径&lt;/li&gt;
+&lt;li&gt;使用stat()函数获取文件属性，判断是执行cgi还是发送普通网页&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;get_line() 获取网络字符串的一行(换行符为: &lt;code&gt;\r\n&lt;/code&gt; )&lt;/li&gt;
+&lt;li&gt;unimplemented() 客户端请求不正确时(服务器不支持的请求)，发送给客户端&lt;a href=&#34;https://man.ilovefishc.com/pageHTML5/HTTP.html&#34;&gt;501&lt;/a&gt;错误&lt;/li&gt;
+&lt;li&gt;not_found_file() 客户端请求网页内容不存在返回该函数404&lt;/li&gt;
+&lt;li&gt;cannot_execute() 不能执行cgi文件&lt;/li&gt;
+&lt;li&gt;bad_request() 客户端请求错误&lt;/li&gt;
+&lt;li&gt;serve_file() 发送网页文件到客户端&lt;/li&gt;
+&lt;li&gt;execute_cgi() 执行cgi文件并将结果发送到客户端&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../images/tinyhttpd_01.png&#34; alt=&#34;tinyhttpd_01&#34;  /&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;cgi介绍&#34;&gt;cgi介绍&lt;/h2&gt;
+&lt;p&gt;cgi(Common Gateway Interface)规定Web服务器调用其他程序的接口协议(就是如何调用程序， 传递参数， 输出结果), &lt;a href=&#34;https://blog.csdn.net/xiaominthere/article/details/32328589&#34;&gt;详细的cgi简介&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;cgi接口使用标准输入、标准输出和环境变量来交换数据&lt;/p&gt;
+&lt;p&gt;该程序中使用的环境变量:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;REQUEST_METHOD&lt;/code&gt;: 浏览器请求方法&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CONTENT_LENGTH&lt;/code&gt;: post请求时的form表单的内容长度&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;QUERY_STRING&lt;/code&gt;: get请求时form表单的内容放到该环境变量中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;cgi从标准输入中获取数据，把数据输出到标准输出&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../images/tinyhttpd_02.png&#34; alt=&#34;tinyhttpd_02&#34;  /&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;linux系统函数&#34;&gt;Linux系统函数&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;pipe()进程见通信的一种实现方法
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// file_pipe[0] 为读取端(输出端), file_pipe[1]为写入端(输入端)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;file_pipe&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;pipe&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file_pipe&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;fork()创建线程函数
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ipid&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;fork&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;// 创建线程
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ipid&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;// 子线程
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;// 主线程
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;dup2()重定向一个文件描述符
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;* stdin:0, stdout:1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;* 下面两句将重定向stdin和stdout到file[0], 和file[1]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;*/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;dup2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;dup2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;putenv()设置环境变量(只在该进程中生效)&lt;/li&gt;
+&lt;li&gt;execl()在该进程中执行外部程序
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 程序绝对路径 程序名称 参数 目标 NULL
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;execl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;/bin/ls&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;ls&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;-al&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;/etc/passwd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;Notes: 该函数执行时，会用这个新的进程替代当前进程就是该函数执行完后，就会退出整个进程，而不会执行下面的代码, 所以通常使用子线程执行该函数&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>使用 hugo 搭建 Blog 记录</title>
+      <link>https://jiaoshijie.github.io/posts/using_hugo_blog/</link>
+      <pubDate>Tue, 01 Oct 2019 01:31:00 +0800</pubDate>
+      <guid>https://jiaoshijie.github.io/posts/using_hugo_blog/</guid>
+      <description>&lt;h2 id=&#34;1-安装-hugohttpsgohugoio&#34;&gt;1. 安装 &lt;a href=&#34;https://gohugo.io/&#34;&gt;hugo&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;对于Arch系Linux系统使用 &lt;code&gt;pacman -S hugo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;其他安装方式去&lt;a href=&#34;https://gohugo.io/getting-started/installing/&#34;&gt;官网&lt;/a&gt;查看&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-使用-hugo-创建-blog&#34;&gt;2. 使用 hugo 创建 Blog&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;hugo new site &amp;lt;MyBlog&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;MyBlog&amp;gt;&lt;/code&gt; 为自己想创建的文件夹名称&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-下载-hugo-主题httpsthemesgohugoio&#34;&gt;3. 下载 &lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;hugo 主题&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;到项目的根目录下, 即 &lt;code&gt;MyBlog&lt;/code&gt; 文件夹下&lt;/li&gt;
+&lt;li&gt;我个人比较喜欢使用的主题为&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod&#34;&gt;PaperMod&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;有两种使用 git 管理主题的方式
+&lt;ol&gt;
+&lt;li&gt;第一种是直接将主题 clone 到指定目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git clone --depth 1 &amp;lt;github url&amp;gt; themes/&amp;lt;theme name&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;第二种是使用 git submodule 来管理主题(以PaperMod主题为例)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git submodule add --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;然后 &lt;code&gt;cd themes/PaperMod&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git ls-remote --tags&lt;/code&gt; 用来查看该仓库的tag名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git fetch --tags&lt;/code&gt; 将 tag 从远程仓库拉取下来&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git tag&lt;/code&gt; 可以查看 tag 的名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git checkout &amp;lt;tag_name&amp;gt;&lt;/code&gt; 切换到指定tag&lt;/li&gt;
+&lt;li&gt;切换到指定 tag 后，可以主git目录使用 &lt;code&gt;git commit -a&lt;/code&gt; 来更改 submodule 的 tag 进行提交&lt;/li&gt;
+&lt;li&gt;日后重新 clone 该仓库到本地，不会自动 clone submodule 可以使用 &lt;code&gt;git submodule update --init --depth 1 --recursive&lt;/code&gt; 来手动 clone&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一般主题下面都有一个 &lt;em&gt;exampleSite/config.toml&lt;/em&gt; 文件是这个主题的默认配置可以copy到该项目的根目录, 然后在修改一下.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
